@@ -4,13 +4,13 @@
     "directive-selector": [
       true,
       "attribute",
-      "dogs",
+      "covid",
       "camelCase"
     ],
     "component-selector": [
       true,
       "element",
-      "dogs",
+      "covid",
       "kebab-case"
     ]
   }

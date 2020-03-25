@@ -12,13 +12,14 @@
 		"directive-selector": [
 			true,
 			"attribute",
-			"app",
+			"covid",
 			"camelCase"
 		],
+		"indent": [true, "tabs", 2],
 		"component-selector": [
 			true,
 			"element",
-			"dogs",
+			"covid",
 			"kebab-case"
 		],
 		"import-blacklist": [

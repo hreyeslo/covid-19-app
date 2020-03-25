@@ -1,10 +1,11 @@
 {
-	"host": "https://dog.ceo/api",
-	"randomImages": 3,
+	"api": {
+		"host": "https://dog.ceo/api"
+	},
 	"i18n": {
 		"scope": {
 			"forRoot": "/i18n/${lang}/",
-			"forChild": "/i18n/${lang}/page/"
+			"forChild": "/i18n/${lang}/pages/"
 		},
 		"default": "en",
 		"langs": [

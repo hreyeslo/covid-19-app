@@ -1,6 +1,7 @@
 {
-	"host": "https://dog.ceo/api",
-	"randomImages": 3,
+	"api": {
+		"host": "https://dog.ceo/api"
+	},
 	"i18n": {
 		"scope": {
 			"forRoot": "/i18n/${lang}/",

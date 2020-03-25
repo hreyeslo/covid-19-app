@@ -4,7 +4,7 @@ import { defaultLiterals } from '../default.literals';
 import { IPhotoLiterals } from '../photo.model';
 
 @Component({
-  selector: 'dogs-photo',
+  selector: 'covid-photo',
   templateUrl: './photo.component.html',
   styleUrls: ['./photo.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush

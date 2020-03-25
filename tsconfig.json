@@ -24,20 +24,14 @@
 			"dom"
 		],
 		"paths": {
-			"@ui/select": [
-				"projects/select/src/public-api"
-			],
-			"@ui/photo": [
-				"projects/photo/src/public-api"
+			"@app/core": [
+				"src/app/core/core_api"
 			],
 			"@shared/services": [
 				"src/app/shared/services_api"
 			],
 			"@shared/models": [
 				"src/app/shared/models_api"
-			],
-			"@app/core": [
-				"src/app/core/core_api"
 			]
 		}
 	},

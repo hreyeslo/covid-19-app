@@ -1,13 +1,14 @@
 {
-	"name": "dogs",
-	"version": "1.0.1",
+	"name": "covidmeters",
+	"version": "0.0.1",
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
 		"build": "ng build",
 		"test": "ng test --codeCoverage=true",
 		"lint": "ng lint",
-		"e2e": "ng e2e --watch"
+		"e2e": "ng e2e --watch",
+		"deploy": "ng build --prod && firebase deploy"
 	},
 	"private": true,
 	"dependencies": {
