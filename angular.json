@@ -34,7 +34,8 @@
 								"glob": "**/*",
 								"input": "src/environments/configs",
 								"output": "/configs/"
-							}
+							},
+							"src/manifest.webmanifest"
 						],
 						"styles": [
 							"node_modules/@nebular/theme/styles/prebuilt/default.css",
@@ -69,7 +70,9 @@
 									"maximumWarning": "6kb",
 									"maximumError": "10kb"
 								}
-							]
+							],
+							"serviceWorker": true,
+							"ngswConfigPath": "ngsw-config.json"
 						}
 					}
 				},
@@ -105,7 +108,8 @@
 								"glob": "**/*",
 								"input": "src/environments/configs",
 								"output": "/configs/"
-							}
+							},
+							"src/manifest.webmanifest"
 						],
 						"styles": [
 							"node_modules/@nebular/theme/styles/prebuilt/default.css",
