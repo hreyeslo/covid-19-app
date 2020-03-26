@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { UtilsService } from '@shared/services';
+import { IGlobalCases } from '@shared/models';
 
 import { DashboardServiceApiModule } from './dashboard-service-api.module';
 import { DashboardService } from './dashboard.service';
@@ -11,5 +13,5 @@ import { DashboardService } from './dashboard.service';
 	deps: [UtilsService]
 })
 export abstract class AbstractDashboardService {
-
+	abstract getGlobalCases(): Observable<IGlobalCases>;
 }
