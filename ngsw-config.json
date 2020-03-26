@@ -22,12 +22,23 @@
 			"resources": {
 				"files": [
 					"/assets/**",
-					"/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani)"
+					"/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani|pdf)"
 				]
 			}
 		}
 	],
 	"dataGroups": [
+		{
+			"name": "fonts",
+			"urls": [
+				"https://fonts.googleapis.com/*"
+			],
+			"cacheConfig": {
+				"maxSize": 100,
+				"maxAge": "72h",
+				"strategy": "performance"
+			}
+		},
 		{
 			"name": "static-json-data",
 			"urls": [
