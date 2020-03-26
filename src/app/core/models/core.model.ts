@@ -1,31 +1,31 @@
-// Interface
 import { InjectionToken } from '@angular/core';
 
 import { ConfigManager } from '../config/config';
 
 export interface IAppConfig {
-  host: string;
-  randomImages: number;
-  i18n: {
-    scope: II18nScope;
-    default: string;
-    langs: string[];
-  };
+	api: {
+		host: string;
+	};
+	i18n: {
+		scope: II18nScope;
+		default: string;
+		langs: string[];
+	};
 }
 
 export interface IAppEnv {
-  production: boolean;
-  configFile: string;
+	production: boolean;
+	configFile: string;
 }
 
 export interface II18nScope {
-  forRoot: string;
-  forChild: string;
+	forRoot: string;
+	forChild: string;
 }
 
 export enum EI18nScope {
-  FOR_ROOT = 'forRoot',
-  FOR_CHILD = 'forChild'
+	FOR_ROOT = 'forRoot',
+	FOR_CHILD = 'forChild'
 }
 
 // Tokens

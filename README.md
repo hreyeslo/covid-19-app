@@ -1,10 +1,6 @@
-# Dogs
+# Covid meters app
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.0.1.
-
-See [here](./docs/app.structure.md) for App structure.
-
-See [here](./docs/libs.structure.md) for Libs structure.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.
 
 ## Development server
 

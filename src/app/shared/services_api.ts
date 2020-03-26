@@ -1,3 +1,2 @@
-// Shared breads
-export * from './services/breeds/shared-breeds-api.module';
-export { AbstractSharedBreedsService as SharedBreedsService } from './services/breeds/abstract-shared-breeds.service';
+export { AbstractUtilsService as UtilsService } from './services/utils/abstract-utils.service';
+export * from './services/utils/utils-api.module';

@@ -1,6 +1,6 @@
 import { getTitle, changeLang, selectBreed, imageList } from '../support/app.po';
 
-describe('dogs', () => {
+describe('covid', () => {
   beforeEach(() => {
     cy.visit('/');
     changeLang('es');
@@ -13,12 +13,12 @@ describe('dogs', () => {
 
   describe('should change language', () => {
     it('spanish', () => {
-      getTitle().contains('Buscador de perros');
+      getTitle().contains('Covid meters');
     });
 
     it('english', () => {
       changeLang('en');
-      getTitle().contains('Dogs finder');
+      getTitle().contains('Covid meters');
     });
   });
 

@@ -6,7 +6,7 @@
 	},
 	"newProjectRoot": "projects",
 	"projects": {
-		"dogs": {
+		"covid": {
 			"projectType": "application",
 			"schematics": {
 				"@schematics/angular:component": {
@@ -15,12 +15,12 @@
 			},
 			"root": "",
 			"sourceRoot": "src",
-			"prefix": "dogs",
+			"prefix": "covid",
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"outputPath": "dist/dogs",
+						"outputPath": "dist/covid",
 						"index": "src/index.html",
 						"main": "src/main.ts",
 						"polyfills": "src/polyfills.ts",
@@ -34,10 +34,10 @@
 								"glob": "**/*",
 								"input": "src/environments/configs",
 								"output": "/configs/"
-							}
+							},
+							"src/manifest.webmanifest"
 						],
 						"styles": [
-							"node_modules/@nebular/theme/styles/prebuilt/default.css",
 							"src/styles.scss"
 						],
 						"scripts": []
@@ -69,25 +69,27 @@
 									"maximumWarning": "6kb",
 									"maximumError": "10kb"
 								}
-							]
+							],
+							"serviceWorker": true,
+							"ngswConfigPath": "ngsw-config.json"
 						}
 					}
 				},
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"options": {
-						"browserTarget": "dogs:build"
+						"browserTarget": "covid:build"
 					},
 					"configurations": {
 						"production": {
-							"browserTarget": "dogs:build:production"
+							"browserTarget": "covid:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "dogs:build"
+						"browserTarget": "covid:build"
 					}
 				},
 				"test": {
@@ -105,10 +107,10 @@
 								"glob": "**/*",
 								"input": "src/environments/configs",
 								"output": "/configs/"
-							}
+							},
+							"src/manifest.webmanifest"
 						],
 						"styles": [
-							"node_modules/@nebular/theme/styles/prebuilt/default.css",
 							"src/styles.scss"
 						],
 						"scripts": []
@@ -132,11 +134,11 @@
 					"options": {
 						"cypressConfig": "e2e/cypress.json",
 						"tsConfig": "e2e/tsconfig.e2e.json",
-						"devServerTarget": "dogs:serve"
+						"devServerTarget": "covid:serve"
 					},
 					"configurations": {
 						"production": {
-							"devServerTarget": "dogs:serve:production"
+							"devServerTarget": "covid:serve:production"
 						}
 					}
 				}
@@ -146,7 +148,7 @@
 			"projectType": "library",
 			"root": "projects/select",
 			"sourceRoot": "projects/select/src",
-			"prefix": "dogs",
+			"prefix": "covid",
 			"architect": {
 				"build": {
 					"builder": "@angular-devkit/build-ng-packagr:build",
@@ -223,5 +225,5 @@
 			}
 		}
 	},
-	"defaultProject": "dogs"
+	"defaultProject": "covid"
 }

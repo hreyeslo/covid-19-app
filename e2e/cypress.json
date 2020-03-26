@@ -5,7 +5,7 @@
 	"pluginsFile": "./src/plugins/index",
 	"supportFile": false,
 	"video": true,
-	"videosFolder": "../dist/cypress/dogs-e2e/videos",
-	"screenshotsFolder": "../dist/cypress/dogs-e2e/screenshots",
+	"videosFolder": "../dist/cypress/covid-e2e/videos",
+	"screenshotsFolder": "../dist/cypress/covid-e2e/screenshots",
 	"chromeWebSecurity": false
 }

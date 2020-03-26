@@ -1,14 +1,3 @@
-<nb-layout>
-    <nb-layout-header class="c-app__header">
-        <span class="c-app__header__label">{{'language' | translate}}</span>
-        <dogs-select
-            class="c-app__header__selector"
-            [items]="languages"
-            [selectedItem]="currentLanguage"
-            (selectedChange)="changeLang($event)"
-        ></dogs-select>
-    </nb-layout-header>
-    <nb-layout-column>
-        <router-outlet></router-outlet>
-    </nb-layout-column>
-</nb-layout>
+<main class="c-app">
+    <router-outlet></router-outlet>
+</main>

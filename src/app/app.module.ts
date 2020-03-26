@@ -1,26 +1,28 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { BrowserModule } from '@angular/platform-browser';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
-// Core
+
 import { CoreModule, I18nModule } from '@app/core';
-// UI
-import { SelectModule } from '@ui/select';
-// Module parts
+
+import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    CoreModule,
-    I18nModule.forRoot('app'),
-    SelectModule
-  ],
-  bootstrap: [AppComponent]
+	declarations: [
+		AppComponent
+	],
+	imports: [
+		BrowserModule,
+		AppRoutingModule,
+		BrowserAnimationsModule,
+		FlexLayoutModule,
+		CoreModule,
+		I18nModule.forRoot('app'),
+		ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule {}

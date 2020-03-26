@@ -4,7 +4,7 @@ import { IAppStore } from '@shared/models';
 import { featureStoreName, ICoreStore } from './core.state';
 
 export interface ICoreAppStore extends IAppStore {
-  [featureStoreName]: ICoreStore;
+	[featureStoreName]: ICoreStore;
 }
 
 export const selectCoreStore = (state: ICoreAppStore) => state[featureStoreName];
