@@ -1,5 +1,4 @@
-import { NbLayoutModule, NbButtonModule, NbIconModule } from '@nebular/theme';
-import { NbEvaIconsModule } from '@nebular/eva-icons';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -25,10 +24,7 @@ import { dashboardReducer } from './store/dashboard.reducer';
 		StoreModule.forFeature(featureStoreName, dashboardReducer),
 		I18nModule.forChild('dashboard'),
 		DashboardServiceApiModule,
-		NbLayoutModule,
-		NbButtonModule,
-		NbEvaIconsModule,
-		NbIconModule
+		FlexLayoutModule
 	]
 })
 export class DashboardModule {}

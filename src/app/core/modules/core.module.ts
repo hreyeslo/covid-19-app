@@ -1,5 +1,4 @@
 import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { NbThemeModule, NbLayoutModule } from '@nebular/theme';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { RequestIdleModule } from 'ngx-request-idle';
@@ -16,8 +15,6 @@ import { ConfigManager } from '../config/config';
 	imports: [
 		HttpClientModule,
 		RequestIdleModule.forRoot(),
-		NbThemeModule.forRoot({name: 'default'}),
-		NbLayoutModule,
 		EffectsModule.forRoot([CoreEffects]),
 		StoreModule.forRoot({
 			Core: coreReducer
@@ -52,8 +49,6 @@ import { ConfigManager } from '../config/config';
 	],
 	exports: [
 		RequestIdleModule,
-		NbThemeModule,
-		NbLayoutModule,
 		EffectsModule,
 		StoreModule,
 		StoreDevtoolsModule
