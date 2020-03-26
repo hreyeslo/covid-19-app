@@ -4,8 +4,14 @@ import { Observable } from 'rxjs';
 
 import { IAppConfig, ConfigManager, APP_CONFIG } from '@app/core';
 
+import {
+	IGlobalCases,
+	CountryCases,
+	ICountryCases,
+	HistoricalCases,
+	IHistoricalCases
+} from '../../models/shared.model';
 import { AbstractUtilsService } from './abstract-utils.service';
-import { IGlobalCases } from '../../models/shared.model';
 
 @Injectable()
 export class UtilsService implements AbstractUtilsService {
@@ -20,9 +26,34 @@ export class UtilsService implements AbstractUtilsService {
 		return this._injector.get(HttpClient);
 	}
 
+	// Global
+
 	getGlobalCases(): Observable<IGlobalCases> {
-		const url = `${this._config?.api?.host}/all`;
-		return this._httpClient.get<IGlobalCases>(url, {responseType: 'json'});
+		return this._makeRequest<IGlobalCases>('all');
+	}
+
+	getGlobalHistoricalCases(): Observable<HistoricalCases> {
+		return this._makeRequest<HistoricalCases>('v2/historical');
+	}
+
+	// Countries
+
+	getAllCountriesCases(): Observable<CountryCases> {
+		return this._makeRequest<CountryCases>('countries?sort=cases');
+	}
+
+	getCountryCases(country: string): Observable<ICountryCases> {
+		return this._makeRequest<ICountryCases>(`countries/${country}?strict=true`);
+	}
+
+	getCountryHistoricalCases(country: string): Observable<IHistoricalCases> {
+		return this._makeRequest<IHistoricalCases>(`v2/historical/${country}`);
+	}
+
+	// Private
+
+	_makeRequest<T>(path: string): Observable<T> {
+		return this._httpClient.get<T>(`${this._config?.api?.host}/${path}`, {responseType: 'json'});
 	}
 
 }

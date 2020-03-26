@@ -8,6 +8,19 @@ const routes: Routes = [
 		loadChildren: () => import('./pages/dashboard/dashboard.module').then(module => module.DashboardModule)
 	},
 	{
+		path: 'countries',
+		children: [
+			{
+				path: '',
+				loadChildren: () => import('./pages/countries/countries.module').then(module => module.CountriesModule)
+			},
+			{
+				path: ':country',
+				loadChildren: () => import('./pages/details/details.module').then(module => module.DetailsModule)
+			}
+		]
+	},
+	{
 		path: '**',
 		redirectTo: '/',
 		pathMatch: 'full'

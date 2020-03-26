@@ -1,12 +1,12 @@
 import { createSelector } from '@ngrx/store';
 import { IAppStore } from '@shared/models';
 
-import { featureStoreName, IDashboardStore } from './dashboard.state';
+import { featureStoreName, ICountriesStore } from './countries.state';
 
 export interface IFeatureAppStore extends IAppStore {
-	[featureStoreName]: IDashboardStore;
+	[featureStoreName]: ICountriesStore;
 }
 
 export const selectDetailsStore = (state: IFeatureAppStore) => state[featureStoreName];
 
-export const selectDashboard = createSelector(selectDetailsStore, (state: IDashboardStore): IDashboardStore => state);
+export const selectCountries = createSelector(selectDetailsStore, (state: ICountriesStore): ICountriesStore => state);
