@@ -7,7 +7,6 @@ import { StoreModule } from '@ngrx/store';
 
 import { IAppEnv, IAppConfig, APP_ENVIRONMENT, APP_CONFIG } from '../models/core.model';
 import { environment } from '../../../environments/environment';
-import { CoreEffects } from '../store/core.effects';
 import { coreReducer } from '../store/core.reducer';
 import { ConfigManager } from '../config/config';
 
@@ -15,7 +14,7 @@ import { ConfigManager } from '../config/config';
 	imports: [
 		HttpClientModule,
 		RequestIdleModule.forRoot(),
-		EffectsModule.forRoot([CoreEffects]),
+		EffectsModule.forRoot([]),
 		StoreModule.forRoot({
 			Core: coreReducer
 		}, {

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 
 import { IAppConfig, ConfigManager, APP_CONFIG } from '@app/core';
 
+import { AbstractUtilsService } from './abstract-utils.service';
 import {
 	IGlobalCases,
 	CountryCases,
@@ -11,7 +12,6 @@ import {
 	HistoricalCases,
 	IHistoricalCases
 } from '../../models/shared.model';
-import { AbstractUtilsService } from './abstract-utils.service';
 
 @Injectable()
 export class UtilsService implements AbstractUtilsService {

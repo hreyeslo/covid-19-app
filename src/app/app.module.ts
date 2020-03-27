@@ -5,6 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { NgModule } from '@angular/core';
 
 import { CoreModule, I18nModule } from '@app/core';
+import { SharedModule } from '@shared/module';
 
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,7 +22,8 @@ import { AppComponent } from './app.component';
 		FlexLayoutModule,
 		CoreModule,
 		I18nModule.forRoot('app'),
-		ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
+		ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+		SharedModule
 	],
 	bootstrap: [AppComponent]
 })

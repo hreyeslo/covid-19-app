@@ -1,7 +1,9 @@
-import { TranslateService } from '@ngx-translate/core';
 import { APP_CONFIG, ConfigManager, setLang } from '@app/core';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { Store } from '@ngrx/store';
+
+import { getGlobalCases, getHistoricalCases, getCountryCases } from '@shared/store';
 
 import { environment } from '../environments/environment';
 
@@ -10,7 +12,7 @@ import { environment } from '../environments/environment';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
 
 	languages: string[] = [];
 	currentLanguage: string;
@@ -19,12 +21,15 @@ export class AppComponent {
 		@Inject(APP_CONFIG) private _configManager: ConfigManager,
 		private _translateService: TranslateService,
 		private _store: Store
-	) {
+	) {}
+
+	ngOnInit() {
 		this._setInitialLanguage();
+		this._initGlobalPooling();
 	}
 
 	changeLang(lang: string): void {
-		this._store.dispatch(setLang(lang));
+		this._store.dispatch(setLang({lang}));
 	}
 
 	_setInitialLanguage(): void {
@@ -35,5 +40,11 @@ export class AppComponent {
 		this.currentLanguage = this.languages.indexOf(browserLang) > -1 ? browserLang : defaultLang;
 		this._translateService.setDefaultLang(this.currentLanguage);
 		this.changeLang(this.currentLanguage);
+	}
+
+	_initGlobalPooling(): void {
+		this._store.dispatch(getGlobalCases());
+		this._store.dispatch(getHistoricalCases());
+		this._store.dispatch(getCountryCases());
 	}
 }

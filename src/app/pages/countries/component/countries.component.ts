@@ -1,7 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+
+import { selectGlobalCases } from '@shared/store';
+import { IGlobalCases } from '@shared/models';
 
 import { AbstractCountriesService } from '../service/abstract-countries.service';
 
@@ -14,7 +17,7 @@ export class CountriesComponent implements OnInit, OnDestroy {
 
 	private readonly _subscriptions: Subscription[] = [];
 
-	data$: Observable<any>;
+	data$: Observable<IGlobalCases>;
 
 	constructor(
 		private _dashboardService: AbstractCountriesService,
@@ -24,10 +27,9 @@ export class CountriesComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this._loadLiterals();
-		this.data$ = this._dashboardService.getGlobalCases();
+		this.data$ = this._store.pipe(select(selectGlobalCases));
 	}
 
-	// Private
 	_loadLiterals() {
 		// const literalsSubscription = this._tranlsateService.onLangChange
 		// 	.pipe(switchMap(() => forkJoin([
