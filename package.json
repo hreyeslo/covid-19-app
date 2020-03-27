@@ -59,6 +59,7 @@
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "modern-css-reset": "^1.1.0",
     "ng-packagr": "^9.1.0",
     "ts-node": "~8.3.0",
     "tslint": "~5.18.0",

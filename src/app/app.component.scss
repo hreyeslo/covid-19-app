@@ -49,12 +49,15 @@
 					padding: rem(20px 10px);
 					text-align: center;
 					border-bottom: rem(1px) solid map_get($mat-blue-gray, 600);
-					margin-bottom: rem(20px);
 					cursor: default;
 					user-select: none;
 				}
 
 				&__menu {
+					height: calc(100% - 66px);
+					padding-top: rem(20px);
+					overflow-x: hidden;
+					overflow-y: auto;
 
 					> ul {
 						list-style: none;
@@ -103,10 +106,11 @@
 				router-outlet + * {
 					position: relative;
 					display: block;
-					padding: 1.5rem;
-					overflow: auto;
-					width: calc(100% - 48px);
-					height: calc(100% - 48px);
+					padding: rem(24px);
+					overflow-y: auto;
+					overflow-x: hidden;
+					width: 100%;
+					height: 100%;
 				}
 			}
 		}
