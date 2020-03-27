@@ -96,13 +96,15 @@
 			&__main {
 				width: 100%;
 				height: 100%;
-				overflow-x: hidden;
-				overflow-y: auto;
+				overflow: hidden;
+				position: relative;
+				display: block;
 
 				router-outlet + * {
 					position: relative;
 					display: block;
-					padding: rem(24px);
+					padding: 1.5rem;
+					overflow: auto;
 					width: calc(100% - 48px);
 					height: calc(100% - 48px);
 				}
