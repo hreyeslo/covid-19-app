@@ -7,7 +7,7 @@
 			"forRoot": "/i18n/${lang}/",
 			"forChild": "/i18n/${lang}/pages/"
 		},
-		"default": "en",
+		"default": "es",
 		"langs": [
 			"en",
 			"es"

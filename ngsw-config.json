@@ -50,6 +50,17 @@
 				"maxAge": "24h",
 				"strategy": "performance"
 			}
+		},
+		{
+			"name": "api",
+			"urls": [
+				"https://corona.lmao.ninja/*"
+			],
+			"cacheConfig": {
+				"maxSize": 100,
+				"maxAge": "5m",
+				"strategy": "freshness"
+			}
 		}
 	]
 }
