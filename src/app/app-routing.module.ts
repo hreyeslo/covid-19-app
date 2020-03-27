@@ -5,6 +5,11 @@ import { NgModule } from '@angular/core';
 const routes: Routes = [
 	{
 		path: '',
+		pathMatch: 'full',
+		redirectTo: 'world'
+	},
+	{
+		path: 'world',
 		loadChildren: () => import('./pages/dashboard/dashboard.module').then(module => module.DashboardModule)
 	},
 	{
@@ -22,7 +27,7 @@ const routes: Routes = [
 	},
 	{
 		path: '**',
-		redirectTo: '/',
+		redirectTo: 'world',
 		pathMatch: 'full'
 	}
 ];

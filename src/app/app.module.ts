@@ -1,7 +1,11 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
 import { NgModule } from '@angular/core';
 
 import { CoreModule, I18nModule } from '@app/core';
@@ -23,7 +27,11 @@ import { AppComponent } from './app.component';
 		CoreModule,
 		I18nModule.forRoot('app'),
 		ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
-		SharedModule
+		SharedModule,
+		MatSidenavModule,
+		MatToolbarModule,
+		MatIconModule,
+		MatButtonModule
 	],
 	bootstrap: [AppComponent]
 })

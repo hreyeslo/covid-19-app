@@ -1,3 +1,36 @@
-<main class="c-app">
-    <router-outlet></router-outlet>
-</main>
+<div class="c-app" [ngClass]="{'c-app--mobile': currentLayout?.type === 'mobile'}">
+
+    <mat-toolbar class="c-app__toolbar" color="primary">
+        <mat-toolbar-row>
+            <button class="c-app__toolbar__button" mat-icon-button aria-label="Menu icon" (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="c-app__toolbar__title">Covid-19 Meters</span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-drawer-container class="c-app__container" autosize [hasBackdrop]="sidenavHasBackdrop">
+        <mat-drawer #sidenav class="c-app__container__sidenav" [mode]="sidenavMode">
+            <span class="c-app__container__sidenav__title">Menu</span>
+            <nav class="c-app__container__sidenav__menu">
+                <ul>
+                    <li>
+                        <button mat-flat-button [routerLink]="['world']" routerLinkActive="active">Global</button>
+                    </li>
+                    <li>
+                        <button mat-flat-button [routerLink]="['countries']" routerLinkActive="active">Countries</button>
+                    </li>
+                    <li>
+                        <button mat-flat-button [routerLink]="['countries', 'spain']" routerLinkActive="active">Details</button>
+                    </li>
+                </ul>
+            </nav>
+        </mat-drawer>
+        <main class="c-app__container__main">
+            <router-outlet></router-outlet>
+        </main>
+    </mat-drawer-container>
+
+</div>
+
+

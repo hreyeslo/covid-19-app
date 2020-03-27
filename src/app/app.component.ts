@@ -1,9 +1,13 @@
+import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { APP_CONFIG, ConfigManager, setLang } from '@app/core';
-import { Component, Inject, OnInit } from '@angular/core';
+import { MatDrawerMode } from '@angular/material/sidenav';
 import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { getGlobalCases, getHistoricalCases, getCountryCases } from '@shared/store';
+import { ILayout, ELayoutName } from '@shared/models';
+import { UtilsService } from '@shared/services';
 
 import { environment } from '../environments/environment';
 
@@ -12,24 +16,51 @@ import { environment } from '../environments/environment';
 	templateUrl: './app.component.html',
 	styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
+
+	private readonly _subscriptions: Subscription[] = [];
 
 	languages: string[] = [];
 	currentLanguage: string;
+	currentLayout: ILayout;
+
+	sidenavMode: MatDrawerMode = 'over';
+	sidenavHasBackdrop = true;
 
 	constructor(
 		@Inject(APP_CONFIG) private _configManager: ConfigManager,
 		private _translateService: TranslateService,
-		private _store: Store
+		private _store: Store,
+		private _utilsService: UtilsService
 	) {}
 
 	ngOnInit() {
 		this._setInitialLanguage();
+		this._initLayoutObserver();
 		this._initGlobalPooling();
+	}
+
+	ngOnDestroy() {
+		this._subscriptions.forEach(subscription => {
+			if (subscription.unsubscribe) {
+				subscription.unsubscribe();
+			}
+		});
 	}
 
 	changeLang(lang: string): void {
 		this._store.dispatch(setLang({lang}));
+	}
+
+	_initLayoutObserver(): void {
+		this._subscriptions.push(
+			this._utilsService.getLayoutObserver().subscribe((layout: ILayout) => {
+				const isMobile = layout.type === ELayoutName.mobile || layout.type === ELayoutName.tablet;
+				this.currentLayout = layout;
+				this.sidenavMode = isMobile ? 'over' : 'side';
+				this.sidenavHasBackdrop = isMobile;
+			})
+		);
 	}
 
 	_setInitialLanguage(): void {

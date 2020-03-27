@@ -50,3 +50,23 @@ export interface IHistoricalCases {
 }
 
 export type HistoricalCases = IHistoricalCases[];
+
+export enum ELayoutName {
+	mobile = 'mobile',
+	tablet = 'tablet',
+	laptop = 'laptop',
+	desktop = 'desktop'
+}
+
+export enum ELayoutAlias {
+	xs = 'xs',
+	sm = 'sm',
+	md = 'md',
+	lg = 'lg',
+	xl = 'xl'
+}
+
+export interface ILayout {
+	type: ELayoutName;
+	alias: ELayoutAlias;
+}
