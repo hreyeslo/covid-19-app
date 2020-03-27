@@ -25,21 +25,15 @@ export const initialState: ISharedStore = {
 
 const _sharedReducer = createReducer(initialState,
 	on(getGlobalCasesSuccess, (state, {global}) => ({...state, cases: {...state?.cases, global}})),
-	on(getGlobalCasesError, (state) => ({
-		...state, cases: {...state?.cases, global: initialState.cases.global}
-	})),
+	on(getGlobalCasesError, (state) => state),
 	on(getHistoricalCasesSuccess, (state, {historical}) => ({
 		...state, cases: {...state?.cases, historical}
 	})),
-	on(getHistoricalCasesError, (state) => ({
-		...state, cases: {...state?.cases, historical: initialState.cases.historical}
-	})),
+	on(getHistoricalCasesError, (state) => state),
 	on(getCountriesCasesSuccess, (state, {countries}) => ({
 		...state, cases: {...state?.cases, countries}
 	})),
-	on(getCountriesCasesError, (state) => ({
-		...state, cases: {...state?.cases, countries: initialState.cases.countries}
-	}))
+	on(getCountriesCasesError, (state) => state)
 );
 
 export function sharedReducer(state: ISharedStore | undefined, action: Action) {
