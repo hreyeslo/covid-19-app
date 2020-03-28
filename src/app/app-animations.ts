@@ -1,12 +1,12 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
-import { fromRightEasing, fromLeftEasing } from 'ngx-router-animations';
+import { moveFromRight, moveFromLeft } from 'ngx-router-animations';
 
 export const AppRoutingAnimations =
 	trigger('routeAnimations', [
-		transition('dashboard => countries', useAnimation(fromRightEasing)),
-		transition('dashboard => details', useAnimation(fromRightEasing)),
-		transition('countries => details', useAnimation(fromRightEasing)),
-		transition('countries => dashboard', useAnimation(fromLeftEasing)),
-		transition('details => countries', useAnimation(fromLeftEasing)),
-		transition('details => dashboard', useAnimation(fromLeftEasing))
+		transition('dashboard => countries', useAnimation(moveFromRight)),
+		transition('dashboard => details', useAnimation(moveFromRight)),
+		transition('countries => details', useAnimation(moveFromRight)),
+		transition('countries => dashboard', useAnimation(moveFromLeft)),
+		transition('details => countries', useAnimation(moveFromLeft)),
+		transition('details => dashboard', useAnimation(moveFromLeft))
 	]);
