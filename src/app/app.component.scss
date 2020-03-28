@@ -3,18 +3,17 @@
 
 :host ::ng-deep {
 	.c-app {
-		position: absolute;
+		position: fixed;
 		top: 0;
 		right: 0;
 		bottom: 0;
 		left: 0;
 		width: 100%;
-		height: calc(100% - 64px);
-		margin-top: rem(64px);
+		height: 100%;
+		padding-top: rem(64px);
 
 		&--mobile {
-			height: calc(100% - 56px);
-			margin-top: rem(56px);
+			padding-top: rem(56px);
 		}
 
 		&__toolbar {
