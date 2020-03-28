@@ -23,7 +23,7 @@ import { detailsReducer } from './store/details.reducer';
 		DetailsRoutingModule,
 		EffectsModule.forFeature([DetailsEffects]),
 		StoreModule.forFeature(featureStoreName, detailsReducer),
-		I18nModule.forChild('dashboard'),
+		I18nModule.forChild('details'),
 		DetailsServiceApiModule,
 		FlexLayoutModule,
 		MatIconModule

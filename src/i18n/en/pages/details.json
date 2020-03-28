@@ -1,7 +1,7 @@
 {
 	"title": "Global Records",
 	"cards": {
-		"cases": "Total cases",
+		"cases": "Totales cases",
 		"active": "Active cases",
 		"deaths": "Deaths",
 		"recovered": "Recovered"

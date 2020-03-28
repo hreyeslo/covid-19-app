@@ -5,24 +5,29 @@
         <span class="c-dashboard__header__title">{{'title' | translate}}</span>
     </div>
 
-    <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData">
-        <div class="c-dashboard__container__cards" fxLayout="row wrap">
+    <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner">
+        <div class="c-dashboard__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
             <mat-card
                 class="c-dashboard__container__cards__card"
                 *ngFor="let card of viewData?.cards; trackBy: trackByIndex"
                 fxFlex.xs="100"
-                [fxFlex.sm]="'calc(50% - 20px)'"
-                [fxFlex]="'calc(25% - 40px)'"
+                [fxFlex.sm]="'0 1 calc(50% - 20px)'"
+                [fxFlex]="'0 1 calc(25% - 40px)'"
             >
                 <mat-card-header class="c-dashboard__container__cards__card__header">
                     <mat-card-title class="c-dashboard__container__cards__card__header__title">{{ 'cards.' + card?.title | translate}}</mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="c-dashboard__container__cards__card__content">
-                    <span [countUp]="card?.value" [options]="countUpOptions" [reanimateOnClick]="false"></span>
+                    <span class="c-dashboard__container__cards__card__content__value" [countUp]="card?.value" [options]="countUpOptions" [reanimateOnClick]="false"></span>
                 </mat-card-content>
             </mat-card>
         </div>
     </div>
 
-
 </div>
+
+<ng-template #spinner>
+    <div class="spinner">
+        <mat-progress-spinner class="example-margin" color="accent" mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>

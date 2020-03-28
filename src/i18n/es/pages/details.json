@@ -1,0 +1,9 @@
+{
+	"title": "Registros Mundiales",
+	"cards": {
+		"cases": "Casos totales",
+		"active": "Casos activos",
+		"deaths": "Muertes",
+		"recovered": "Recuperados"
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"title": "Records by Country - Top 20",
+	"cards": {
+		"cases": "Total:",
+		"active": "Active:",
+		"deaths": "Deaths:",
+		"recovered": "Recovered:"
+	},
+	"filter": {
+		"label": "Find...",
+		"placeholder": "Type your country"
+	}
+}

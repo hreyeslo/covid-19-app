@@ -1,7 +1,13 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
+import { FormsModule } from '@angular/forms';
+import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
@@ -23,10 +29,16 @@ import { countriesReducer } from './store/countries.reducer';
 		CountriesRoutingModule,
 		EffectsModule.forFeature([CountriesEffects]),
 		StoreModule.forFeature(featureStoreName, countriesReducer),
-		I18nModule.forChild('dashboard'),
+		I18nModule.forChild('countries'),
 		CountriesServiceApiModule,
 		FlexLayoutModule,
-		MatIconModule
+		FormsModule,
+		MatIconModule,
+		MatCardModule,
+		CountUpModule,
+		MatInputModule,
+		MatFormFieldModule,
+		MatProgressSpinnerModule
 	]
 })
 export class CountriesModule {}

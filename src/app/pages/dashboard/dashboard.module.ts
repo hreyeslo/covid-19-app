@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -30,7 +31,8 @@ import { dashboardReducer } from './store/dashboard.reducer';
 		FlexLayoutModule,
 		MatCardModule,
 		MatIconModule,
-		CountUpModule
+		CountUpModule,
+		MatProgressSpinnerModule
 	]
 })
 export class DashboardModule {}

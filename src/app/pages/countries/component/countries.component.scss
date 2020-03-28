@@ -5,7 +5,98 @@
 	@include page-container;
 }
 
-.c-countries {
+:host ::ng-deep {
+	.c-countries {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 auto;
 
-	@include page-header;
+		@include page-header;
+
+		&__filter {
+			margin: rem(20px);
+		}
+
+		&__container {
+			display: flex;
+			flex: 1 1 auto;
+
+			@include cards;
+
+			&__cards {
+
+				&__card {
+					cursor: pointer;
+
+					&__header {
+						position: relative;
+						padding-top: 0;
+						font-weight: 500;
+
+						.mat-card-header-text {
+							width: 100%;
+							text-align: center;
+							margin: 0;
+						}
+					}
+
+					&__position {
+						position: absolute;
+						left: rem(20px);
+						bottom: rem(20px);
+						font-size: rem(16px);
+						font-weight: 300;
+						color: $fontTitleColor;
+					}
+
+					&__name {
+						font-size: rem(16px);
+					}
+
+					&__content {
+						margin-top: rem(10px);
+
+						&__flag {
+							width: rem(28%);
+							max-height: rem(50px);
+							@include mat-elevation(1);
+							border-radius: rem(4px);
+							margin-top: rem(10px 0 0 0);
+
+							@include mobile{
+								width: rem(25%);
+								max-height: rem(45px);
+							}
+						}
+
+						&__values {
+							padding-left: rem(30px);
+							font-size: rem(16px);
+							font-weight: 500;
+							color: $fontColor;
+
+							@include mobile{
+								font-size: rem(14px);
+								padding-left: rem(15px);
+							}
+
+							div {
+								line-height: rem(35px);
+							}
+
+							&__number {
+								font-size: rem(27px);
+								padding-left: rem(10px);
+								font-weight: 300;
+
+								@include mobile{
+									font-size: rem(20px);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }

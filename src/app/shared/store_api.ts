@@ -6,5 +6,6 @@ export {
 	selectIsTabletLayout,
 	selectIsMobileTabletLayout,
 	selectIsDesktopLayout,
-	selectGlobalCases
+	selectGlobalCases,
+	selectGlobalCountries
 } from './store/shared.selectors';

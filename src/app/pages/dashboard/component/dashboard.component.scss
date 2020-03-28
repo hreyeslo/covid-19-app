@@ -5,54 +5,20 @@
 	@include page-container;
 }
 
-.c-dashboard {
+:host ::ng-deep {
+	.c-dashboard {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 auto;
 
-	@include page-header;
+		@include page-header;
 
-	&__container {
+		&__container {
+			display: flex;
+			flex: 1 1 auto;
 
-		&__cards {
-			cursor: default;
-			user-select: none;
-
-			&__card {
-				margin: rem(20px 0);
-				color: $fontColor;
-				@include box-shadow;
-
-				@include tablet {
-					margin: rem(20px 10px);
-				}
-
-				@include desktop {
-					margin: rem(20px);
-				}
-
-				&__header {
-					display: flex;
-					flex-direction: row;
-					justify-content: center;
-					padding-top: rem(20px);
-
-					&__title {
-						font-weight: 300;
-						font-size: rem(30px);
-						color: $fontTitleColor;
-					}
-				}
-
-				&__content {
-
-					> span {
-						display: block;
-						width: 100%;
-						text-align: center;
-						font-size: rem(50px);
-						line-height: rem(100px);
-						font-weight: 300;
-					}
-				}
-			}
+			@include cards;
 		}
 	}
 }
+

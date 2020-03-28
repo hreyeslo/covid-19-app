@@ -40,3 +40,50 @@
 		}
 	}
 }
+
+@mixin cards {
+	&__cards {
+		cursor: default;
+		user-select: none;
+		width: 100%;
+
+		&__card {
+			margin: rem(10px 0);
+			color: $fontColor;
+			@include box-shadow;
+
+			@include tablet {
+				margin: rem(10px);
+			}
+
+			@include desktop {
+				margin: rem(20px);
+			}
+
+			&__header {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				padding-top: rem(20px);
+
+				&__title {
+					font-weight: 400;
+					font-size: rem(30px);
+					color: $fontTitleColor;
+				}
+			}
+
+			&__content {
+
+				&__value {
+					display: block;
+					width: 100%;
+					text-align: center;
+					font-size: rem(50px);
+					line-height: rem(100px);
+					font-weight: 300;
+				}
+			}
+		}
+	}
+}
