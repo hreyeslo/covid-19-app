@@ -13,16 +13,20 @@ import {
 	ICountryCases,
 	HistoricalCases,
 	IHistoricalCases,
-	ILayout,
 	ELayoutName,
-	ELayoutAlias
+	ELayoutAlias,
+	ILayout
 } from '../../models/shared.model';
 import { filter, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { setLayout } from '../../store/shared.actions';
 
 @Injectable()
 export class UtilsService implements AbstractUtilsService {
 
-	constructor(private _injector: Injector) {}
+	constructor(private _injector: Injector) {
+		this._initLayoutObserver();
+	}
 
 	get _config(): IAppConfig {
 		return this._injector.get<ConfigManager>(APP_CONFIG).config;
@@ -34,6 +38,10 @@ export class UtilsService implements AbstractUtilsService {
 
 	get _mediaObserver(): MediaObserver {
 		return this._injector.get(MediaObserver);
+	}
+
+	get _store(): Store {
+		return this._injector.get(Store);
 	}
 
 	// Global
@@ -60,8 +68,14 @@ export class UtilsService implements AbstractUtilsService {
 		return this._makeRequest<IHistoricalCases>(`v2/historical/${country}`);
 	}
 
-	getLayoutObserver(): Observable<ILayout> {
-		return this._mediaObserver.asObservable().pipe(
+	// Private
+
+	_makeRequest<T>(path: string): Observable<T> {
+		return this._httpClient.get<T>(`${this._config?.api?.host}/${path}`, {responseType: 'json'});
+	}
+
+	_initLayoutObserver(): void {
+		this._mediaObserver.asObservable().pipe(
 			filter((changes: MediaChange[]) => changes.length > 0),
 			map((changes: MediaChange[]) => changes[0]),
 			distinctUntilChanged((prev, curr) => isEqual(prev, curr)),
@@ -82,20 +96,14 @@ export class UtilsService implements AbstractUtilsService {
 						type = ELayoutName.desktop;
 						break;
 					default:
-						type = ELayoutName.desktop;
+						type = ELayoutName.mobile;
 				}
 				return of({
 					type,
-					alias: changes.mqAlias as ELayoutAlias || ELayoutAlias.lg
+					alias: changes.mqAlias as ELayoutAlias || ELayoutAlias.xs
 				});
 			})
-		);
-	}
-
-	// Private
-
-	_makeRequest<T>(path: string): Observable<T> {
-		return this._httpClient.get<T>(`${this._config?.api?.host}/${path}`, {responseType: 'json'});
+		).subscribe((layout: ILayout) => this._store.dispatch(setLayout({layout})));
 	}
 
 }

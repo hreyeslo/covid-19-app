@@ -1,34 +1,34 @@
-<div class="c-app" [ngClass]="{'c-app--mobile': currentLayout?.type === 'mobile'}">
+<div class="c-app">
 
     <mat-toolbar class="c-app__toolbar" color="primary">
         <mat-toolbar-row>
-            <button class="c-app__toolbar__button" mat-icon-button aria-label="Menu icon" (click)="sidenav?.toggle()" *ngIf="!isMobile">
+            <button class="c-app__toolbar__button" mat-icon-button aria-label="Menu icon" (click)="sidenav?.toggle()" *ngIf="isDesktopLayout$ | async">
                 <mat-icon>menu</mat-icon>
             </button>
-            <span class="c-app__toolbar__title" [ngClass]="{'c-app__toolbar__title__mobile': isMobile}">Covid-19 Meters</span>
+            <span class="c-app__toolbar__title">Covid-19 Meters</span>
         </mat-toolbar-row>
     </mat-toolbar>
 
     <mat-drawer-container class="c-app__container" autosize [hasBackdrop]="sidenavHasBackdrop">
-        <mat-drawer #sidenav class="c-app__container__sidenav" [mode]="sidenavMode" [opened]="!isMobile">
+        <mat-drawer #sidenav class="c-app__container__sidenav" [mode]="sidenavMode" [opened]="isDesktopLayout$ | async" [fxHide]="isMobileLayout$ | async">
             <span class="c-app__container__sidenav__title">Menu</span>
             <nav class="c-app__container__sidenav__menu">
                 <ul>
                     <li>
-                        <button mat-flat-button [routerLink]="['dashboard']" routerLinkActive="active" (click)="isMobile ? sidenav.toggle(false): null">Global</button>
+                        <button mat-flat-button [routerLink]="['dashboard']" routerLinkActive="active">Global</button>
                     </li>
                     <li>
-                        <button mat-flat-button [routerLink]="['countries']" routerLinkActive="active" (click)="isMobile ? sidenav.toggle(false): null">Countries</button>
+                        <button mat-flat-button [routerLink]="['countries']" routerLinkActive="active">Countries</button>
                     </li>
                 </ul>
             </nav>
         </mat-drawer>
-        <main class="c-app__container__main" [@routeAnimations]="isMobile && o && o?.activatedRouteData && o?.activatedRouteData['animation']">
+        <main class="c-app__container__main" [@routeAnimations]="(isMobileLayout$ | async) && o && o?.activatedRouteData && o?.activatedRouteData['animation']">
             <router-outlet #o="outlet"></router-outlet>
         </main>
     </mat-drawer-container>
 
-    <div class="c-app__container__main__mobile-menu" *ngIf="isMobile" fxLayout="row" fxLayoutAlign="space-around center">
+    <div class="c-app__container__main__mobile-menu" *ngIf="isMobileLayout$ | async" fxLayout="row" fxLayoutAlign="space-around center">
         <button mat-icon-button aria-label="Glbal icon" class="c-app__container__main__mobile-menu__button" [routerLink]="['dashboard']" routerLinkActive="active">
             <mat-icon>language</mat-icon>
         </button>

@@ -1,5 +1,6 @@
 import { createReducer, on, Action } from '@ngrx/store';
 
+import { ELayoutName, ELayoutAlias } from '../models/shared.model';
 import { ISharedStore } from './shared.state';
 import {
 	getGlobalCasesSuccess,
@@ -7,10 +8,15 @@ import {
 	getHistoricalCasesSuccess,
 	getHistoricalCasesError,
 	getCountriesCasesSuccess,
-	getCountriesCasesError
+	getCountriesCasesError,
+	setLayout
 } from './shared.actions';
 
 export const initialState: ISharedStore = {
+	layout: {
+		type: ELayoutName.mobile,
+		alias: ELayoutAlias.xs
+	},
 	cases: {
 		global: {
 			cases: 0,
@@ -24,6 +30,7 @@ export const initialState: ISharedStore = {
 };
 
 const _sharedReducer = createReducer(initialState,
+	on(setLayout, (state, {layout}) => ({...state, layout})),
 	on(getGlobalCasesSuccess, (state, {global}) => ({...state, cases: {...state?.cases, global}})),
 	on(getGlobalCasesError, (state) => state),
 	on(getHistoricalCasesSuccess, (state, {historical}) => ({

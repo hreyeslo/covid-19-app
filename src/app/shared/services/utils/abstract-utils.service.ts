@@ -8,8 +8,7 @@ import {
 	HistoricalCases,
 	CountryCases,
 	ICountryCases,
-	IHistoricalCases,
-	ILayout
+	IHistoricalCases
 } from '../../models/shared.model';
 
 @Injectable({
@@ -27,6 +26,4 @@ export abstract class AbstractUtilsService {
 	abstract getCountryCases(country: string): Observable<ICountryCases>;
 
 	abstract getCountryHistoricalCases(country: string): Observable<IHistoricalCases>;
-
-	abstract getLayoutObserver(): Observable<ILayout>;
 }

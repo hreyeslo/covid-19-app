@@ -1,0 +1,35 @@
+$breakpoints: (
+				'mobile': screen and (max-width: 599px),
+				'tablet': screen and (min-width: 600px) and (max-width: 959px),
+				'desktop': screen and (min-width: 960px)
+) !default;
+
+
+@mixin respond-to($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media #{inspect(map-get($breakpoints, $breakpoint))} {
+			@content;
+		}
+	} @else {
+		@warn "Unfortunately, no value could be retrieved from `#{$breakpoint}`. "
+        + "Available breakpoints are: #{map-keys($breakpoints)}.";
+	}
+}
+
+@mixin desktop {
+	@include respond-to('mobile') {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@include respond-to('tablet') {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@include respond-to('desktop') {
+		@content;
+	}
+}

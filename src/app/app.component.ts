@@ -2,11 +2,17 @@ import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { APP_CONFIG, ConfigManager, setLang } from '@app/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
-import { Store } from '@ngrx/store';
+import { Subscription, Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { tap } from 'rxjs/operators';
 
-import { getGlobalCases, getHistoricalCases, getCountryCases } from '@shared/store';
-import { ILayout, ELayoutName } from '@shared/models';
+import {
+	getGlobalCases,
+	getHistoricalCases,
+	getCountryCases,
+	selectIsDesktopLayout,
+	selectIsMobileTabletLayout
+} from '@shared/store';
 import { UtilsService } from '@shared/services';
 
 import { environment } from '../environments/environment';
@@ -24,11 +30,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	languages: string[] = [];
 	currentLanguage: string;
-	currentLayout: ILayout;
 
+	isDesktopLayout$: Observable<boolean>;
+	isMobileLayout$: Observable<boolean>;
 	sidenavMode: MatDrawerMode = 'over';
 	sidenavHasBackdrop = true;
-	isMobile = true;
 
 	constructor(
 		@Inject(APP_CONFIG) private _configManager: ConfigManager,
@@ -56,12 +62,12 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	_initLayoutObserver(): void {
-		this._subscriptions.push(
-			this._utilsService.getLayoutObserver().subscribe((layout: ILayout) => {
-				this.isMobile = (layout.type === ELayoutName.mobile || layout.type === ELayoutName.tablet);
-				this.currentLayout = layout;
-				this.sidenavMode = this.isMobile ? 'over' : 'side';
-				this.sidenavHasBackdrop = this.isMobile;
+		this.isMobileLayout$ = this._store.pipe(select(selectIsMobileTabletLayout));
+		this.isDesktopLayout$ = this._store.pipe(
+			select(selectIsDesktopLayout),
+			tap((isDesktopLayout: boolean) => {
+				this.sidenavMode = isDesktopLayout ? 'side' : 'over';
+				this.sidenavHasBackdrop = !isDesktopLayout;
 			})
 		);
 	}

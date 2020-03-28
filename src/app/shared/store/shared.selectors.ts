@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { IAppStore, IGlobalCases } from '../models/shared.model';
+import { IAppStore, IGlobalCases, ILayout, ELayoutName } from '../models/shared.model';
 import { featureStoreName, ISharedStore } from './shared.state';
 
 export interface ICoreAppStore extends IAppStore {
@@ -8,6 +8,43 @@ export interface ICoreAppStore extends IAppStore {
 }
 
 export const selectCoreStore = (state: ICoreAppStore) => state[featureStoreName];
+
+export const selectLayout = createSelector(
+	selectCoreStore,
+	(state: ISharedStore): ILayout => state?.layout
+);
+
+export const selectIsMobileLayout = createSelector(
+	selectCoreStore,
+	(state: ISharedStore): boolean => {
+		const layout = state?.layout;
+		return (layout.type === ELayoutName.mobile);
+	}
+);
+
+export const selectIsTabletLayout = createSelector(
+	selectCoreStore,
+	(state: ISharedStore): boolean => {
+		const layout = state?.layout;
+		return (layout.type === ELayoutName.tablet);
+	}
+);
+
+export const selectIsMobileTabletLayout = createSelector(
+	selectCoreStore,
+	(state: ISharedStore): boolean => {
+		const layout = state?.layout;
+		return (layout.type === ELayoutName.mobile || layout.type === ELayoutName.tablet);
+	}
+);
+
+export const selectIsDesktopLayout = createSelector(
+	selectCoreStore,
+	(state: ISharedStore): boolean => {
+		const layout = state?.layout;
+		return (layout.type === ELayoutName.laptop || layout.type === ELayoutName.desktop);
+	}
+);
 
 export const selectGlobalCases = createSelector(
 	selectCoreStore,
