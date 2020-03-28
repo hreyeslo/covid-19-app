@@ -33,7 +33,7 @@
                         </button>
                     </li>
                     <li>
-                        <button mat-flat-button aria-label="Localization icon">
+                        <button mat-flat-button aria-label="Localization icon" (click)="navigateByLocation()">
                             <mat-icon>my_location</mat-icon>
                             <span>{{'menu.location' | translate}}</span>
                         </button>
@@ -53,7 +53,7 @@
         <button mat-icon-button aria-label="Countries icon" class="c-app__container__main__mobile-menu__button" [routerLink]="['countries']" routerLinkActive="active">
             <mat-icon>flag</mat-icon>
         </button>
-        <button mat-icon-button aria-label="Localization icon" class="c-app__container__main__mobile-menu__button">
+        <button mat-icon-button aria-label="Localization icon" class="c-app__container__main__mobile-menu__button" (click)="navigateByLocation()">
             <mat-icon>my_location</mat-icon>
         </button>
     </div>

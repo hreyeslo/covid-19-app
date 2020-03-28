@@ -1,8 +1,17 @@
-<section class="c-details">
+<div class="c-details">
 
-    <div class="c-details__header">
-        <mat-icon class="c-details__header__icon">my_location</mat-icon>
-        <span class="c-details__header__title">España</span>
-    </div>
+    <ng-container *ngIf="viewData$ | async; let viewData; else spinner">
+        <div class="c-details__header">
+            <img class="c-details__header__flag" [src]="viewData?.cases?.countryInfo?.flag" alt="Country flag">
+            <span class="c-details__header__title">{{viewData?.cases?.country | titlecase}}</span>
+        </div>
 
-</section>
+    </ng-container>
+
+    <ng-template #spinner>
+        <div class="spinner">
+            <mat-progress-spinner class="example-margin" color="accent" mode="indeterminate"></mat-progress-spinner>
+        </div>
+    </ng-template>
+
+</div>

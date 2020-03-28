@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
@@ -26,7 +27,8 @@ import { detailsReducer } from './store/details.reducer';
 		I18nModule.forChild('details'),
 		DetailsServiceApiModule,
 		FlexLayoutModule,
-		MatIconModule
+		MatIconModule,
+		MatProgressSpinnerModule
 	]
 })
 export class DetailsModule {}

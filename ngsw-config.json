@@ -61,6 +61,17 @@
 				"maxAge": "5m",
 				"strategy": "freshness"
 			}
+		},
+		{
+			"name": "geolocation",
+			"urls": [
+				"https://geoip-js.maxmind.com/*"
+			],
+			"cacheConfig": {
+				"maxSize": 100,
+				"maxAge": "1h",
+				"strategy": "performance"
+			}
 		}
 	]
 }

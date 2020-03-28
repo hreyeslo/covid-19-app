@@ -5,8 +5,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { SwUpdate } from '@angular/service-worker';
 import { Subscription, Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
+import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
-
 import {
 	getGlobalCases,
 	getHistoricalCases,
@@ -42,7 +42,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		private _translateService: TranslateService,
 		private _store: Store,
 		private _utilsService: UtilsService,
-		private _swUpdate: SwUpdate
+		private _swUpdate: SwUpdate,
+		private _router: Router
 	) {}
 
 	ngOnInit() {
@@ -97,5 +98,11 @@ export class AppComponent implements OnInit, OnDestroy {
 				window.location.reload();
 			});
 		}
+	}
+
+	navigateByLocation() {
+		this._utilsService.getMyCountry().subscribe((country: string) => {
+			this._router.navigate(['/', 'countries', country]);
+		});
 	}
 }

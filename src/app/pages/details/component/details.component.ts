@@ -1,12 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription, Observable } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, Subject, forkJoin } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import { selectGlobalCases } from '@shared/store';
-import { IGlobalCases } from '@shared/models';
+import { IHistoricalCases, ICountryCases } from '@shared/models';
+import { UtilsService } from '@shared/services';
 
 import { AbstractDetailsService } from '../service/abstract-details.service';
+import { IDetails } from '../models/details.model';
 
 @Component({
 	selector: 'covid-dashboard',
@@ -17,30 +19,20 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	private readonly _subscriptions: Subscription[] = [];
 
-	data$: Observable<IGlobalCases>;
+	viewData$: Subject<IDetails> = new Subject<IDetails>();
 
 	constructor(
 		private _dashboardService: AbstractDetailsService,
 		private _tranlsateService: TranslateService,
-		private _store: Store
+		private _store: Store,
+		private _route: ActivatedRoute,
+		private _utilsService: UtilsService
 	) {}
 
 	ngOnInit(): void {
-		this._loadLiterals();
-		this.data$ = this._store.pipe(select(selectGlobalCases));
-	}
-
-	_loadLiterals() {
-		// const literalsSubscription = this._tranlsateService.onLangChange
-		// 	.pipe(switchMap(() => forkJoin([
-		// 		this._tranlsateService.get('select'),
-		// 		this._tranlsateService.get('photo')
-		// 	])))
-		// 	.subscribe(([selectLiterals, photoLiterals]) => {
-		// 		this.selectLiterals$.next(selectLiterals);
-		// 		this.photoLiterals$.next(photoLiterals);
-		// 	});
-		// this._subscriptions.push(literalsSubscription);
+		this._subscriptions.push(
+			this._route.params.subscribe(params => this._getViewInfo(params?.country))
+		);
 	}
 
 	ngOnDestroy() {
@@ -48,6 +40,16 @@ export class DetailsComponent implements OnInit, OnDestroy {
 			if (subscription.unsubscribe) {
 				subscription.unsubscribe();
 			}
+		});
+	}
+
+	_getViewInfo(country: string) {
+		forkJoin([
+			this._utilsService.getCountryCases(country),
+			this._utilsService.getCountryHistoricalCases(country)
+		]).subscribe((response: [ICountryCases, IHistoricalCases]) => {
+			const [cases, historical] = response;
+			this.viewData$.next({cases, historical});
 		});
 	}
 }

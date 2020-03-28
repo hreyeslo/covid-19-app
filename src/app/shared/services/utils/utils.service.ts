@@ -1,6 +1,6 @@
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
 import { Injectable, Injector } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { isEqual } from 'lodash';
 
@@ -17,7 +17,7 @@ import {
 	ELayoutAlias,
 	ILayout
 } from '../../models/shared.model';
-import { filter, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { filter, map, distinctUntilChanged, switchMap, catchError, first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { setLayout } from '../../store/shared.actions';
 
@@ -66,6 +66,17 @@ export class UtilsService implements AbstractUtilsService {
 
 	getCountryHistoricalCases(country: string): Observable<IHistoricalCases> {
 		return this._makeRequest<IHistoricalCases>(`v2/historical/${country}`);
+	}
+
+	getMyCountry(): Observable<string> {
+		const referrer = location.protocol + '//' + location.hostname;
+		return this._httpClient.get('https://geoip-js.maxmind.com/geoip/v2.1/country/me', {
+			params: new HttpParams({fromObject: {referrer}})
+		}).pipe(
+			catchError(() => of({})),
+			switchMap((location: any) => of(location?.country?.names?.en?.toLowerCase())),
+			first()
+		);
 	}
 
 	// Private

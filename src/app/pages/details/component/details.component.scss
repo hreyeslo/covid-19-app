@@ -5,7 +5,32 @@
 	@include page-container;
 }
 
-.c-details {
+:host ::ng-deep {
+	.c-details {
+		display: flex;
+		flex-direction: column;
+		flex: 1 1 auto;
 
-	@include page-header;
+		@include page-header;
+
+		&__header {
+
+			&__flag {
+				width: 60px;
+				border-radius: 4px;
+			}
+
+			&__title {
+				font-size: 40px;
+				font-weight: 400;
+			}
+		}
+
+		&__container {
+			display: flex;
+			flex: 1 1 auto;
+
+			@include cards;
+		}
+	}
 }

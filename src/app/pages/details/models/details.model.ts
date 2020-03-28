@@ -1,3 +1,6 @@
+import { ICountryCases, IHistoricalCases } from '@shared/models';
+
 export interface IDetails {
-	[key: string]: string;
+	cases: ICountryCases;
+	historical: IHistoricalCases;
 }
