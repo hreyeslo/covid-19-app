@@ -2,6 +2,7 @@ import { Component, Inject, OnInit, OnDestroy } from '@angular/core';
 import { APP_CONFIG, ConfigManager, setLang } from '@app/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { TranslateService } from '@ngx-translate/core';
+import { SwUpdate } from '@angular/service-worker';
 import { Subscription, Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
 import { tap } from 'rxjs/operators';
@@ -40,10 +41,12 @@ export class AppComponent implements OnInit, OnDestroy {
 		@Inject(APP_CONFIG) private _configManager: ConfigManager,
 		private _translateService: TranslateService,
 		private _store: Store,
-		private _utilsService: UtilsService
+		private _utilsService: UtilsService,
+		private _swUpdate: SwUpdate
 	) {}
 
 	ngOnInit() {
+		this._swUpdateChecker();
 		this._setInitialLanguage();
 		this._initLayoutObserver();
 		this._initGlobalPooling();
@@ -86,5 +89,13 @@ export class AppComponent implements OnInit, OnDestroy {
 		this._store.dispatch(getGlobalCases());
 		this._store.dispatch(getHistoricalCases());
 		this._store.dispatch(getCountryCases());
+	}
+
+	_swUpdateChecker(): void {
+		if (this._swUpdate.isEnabled) {
+			this._swUpdate.available.subscribe(event => {
+				window.location.reload();
+			});
+		}
 	}
 }
