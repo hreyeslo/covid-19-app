@@ -69,7 +69,7 @@
 							max-height: rem(50px);
 							@include mat-elevation(1);
 							border-radius: rem(4px);
-							margin-top: rem(10px 0 0 0);
+							margin-top: rem(10px);
 
 							@include mobile{
 								width: rem(25%);
