@@ -20,7 +20,7 @@
 		&__toolbar {
 			@include mat-elevation(4);
 			position: fixed;
-			z-index: 99;
+			z-index: 9999;
 			top: 0;
 
 			&__button {
@@ -129,10 +129,10 @@
 
 				&__mobile-menu {
 					@include mat-elevation(8);
-					position: fixed;
+					position: sticky;
 					bottom: 0;
 					width: 100%;
-					z-index: 99;
+					z-index: 9999;
 					height: rem(56px);
 					background-color: map_get($mat-blue-gray, 800);
 

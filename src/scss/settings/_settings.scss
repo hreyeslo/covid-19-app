@@ -1,3 +1,17 @@
 // sassrem
 $rem-baseline: 16px;
 $rem-fallback: true;
+
+// breakpoints
+$breakpoints: (
+				'mobile': 'screen and (max-width: 599px)',
+				'tablet': 'screen and (min-width: 600px) and (max-width: 959px)',
+				'desktop': 'screen and (min-width: 960px)'
+) !default;
+
+
+// Colors:
+$globalBgColor: #edf2f6;
+$fontColor: #3d4f5f;
+$fontTitleColor: #8c8e90;
+

@@ -1,4 +1,5 @@
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -24,7 +25,8 @@ import { countriesReducer } from './store/countries.reducer';
 		StoreModule.forFeature(featureStoreName, countriesReducer),
 		I18nModule.forChild('dashboard'),
 		CountriesServiceApiModule,
-		FlexLayoutModule
+		FlexLayoutModule,
+		MatIconModule
 	]
 })
 export class CountriesModule {}

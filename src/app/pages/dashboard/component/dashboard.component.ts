@@ -1,12 +1,14 @@
+import { Subscription, Observable, combineLatest, of, Subject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Subscription, Observable } from 'rxjs';
 import { Store, select } from '@ngrx/store';
+import { switchMap } from 'rxjs/operators';
 
 import { selectGlobalCases } from '@shared/store';
 import { IGlobalCases } from '@shared/models';
 
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
+import { IDashboardViewData, IDashboardCard } from '../models/dashboard.model';
 
 @Component({
 	selector: 'covid-dashboard',
@@ -16,8 +18,15 @@ import { AbstractDashboardService } from '../service/abstract-dashboard.service'
 export class DashboardComponent implements OnInit, OnDestroy {
 
 	private readonly _subscriptions: Subscription[] = [];
+	readonly countUpOptions = {
+		separator: '.',
+		decimal: ','
+	};
 
-	data$: Observable<IGlobalCases>;
+	_globalCases$: Observable<IGlobalCases>;
+
+	viewData$: Observable<IDashboardViewData>;
+	lastUpdate$: Subject<number> = new Subject<number>();
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
@@ -26,21 +35,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this._loadLiterals();
-		this.data$ = this._store.pipe(select(selectGlobalCases));
-	}
-
-	_loadLiterals() {
-		// const literalsSubscription = this._tranlsateService.onLangChange
-		// 	.pipe(switchMap(() => forkJoin([
-		// 		this._tranlsateService.get('select'),
-		// 		this._tranlsateService.get('photo')
-		// 	])))
-		// 	.subscribe(([selectLiterals, photoLiterals]) => {
-		// 		this.selectLiterals$.next(selectLiterals);
-		// 		this.photoLiterals$.next(photoLiterals);
-		// 	});
-		// this._subscriptions.push(literalsSubscription);
+		this._globalCases$ = this._store.pipe(select(selectGlobalCases));
+		this._mapViewData();
 	}
 
 	ngOnDestroy() {
@@ -49,5 +45,42 @@ export class DashboardComponent implements OnInit, OnDestroy {
 				subscription.unsubscribe();
 			}
 		});
+	}
+
+	trackByIndex(index: number): number {
+		return index;
+	}
+
+	_mapViewData(): void {
+		this.viewData$ = combineLatest([
+			this._globalCases$
+		]).pipe(switchMap((data: [IGlobalCases]) => {
+				return of({
+					cards: this._getCards(data[0])
+				});
+			})
+		);
+	}
+
+	_getCards(data: IGlobalCases): IDashboardCard[] {
+		this.lastUpdate$.next(data?.updated);
+		return [
+			{
+				title: 'cases',
+				value: data?.cases
+			},
+			{
+				title: 'active',
+				value: data?.active
+			},
+			{
+				title: 'deaths',
+				value: data?.deaths
+			},
+			{
+				title: 'recovered',
+				value: data?.recovered
+			}
+		];
 	}
 }

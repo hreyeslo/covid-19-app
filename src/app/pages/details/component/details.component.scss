@@ -1,12 +1,11 @@
+@import "src/scss/settings";
 @import "src/scss/utilities";
 
 :host {
-	@include hostAnimation;
+	@include page-container;
 }
 
 .c-details {
 
-	&__title {
-
-	}
+	@include page-header;
 }

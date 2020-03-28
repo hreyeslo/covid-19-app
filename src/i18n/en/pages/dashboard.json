@@ -1,3 +1,9 @@
 {
-	"title": "Covid meters"
+	"title": "Global Records",
+	"cards": {
+		"cases": "Totales cases",
+		"active": "Active cases",
+		"deaths": "Deaths",
+		"recovered": "Recovered"
+	}
 }

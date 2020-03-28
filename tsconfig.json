@@ -40,7 +40,7 @@
 				"src/app/shared/shared.module"
 			],
 			"@ui/card": [
-				"src/app/shared/shared.module"
+				"projects/card/src/public-api"
 			]
 		}
 	},

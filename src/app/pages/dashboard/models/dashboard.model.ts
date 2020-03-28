@@ -1,3 +1,8 @@
-export interface IDashboard {
-	[key: string]: string;
+export interface IDashboardViewData {
+	cards: IDashboardCard[];
+}
+
+export interface IDashboardCard {
+	title: string;
+	value: number;
 }

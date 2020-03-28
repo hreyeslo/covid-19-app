@@ -1,4 +1,5 @@
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -24,7 +25,8 @@ import { detailsReducer } from './store/details.reducer';
 		StoreModule.forFeature(featureStoreName, detailsReducer),
 		I18nModule.forChild('dashboard'),
 		DetailsServiceApiModule,
-		FlexLayoutModule
+		FlexLayoutModule,
+		MatIconModule
 	]
 })
 export class DetailsModule {}
