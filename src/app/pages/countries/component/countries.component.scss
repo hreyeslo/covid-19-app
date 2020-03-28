@@ -14,7 +14,15 @@
 		@include page-header;
 
 		&__filter {
-			margin: rem(20px);
+			margin: 0;
+
+			@include tablet{
+				margin: rem(10px);
+			}
+
+			@include desktop{
+				margin: rem(20px);
+			}
 		}
 
 		&__container {
