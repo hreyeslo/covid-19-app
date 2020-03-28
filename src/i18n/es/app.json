@@ -1,3 +1,9 @@
 {
-	"language": "Idioma"
+	"title": "Covid-19 Meters",
+	"menu": {
+		"title": "Menú",
+		"global": "Mundial",
+		"countries": "Países",
+		"location": "Mi país"
+	}
 }
