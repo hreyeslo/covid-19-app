@@ -10,24 +10,21 @@
     </mat-toolbar>
 
     <mat-drawer-container class="c-app__container" autosize [hasBackdrop]="sidenavHasBackdrop">
-        <mat-drawer #sidenav class="c-app__container__sidenav" [mode]="sidenavMode">
+        <mat-drawer #sidenav class="c-app__container__sidenav" [mode]="sidenavMode" [opened]="true">
             <span class="c-app__container__sidenav__title">Menu</span>
             <nav class="c-app__container__sidenav__menu">
                 <ul>
                     <li>
-                        <button mat-flat-button [routerLink]="['world']" routerLinkActive="active">Global</button>
+                        <button mat-flat-button [routerLink]="['dashboard']" routerLinkActive="active" (click)="isMobile ? sidenav.toggle(false): null">Global</button>
                     </li>
                     <li>
-                        <button mat-flat-button [routerLink]="['countries']" routerLinkActive="active">Countries</button>
-                    </li>
-                    <li>
-                        <button mat-flat-button [routerLink]="['countries', 'spain']" routerLinkActive="active">Details</button>
+                        <button mat-flat-button [routerLink]="['countries']" routerLinkActive="active" (click)="isMobile ? sidenav.toggle(false): null">Countries</button>
                     </li>
                 </ul>
             </nav>
         </mat-drawer>
-        <main class="c-app__container__main">
-            <router-outlet></router-outlet>
+        <main class="c-app__container__main" [@routeAnimations]="isMobile && o && o?.activatedRouteData && o?.activatedRouteData['animation']">
+            <router-outlet #o="outlet"></router-outlet>
         </main>
     </mat-drawer-container>
 

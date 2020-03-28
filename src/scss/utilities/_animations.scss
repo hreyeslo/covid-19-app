@@ -1,0 +1,13 @@
+@import "~sass-rem";
+@import "~@angular/material/theming";
+
+@mixin hostAnimation {
+	display: block;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background: map_get($mat-gray, 50);
+	padding: rem(24px);
+	overflow-y: auto;
+	overflow-x: hidden;
+}

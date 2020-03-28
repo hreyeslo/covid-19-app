@@ -10,11 +10,13 @@ import { ILayout, ELayoutName } from '@shared/models';
 import { UtilsService } from '@shared/services';
 
 import { environment } from '../environments/environment';
+import { AppRoutingAnimations } from './app-animations';
 
 @Component({
 	selector: 'covid-root',
 	templateUrl: './app.component.html',
-	styleUrls: ['./app.component.scss']
+	styleUrls: ['./app.component.scss'],
+	animations: [AppRoutingAnimations]
 })
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -26,6 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	sidenavMode: MatDrawerMode = 'over';
 	sidenavHasBackdrop = true;
+	isMobile = true;
 
 	constructor(
 		@Inject(APP_CONFIG) private _configManager: ConfigManager,
@@ -55,10 +58,10 @@ export class AppComponent implements OnInit, OnDestroy {
 	_initLayoutObserver(): void {
 		this._subscriptions.push(
 			this._utilsService.getLayoutObserver().subscribe((layout: ILayout) => {
-				const isMobile = layout.type === ELayoutName.mobile || layout.type === ELayoutName.tablet;
+				this.isMobile = (layout.type === ELayoutName.mobile || layout.type === ELayoutName.tablet);
 				this.currentLayout = layout;
-				this.sidenavMode = isMobile ? 'over' : 'side';
-				this.sidenavHasBackdrop = isMobile;
+				this.sidenavMode = this.isMobile ? 'over' : 'side';
+				this.sidenavHasBackdrop = this.isMobile;
 			})
 		);
 	}

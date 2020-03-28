@@ -6,22 +6,25 @@ const routes: Routes = [
 	{
 		path: '',
 		pathMatch: 'full',
-		redirectTo: 'world'
+		redirectTo: 'dashboard'
 	},
 	{
-		path: 'world',
-		loadChildren: () => import('./pages/dashboard/dashboard.module').then(module => module.DashboardModule)
+		path: 'dashboard',
+		loadChildren: () => import('./pages/dashboard/dashboard.module').then(module => module.DashboardModule),
+		data: {animation: 'dashboard'}
 	},
 	{
 		path: 'countries',
 		children: [
 			{
 				path: '',
-				loadChildren: () => import('./pages/countries/countries.module').then(module => module.CountriesModule)
+				loadChildren: () => import('./pages/countries/countries.module').then(module => module.CountriesModule),
+				data: {animation: 'countries'}
 			},
 			{
 				path: ':country',
-				loadChildren: () => import('./pages/details/details.module').then(module => module.DetailsModule)
+				loadChildren: () => import('./pages/details/details.module').then(module => module.DetailsModule),
+				data: {animation: 'details'}
 			}
 		]
 	},
