@@ -1,10 +1,10 @@
-import { Subscription, Observable, combineLatest, of, Subject } from 'rxjs';
+import { Subscription, Observable, combineLatest, of } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Store, select } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
 
-import { selectGlobalCases } from '@shared/store';
+import { selectGlobalCases, selectLastUpdate } from '@shared/store';
 import { IGlobalCases } from '@shared/models';
 
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	_globalCases$: Observable<IGlobalCases>;
 
 	viewData$: Observable<IDashboardViewData>;
-	lastUpdate$: Subject<number> = new Subject<number>();
+	lastUpdate$: Observable<number>;
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
@@ -36,6 +36,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this._globalCases$ = this._store.pipe(select(selectGlobalCases));
+		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._mapViewData();
 	}
 
@@ -63,7 +64,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	}
 
 	_getCards(data: IGlobalCases): IDashboardCard[] {
-		this.lastUpdate$.next(data?.updated);
 		return [
 			{
 				title: 'cases',

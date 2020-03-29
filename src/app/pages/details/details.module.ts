@@ -1,8 +1,10 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
+import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
@@ -28,7 +30,9 @@ import { detailsReducer } from './store/details.reducer';
 		DetailsServiceApiModule,
 		FlexLayoutModule,
 		MatIconModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		MatCardModule,
+		CountUpModule
 	]
 })
 export class DetailsModule {}

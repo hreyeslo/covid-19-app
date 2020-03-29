@@ -27,10 +27,12 @@
 		@include page-header;
 
 		&__header {
+			margin-bottom: rem(10px);
 
 			&__flag {
 				width: 60px;
-				border-radius: 4px;
+				border-radius: rem(4px);
+				@include mat-elevation(1);
 			}
 
 			&__title {

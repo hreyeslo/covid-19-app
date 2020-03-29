@@ -1,6 +1,12 @@
 import { createSelector } from '@ngrx/store';
 
-import { IAppStore, IGlobalCases, ILayout, ELayoutName, CountryCases } from '../models/shared.model';
+import {
+	IAppStore,
+	IGlobalCases,
+	ILayout,
+	ELayoutName,
+	CountryCases
+} from '../models/shared.model';
 import { featureStoreName, ISharedStore } from './shared.state';
 
 export interface ICoreAppStore extends IAppStore {
@@ -44,6 +50,11 @@ export const selectIsDesktopLayout = createSelector(
 		const layout = state?.layout;
 		return (layout.type === ELayoutName.laptop || layout.type === ELayoutName.desktop);
 	}
+);
+
+export const selectLastUpdate = createSelector(
+	selectCoreStore,
+	(state: ISharedStore): number => state?.cases?.global?.updated
 );
 
 export const selectGlobalCases = createSelector(

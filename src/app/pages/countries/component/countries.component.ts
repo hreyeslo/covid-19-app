@@ -6,7 +6,7 @@ import { Store, select } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
 import { includes } from 'lodash';
 
-import { selectGlobalCountries } from '@shared/store';
+import { selectGlobalCountries, selectLastUpdate } from '@shared/store';
 import { CountryCases, ICountryCases } from '@shared/models';
 
 import { AbstractCountriesService } from '../service/abstract-countries.service';
@@ -27,6 +27,7 @@ export class CountriesComponent implements OnInit, OnDestroy {
 
 	_filter$: BehaviorSubject<string> = new BehaviorSubject<string>('');
 	viewData$: Observable<CountryCases>;
+	lastUpdate$: Observable<number>;
 	filterValue: string;
 
 	constructor(
@@ -39,6 +40,7 @@ export class CountriesComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.viewData$ = this._filter$.pipe(switchMap(this._getCountriesByFilter.bind(this)));
+		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 	}
 
 	ngOnDestroy() {
