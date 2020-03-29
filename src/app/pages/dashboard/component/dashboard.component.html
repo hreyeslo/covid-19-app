@@ -29,7 +29,11 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <covid-charts [global]="viewData.global" [historical]="viewData.historical"></covid-charts>
+        <covid-charts
+            [global]="viewData.global"
+            [historical]="viewData.historical"
+            [literals]="chartLiterals$ |async">
+        </covid-charts>
     </div>
 
 </div>

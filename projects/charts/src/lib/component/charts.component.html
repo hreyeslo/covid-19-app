@@ -4,10 +4,29 @@
         <apx-chart
             *ngIf="totalCasesChart$ | async; let totalCasesChart"
             #total
-            [series]="totalCasesChart.series"
-            [chart]="totalCasesChart.chart"
-            [xaxis]="totalCasesChart.xaxis"
-            [title]="totalCasesChart.title"
+            [series]="totalCasesChart?.series"
+            [chart]="totalCasesChart?.chart"
+            [xaxis]="totalCasesChart?.xaxis"
+            [title]="totalCasesChart?.title"
+            [colors]="totalCasesChart?.colors"
+            [dataLabels]="totalCasesChart?.dataLabels"
+            [stroke]="totalCasesChart?.stroke"
+            [grid]="totalCasesChart?.grid"
+        ></apx-chart>
+    </div>
+
+    <div class="c-charts__card c-charts__total" fxFlex.xs="100" fxFlex.sm="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
+        <apx-chart
+            *ngIf="totalDeaths$ | async; let totalDeaths"
+            #deaths
+            [series]="totalDeaths?.series"
+            [chart]="totalDeaths?.chart"
+            [xaxis]="totalDeaths?.xaxis"
+            [title]="totalDeaths?.title"
+            [colors]="totalDeaths?.colors"
+            [dataLabels]="totalDeaths?.dataLabels"
+            [stroke]="totalDeaths?.stroke"
+            [grid]="totalDeaths?.grid"
         ></apx-chart>
     </div>
 

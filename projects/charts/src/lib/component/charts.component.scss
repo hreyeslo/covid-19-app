@@ -26,6 +26,17 @@
 				margin: rem(20px);
 			}
 		}
+
+		&__total {
+			padding-top: rem(36px);
+
+			.apexcharts-title-text {
+				fill: $fontTitleColor;
+				font-size: rem(22px);
+				font-weight: 400;
+				font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+			}
+		}
 	}
 }
 

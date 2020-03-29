@@ -8,6 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { IHistoricalCases, ICountryCases } from '@shared/models';
 import { selectLastUpdate } from '@shared/store';
 import { UtilsService } from '@shared/services';
+import { IChartsLiterals } from '@ui/charts';
 
 import { AbstractDetailsService } from '../service/abstract-details.service';
 import { environment } from '../../../../environments/environment';
@@ -29,6 +30,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	viewData$: Subject<IDetails> = new Subject<IDetails>();
 	lastUpdate$: Observable<number>;
+	chartLiterals$: Observable<IChartsLiterals>;
 	tabSelected = 0;
 
 	constructor(
@@ -41,6 +43,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
+		this.chartLiterals$ = this._tranlsateService.get('charts');
 		this._subscriptions.push(
 			this._route.params.subscribe(params => this._getViewInfo(params?.country))
 		);

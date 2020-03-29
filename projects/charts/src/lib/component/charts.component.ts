@@ -7,7 +7,7 @@ import { format } from 'date-fns';
 
 import { HistoricalCases, IGlobalCases, ICountryCases } from '@shared/models';
 
-import { defaultChartLinear } from '../charts.defaults';
+import { totalCasesChart, totalDeathsChart } from '../charts.defaults';
 import { IChartsLiterals } from '../charts.model';
 
 @Component({
@@ -24,20 +24,22 @@ export class ChartsComponent implements OnChanges {
 	@Input() country: ICountryCases;
 	@Input() literals: IChartsLiterals;
 
-	totalCasesChart$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(defaultChartLinear);
+	totalCasesChart$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(totalCasesChart);
+	totalDeaths$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(totalDeathsChart);
 
 	constructor(private _requestIdle: RequestIdle) {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (!!changes?.historical?.currentValue && changes?.historical?.previousValue !== changes?.historical?.currentValue) {
-			this._updateTotlaCasesChart('cases');
+			this._updateTotalCasesChart();
+			this._updateTotalDeathsChart();
 		}
 	}
 
-	_updateTotlaCasesChart(key: string) {
-		this._getTotalSeriesByKey(key).then(data => {
+	_updateTotalCasesChart() {
+		this._getTotalSeriesByKey('cases').then(data => {
 			this.totalCasesChart$.next({
-				...defaultChartLinear,
+				...totalCasesChart,
 				series: [
 					{
 						name: this.literals?.totalCases,
@@ -49,7 +51,28 @@ export class ChartsComponent implements OnChanges {
 					align: 'left'
 				},
 				xaxis: {
-					categories: Object.keys(data).map(date => format(new Date(date), 'DD-MM-YYYY'))
+					categories: Object.keys(data).map(date => format(new Date(date), 'dd-MM-yyyy'))
+				}
+			});
+		});
+	}
+
+	_updateTotalDeathsChart() {
+		this._getTotalSeriesByKey('deaths').then(data => {
+			this.totalDeaths$.next({
+				...totalDeathsChart,
+				series: [
+					{
+						name: this.literals?.totalDeath,
+						data: Object.values(data)
+					}
+				],
+				title: {
+					text: this.literals?.totalDeath,
+					align: 'left'
+				},
+				xaxis: {
+					categories: Object.keys(data).map(date => format(new Date(date), 'dd-MM-yyyy'))
 				}
 			});
 		});

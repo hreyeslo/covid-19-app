@@ -6,6 +6,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
 import { IGlobalCases, HistoricalCases } from '@shared/models';
+import { IChartsLiterals } from '@ui/charts';
 
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
 import { IDashboardViewData, IDashboardCard } from '../models/dashboard.model';
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	viewData$: Observable<IDashboardViewData>;
 	lastUpdate$: Observable<number>;
+	chartLiterals$: Observable<IChartsLiterals>;
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
@@ -40,6 +42,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this._globalCases$ = this._store.pipe(select(selectGlobalCases));
 		this._historicalCases$ = this._store.pipe(select(selectHistoricalCases));
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
+		this.chartLiterals$ = this._tranlsateService.get('charts');
 		this._mapViewData();
 	}
 

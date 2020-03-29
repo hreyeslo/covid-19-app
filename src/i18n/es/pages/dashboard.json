@@ -10,5 +10,9 @@
 	"tabs": {
 		"summary": "Resumen",
 		"charts": "Gráficas"
+	},
+	"charts": {
+		"totalCases": "Histórico de casos totales",
+		"totalDeath": "Histórico de muertes totales"
 	}
 }

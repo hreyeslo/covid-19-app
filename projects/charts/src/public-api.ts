@@ -4,3 +4,4 @@
 
 export * from './lib/component/charts.component';
 export * from './lib/charts.module';
+export * from './lib/charts.model';
