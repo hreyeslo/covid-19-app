@@ -28,6 +28,7 @@
 
 		&__header {
 			margin-bottom: rem(10px);
+			min-height: rem(101px);
 
 			&__flag {
 				width: 60px;
@@ -38,6 +39,10 @@
 			&__title {
 				font-size: 40px;
 				font-weight: 400;
+			}
+
+			&__date{
+				padding-top: rem(10px);
 			}
 		}
 

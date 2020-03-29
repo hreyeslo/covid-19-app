@@ -22,7 +22,8 @@ export class CountriesComponent implements OnInit, OnDestroy {
 	private readonly _maxItemsToShow = 20;
 	readonly countUpOptions = {
 		separator: '.',
-		decimal: ','
+		decimal: ',',
+		duration: 1
 	};
 
 	_filter$: BehaviorSubject<string> = new BehaviorSubject<string>('');

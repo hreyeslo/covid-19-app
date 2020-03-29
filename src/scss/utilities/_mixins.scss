@@ -9,7 +9,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
-		min-height: rem(65px);
+		min-height: rem(101px);
 
 		@include desktop {
 			margin-bottom: rem(20px);
@@ -39,6 +39,17 @@
 			@include mobile {
 				font-size: rem(25px);
 				line-height: rem(25px);
+			}
+		}
+
+		&__date {
+			font-size: rem(14px);
+			font-weight: 300;
+			color: $fontColor;
+			padding-bottom: rem(20px);
+
+			&__value {
+				padding-left: rem(5px);
 			}
 		}
 	}

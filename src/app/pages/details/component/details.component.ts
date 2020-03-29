@@ -21,7 +21,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	private readonly _subscriptions: Subscription[] = [];
 	readonly countUpOptions = {
 		separator: '.',
-		decimal: ','
+		decimal: ',',
+		duration: 1
 	};
 
 	viewData$: Subject<IDetails> = new Subject<IDetails>();

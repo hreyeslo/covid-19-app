@@ -1,9 +1,15 @@
 <div class="c-details">
 
     <ng-container *ngIf="viewData$ | async; let viewData; else spinner">
-        <div class="c-details__header">
-            <img class="c-details__header__flag" [src]="viewData?.cases?.countryInfo?.flag" alt="Country flag">
-            <span class="c-details__header__title">{{viewData?.cases?.country | titlecase}}</span>
+        <div class="c-details__header" fxLayout="column">
+            <div fxLayout="row" fxLayoutAlign="center center">
+                <img class="c-details__header__flag" [src]="viewData?.cases?.countryInfo?.flag" alt="Country flag">
+                <span class="c-details__header__title">{{viewData?.cases?.country | titlecase}}</span>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center" class="c-details__header__date">
+                <span>Última actualización:</span>
+                <span class="c-details__header__date__value">{{lastUpdate$ | async | date:'d-M-yyyy, HH:mm z'}}</span>
+            </div>
         </div>
 
         <div class="c-details__container">

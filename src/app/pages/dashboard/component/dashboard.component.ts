@@ -20,7 +20,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	private readonly _subscriptions: Subscription[] = [];
 	readonly countUpOptions = {
 		separator: '.',
-		decimal: ','
+		decimal: ',',
+		duration: 1
 	};
 
 	_globalCases$: Observable<IGlobalCases>;

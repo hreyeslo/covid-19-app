@@ -1,8 +1,14 @@
 <div class="c-dashboard">
 
-    <div class="c-dashboard__header">
-        <mat-icon class="c-dashboard__header__icon">language</mat-icon>
-        <span class="c-dashboard__header__title">{{'title' | translate}}</span>
+    <div class="c-dashboard__header" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon class="c-dashboard__header__icon">language</mat-icon>
+            <span class="c-dashboard__header__title">{{'title' | translate}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="c-dashboard__header__date">
+            <span>Última actualización:</span>
+            <span class="c-dashboard__header__date__value">{{lastUpdate$ | async | date:'d-M-yyyy, HH:mm z'}}</span>
+        </div>
     </div>
 
     <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner">
