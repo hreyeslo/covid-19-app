@@ -1,4 +1,4 @@
-import { Subscription, Subject, forkJoin, Observable, interval } from 'rxjs';
+import { Subscription, Subject, forkJoin, Observable, interval, of } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { startWith, switchMap } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { IHistoricalCases, ICountryCases } from '@shared/models';
 import { selectLastUpdate } from '@shared/store';
 import { UtilsService } from '@shared/services';
-import { IChartsLiterals } from '@ui/charts';
+import { IChartData } from '@ui/charts';
 
 import { AbstractDetailsService } from '../service/abstract-details.service';
 import { environment } from '../../../../environments/environment';
@@ -30,7 +30,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	viewData$: Subject<IDetails> = new Subject<IDetails>();
 	lastUpdate$: Observable<number>;
-	chartLiterals$: Observable<IChartsLiterals>;
+	chartData$: Observable<IChartData>;
 	tabSelected = 0;
 
 	constructor(
@@ -43,7 +43,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
-		this.chartLiterals$ = this._tranlsateService.get('charts');
 		this._subscriptions.push(
 			this._route.params.subscribe(params => this._getViewInfo(params?.country))
 		);
@@ -93,7 +92,13 @@ export class DetailsComponent implements OnInit, OnDestroy {
 						}
 					]
 				});
+				this._mapChartData(historical, cases);
 			})
 		);
+	}
+
+	_mapChartData(historical: any, country: any) {
+		this.chartData$ = this._tranlsateService.get('charts')
+			.pipe(switchMap(literals => of({historical: [historical], literals, country})));
 	}
 }

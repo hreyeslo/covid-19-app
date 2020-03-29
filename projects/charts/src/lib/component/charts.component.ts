@@ -1,14 +1,10 @@
-import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
-import { ChartComponent } from 'ng-apexcharts';
-import { RequestIdle } from 'ngx-request-idle';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { each } from 'lodash';
+import { each, get } from 'lodash';
 import { format } from 'date-fns';
 
-import { HistoricalCases, IGlobalCases, ICountryCases } from '@shared/models';
-
 import { totalCasesChart, totalDeathsChart } from '../charts.defaults';
-import { IChartsLiterals } from '../charts.model';
+import { IChartData } from '../charts.model';
 
 @Component({
 	selector: 'covid-charts',
@@ -17,20 +13,18 @@ import { IChartsLiterals } from '../charts.model';
 })
 export class ChartsComponent implements OnChanges {
 
-	@ViewChild('total', {static: false}) _totalCasesChart: ChartComponent;
-
-	@Input() historical: HistoricalCases = [];
-	@Input() global: IGlobalCases;
-	@Input() country: ICountryCases;
-	@Input() literals: IChartsLiterals;
+	@Input() chartData: IChartData;
 
 	totalCasesChart$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(totalCasesChart);
 	totalDeaths$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(totalDeathsChart);
 
-	constructor(private _requestIdle: RequestIdle) {}
+	constructor() {}
 
 	ngOnChanges(changes: SimpleChanges) {
-		if (!!changes?.historical?.currentValue && changes?.historical?.previousValue !== changes?.historical?.currentValue) {
+		if (
+			!!changes?.chartData?.currentValue
+			&& changes?.chartData?.previousValue?.historical !== changes?.chartData?.currentValue?.historical
+		) {
 			this._updateTotalCasesChart();
 			this._updateTotalDeathsChart();
 		}
@@ -42,12 +36,12 @@ export class ChartsComponent implements OnChanges {
 				...totalCasesChart,
 				series: [
 					{
-						name: this.literals?.totalCases,
+						name: this.chartData?.literals?.totalCases,
 						data: Object.values(data)
 					}
 				],
 				title: {
-					text: this.literals?.totalCases,
+					text: this.chartData?.literals?.totalCases,
 					align: 'left'
 				},
 				xaxis: {
@@ -63,12 +57,12 @@ export class ChartsComponent implements OnChanges {
 				...totalDeathsChart,
 				series: [
 					{
-						name: this.literals?.totalDeath,
+						name: this.chartData?.literals?.totalDeath,
 						data: Object.values(data)
 					}
 				],
 				title: {
-					text: this.literals?.totalDeath,
+					text: this.chartData?.literals?.totalDeath,
 					align: 'left'
 				},
 				xaxis: {
@@ -79,17 +73,21 @@ export class ChartsComponent implements OnChanges {
 	}
 
 	_getTotalSeriesByKey(key: string): Promise<any> {
-		return Promise.resolve(this.historical.reduce((acc: any, country: any) => {
-			const data = country?.timeline[key] || {};
-			each(data, (value, date) => {
-				if (acc[date]) {
-					acc[date] = acc[date] + value;
-				} else {
-					acc[date] = value;
-				}
-			});
-			return acc;
-		}, {}));
+		return new Promise(resolve => {
+			const countries: any[] = get(this.chartData, 'historical', []);
+			const results = countries.reduce((acc: any, country: any) => {
+				const data = country?.timeline[key] || {};
+				each(data, (value, date) => {
+					if (acc[date]) {
+						acc[date] = acc[date] + value;
+					} else {
+						acc[date] = value;
+					}
+				});
+				return acc;
+			}, {});
+			resolve(results);
+		});
 	}
 
 }

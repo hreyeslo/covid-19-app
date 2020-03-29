@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs/operators';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
 import { IGlobalCases, HistoricalCases } from '@shared/models';
-import { IChartsLiterals } from '@ui/charts';
+import { IChartData } from '@ui/charts';
 
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
 import { IDashboardViewData, IDashboardCard } from '../models/dashboard.model';
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	viewData$: Observable<IDashboardViewData>;
 	lastUpdate$: Observable<number>;
-	chartLiterals$: Observable<IChartsLiterals>;
+	chartData$: Observable<IChartData>;
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
@@ -42,8 +42,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this._globalCases$ = this._store.pipe(select(selectGlobalCases));
 		this._historicalCases$ = this._store.pipe(select(selectHistoricalCases));
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
-		this.chartLiterals$ = this._tranlsateService.get('charts');
 		this._mapViewData();
+		this._mapChartData();
 	}
 
 	ngOnDestroy() {
@@ -91,5 +91,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 				value: data?.recovered
 			}
 		];
+	}
+
+	_mapChartData() {
+		this.chartData$ = combineLatest([
+			this._historicalCases$,
+			this._globalCases$,
+			this._tranlsateService.get('charts')
+		]).pipe(switchMap(data => of({
+			historical: data[0],
+			global: data[1],
+			literals: data[2]
+		})));
 	}
 }

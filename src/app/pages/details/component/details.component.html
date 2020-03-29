@@ -31,7 +31,7 @@
                     </mat-card-content>
                 </mat-card>
             </div>
-            <covid-charts [country]="viewData.cases" [historical]="viewData.historical" [literals]="chartLiterals$ | async"></covid-charts>
+            <covid-charts [chartData]="chartData$ | async"></covid-charts>
         </div>
 
     </ng-container>
