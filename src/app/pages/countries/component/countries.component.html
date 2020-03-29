@@ -18,11 +18,11 @@
         </mat-form-field>
     </div>
 
-    <div class="c-countries__container" *ngIf="viewData$ | async; let viewData">
-        <div class="c-countries__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start" *ngIf="viewData.length > 0; else spinner">
+    <div class="c-countries__container" *ngIf="viewData$ | async; let viewData; else spinner">
+        <div class="c-countries__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
             <mat-card
                 class="c-countries__container__cards__card"
-                *ngFor="let country of viewData; trackBy: trackByIndex; let position = index;"
+                *ngFor="let country of viewData; trackBy: trackByIndex"
                 fxFlex.xs="100"
                 [fxFlex.sm]="'0 1 calc(50% - 20px)'"
                 [fxFlex.md]="'0 1 calc(50% - 40px)'"
@@ -37,7 +37,7 @@
                     </mat-card-title>
                 </mat-card-header>
                 <mat-card-content class="c-countries__container__cards__card__content">
-                    <span class="c-countries__container__cards__card__position">{{position + 1}}º</span>
+                    <span class="c-countries__container__cards__card__position">{{country?.countryInfo?.position}}º</span>
                     <div fxLayout="row">
                         <img class="c-countries__container__cards__card__content__flag" [src]="country?.countryInfo?.flag" alt="Country flag">
                         <div class="c-countries__container__cards__card__content__values" fxFlex="1 1 auto" fxLayout="column">
