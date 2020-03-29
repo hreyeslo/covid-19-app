@@ -2,10 +2,13 @@ import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/
 import { ChartComponent } from 'ng-apexcharts';
 import { RequestIdle } from 'ngx-request-idle';
 import { BehaviorSubject } from 'rxjs';
+import { each } from 'lodash';
+import { format } from 'date-fns';
 
 import { HistoricalCases, IGlobalCases, ICountryCases } from '@shared/models';
 
 import { defaultChartLinear } from '../charts.defaults';
+import { IChartsLiterals } from '../charts.model';
 
 @Component({
 	selector: 'covid-charts',
@@ -19,7 +22,7 @@ export class ChartsComponent implements OnChanges {
 	@Input() historical: HistoricalCases = [];
 	@Input() global: IGlobalCases;
 	@Input() country: ICountryCases;
-	@Input() loading = true;
+	@Input() literals: IChartsLiterals;
 
 	totalCasesChart$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(defaultChartLinear);
 
@@ -27,20 +30,43 @@ export class ChartsComponent implements OnChanges {
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (!!changes?.historical?.currentValue && changes?.historical?.previousValue !== changes?.historical?.currentValue) {
-			this._updateTotlaCasesChart();
+			this._updateTotlaCasesChart('cases');
 		}
 	}
 
-	_updateTotlaCasesChart() {
-		this.totalCasesChart$.next({
-			...defaultChartLinear,
-			series: [
-				{
-					name: 'series-1',
-					data: [23, 44, 1, 22]
+	_updateTotlaCasesChart(key: string) {
+		this._getTotalSeriesByKey(key).then(data => {
+			this.totalCasesChart$.next({
+				...defaultChartLinear,
+				series: [
+					{
+						name: this.literals?.totalCases,
+						data: Object.values(data)
+					}
+				],
+				title: {
+					text: this.literals?.totalCases,
+					align: 'left'
+				},
+				xaxis: {
+					categories: Object.keys(data).map(date => format(new Date(date), 'DD-MM-YYYY'))
 				}
-			]
+			});
 		});
+	}
+
+	_getTotalSeriesByKey(key: string): Promise<any> {
+		return Promise.resolve(this.historical.reduce((acc: any, country: any) => {
+			const data = country?.timeline[key] || {};
+			each(data, (value, date) => {
+				if (acc[date]) {
+					acc[date] = acc[date] + value;
+				} else {
+					acc[date] = value;
+				}
+			});
+			return acc;
+		}, {}));
 	}
 
 }
