@@ -20,10 +20,12 @@
 
 			@include tablet {
 				margin: rem(10px);
+				max-width: calc(50% - 20px);
 			}
 
 			@include desktop {
 				margin: rem(20px);
+				max-width: calc(50% - 40px);
 			}
 		}
 
