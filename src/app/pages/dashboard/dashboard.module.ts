@@ -8,6 +8,7 @@ import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
+import { ChartsModule } from '@ui/charts';
 import { I18nModule } from '@app/core';
 
 import { DashboardServiceApiModule } from './service/dashboard-service-api.module';
@@ -32,7 +33,8 @@ import { dashboardReducer } from './store/dashboard.reducer';
 		MatCardModule,
 		MatIconModule,
 		CountUpModule,
-		MatProgressSpinnerModule
+		MatProgressSpinnerModule,
+		ChartsModule
 	]
 })
 export class DashboardModule {}

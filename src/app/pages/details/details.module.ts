@@ -8,6 +8,7 @@ import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
+import { ChartsModule } from '@ui/charts';
 import { I18nModule } from '@app/core';
 
 import { DetailsServiceApiModule } from './service/details-service-api.module';
@@ -32,7 +33,8 @@ import { detailsReducer } from './store/details.reducer';
 		MatIconModule,
 		MatProgressSpinnerModule,
 		MatCardModule,
-		CountUpModule
+		CountUpModule,
+		ChartsModule
 	]
 })
 export class DetailsModule {}

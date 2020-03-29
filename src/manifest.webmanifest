@@ -1,12 +1,13 @@
 {
   "name": "Covid-19 Meters",
   "short_name": "Covid Meters",
-  "theme_color": "#1976d2",
-  "background_color": "#1976d2",
+  "theme_color": "#009688",
+  "background_color": "#edf2f6",
   "display": "standalone",
   "orientation": "portrait",
-  "Scope": "/",
-  "start_url": "/",
+  "gcm_sender_id": "1585480938",
+  "scope": "./",
+  "start_url": "./",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
@@ -48,6 +49,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "splash_pages": null
+  ]
 }

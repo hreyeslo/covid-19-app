@@ -39,8 +39,8 @@
 			"@shared/module": [
 				"src/app/shared/shared.module"
 			],
-			"@ui/summary": [
-				"projects/summary/src/public-api"
+			"@ui/charts": [
+				"projects/charts/src/public-api"
 			]
 		}
 	},

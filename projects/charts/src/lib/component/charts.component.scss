@@ -1,0 +1,42 @@
+@import "../../../../../src/scss/settings";
+@import "../../../../../src/scss/tools";
+@import "../../../../../src/scss/themes";
+@import "../../../../../src/scss/utilities";
+
+:host ::ng-deep {
+	.c-charts {
+
+		&__card {
+			cursor: default;
+			user-select: none;
+			margin: rem(10px 0);
+			color: $fontColor;
+			background: white;
+			@include box-shadow;
+			display: block;
+			position: relative;
+			padding: 16px;
+			border-radius: 4px;
+
+			@include tablet {
+				margin: rem(10px);
+			}
+
+			@include desktop {
+				margin: rem(20px);
+			}
+		}
+
+		&__total {
+			padding-top: rem(36px);
+
+			.apexcharts-title-text {
+				fill: $fontTitleColor;
+				font-size: rem(22px);
+				font-weight: 400;
+				font-family: 'Roboto', Helvetica, Arial, sans-serif !important;
+			}
+		}
+	}
+}
+

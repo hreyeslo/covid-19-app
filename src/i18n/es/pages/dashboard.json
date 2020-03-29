@@ -1,9 +1,18 @@
 {
 	"title": "Registros Mundiales",
+	"lastUpdate": "Última actualización:",
 	"cards": {
 		"cases": "Casos totales",
 		"active": "Casos activos",
 		"deaths": "Muertes",
 		"recovered": "Recuperados"
+	},
+	"tabs": {
+		"summary": "Resumen",
+		"charts": "Gráficas"
+	},
+	"charts": {
+		"totalCases": "Histórico de casos totales",
+		"totalDeath": "Histórico de muertes totales"
 	}
 }

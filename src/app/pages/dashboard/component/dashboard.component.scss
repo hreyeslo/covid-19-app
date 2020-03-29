@@ -11,7 +11,7 @@
 		width: calc(100vw - 36px);
 		z-index: 999;
 
-		@include tablet{
+		@include tablet {
 			width: calc(100vw - 48px);
 		}
 

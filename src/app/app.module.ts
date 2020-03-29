@@ -26,7 +26,10 @@ import { AppComponent } from './app.component';
 		FlexLayoutModule,
 		CoreModule,
 		I18nModule.forRoot('app'),
-		ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production}),
+		ServiceWorkerModule.register('ngsw-worker.js', {
+			enabled: environment.production,
+			registrationStrategy: 'registerImmediately'
+		}),
 		SharedModule,
 		MatSidenavModule,
 		MatToolbarModule,

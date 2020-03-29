@@ -17,6 +17,7 @@ export interface ICountryInfo {
 	flag: string;
 	iso3: string;
 	iso2: string;
+	position?: number;
 }
 
 export interface ICountryCases {

@@ -57,7 +57,18 @@ export class UtilsService implements AbstractUtilsService {
 	// Countries
 
 	getAllCountriesCases(): Observable<CountryCases> {
-		return this._makeRequest<CountryCases>('countries?sort=cases');
+		return this._makeRequest<CountryCases>('countries?sort=cases')
+			.pipe(switchMap((counties: CountryCases) => {
+				return of(counties.map((country, index) => {
+					return {
+						...country,
+						countryInfo: {
+							...country.countryInfo,
+							position: index + 1
+						}
+					};
+				}));
+			}));
 	}
 
 	getCountryCases(country: string): Observable<ICountryCases> {

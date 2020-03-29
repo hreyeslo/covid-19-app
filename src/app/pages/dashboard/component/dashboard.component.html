@@ -6,12 +6,12 @@
             <span class="c-dashboard__header__title">{{'title' | translate}}</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" class="c-dashboard__header__date">
-            <span>Última actualización:</span>
+            <span>{{'lastUpdate' | translate}}</span>
             <span class="c-dashboard__header__date__value">{{lastUpdate$ | async | date:'d-M-yyyy, HH:mm z'}}</span>
         </div>
     </div>
 
-    <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner">
+    <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner" fxLayout="column">
         <div class="c-dashboard__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
             <mat-card
                 class="c-dashboard__container__cards__card"
@@ -29,6 +29,11 @@
                 </mat-card-content>
             </mat-card>
         </div>
+        <covid-charts
+            [global]="viewData.global"
+            [historical]="viewData.historical"
+            [literals]="chartLiterals$ |async">
+        </covid-charts>
     </div>
 
 </div>

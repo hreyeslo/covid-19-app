@@ -101,3 +101,10 @@
 		}
 	}
 }
+
+@mixin tabs {
+	&__tabs {
+		width: 100%;
+		height: rem(50px);
+	}
+}
