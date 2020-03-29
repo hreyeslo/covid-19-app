@@ -5,7 +5,7 @@ import {
 	IGlobalCases,
 	ILayout,
 	ELayoutName,
-	CountryCases
+	CountryCases, HistoricalCases
 } from '../models/shared.model';
 import { featureStoreName, ISharedStore } from './shared.state';
 
@@ -60,6 +60,11 @@ export const selectLastUpdate = createSelector(
 export const selectGlobalCases = createSelector(
 	selectCoreStore,
 	(state: ISharedStore): IGlobalCases => state?.cases?.global
+);
+
+export const selectHistoricalCases = createSelector(
+	selectCoreStore,
+	(state: ISharedStore): HistoricalCases => state?.cases?.historical
 );
 
 export const selectGlobalCountries = createSelector(

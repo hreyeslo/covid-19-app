@@ -4,8 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { Store, select } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
 
-import { selectGlobalCases, selectLastUpdate } from '@shared/store';
-import { IGlobalCases } from '@shared/models';
+import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
+import { IGlobalCases, HistoricalCases } from '@shared/models';
 
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
 import { IDashboardViewData, IDashboardCard } from '../models/dashboard.model';
@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	};
 
 	_globalCases$: Observable<IGlobalCases>;
+	_historicalCases$: Observable<HistoricalCases>;
 
 	viewData$: Observable<IDashboardViewData>;
 	lastUpdate$: Observable<number>;
@@ -37,6 +38,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this._globalCases$ = this._store.pipe(select(selectGlobalCases));
+		this._historicalCases$ = this._store.pipe(select(selectHistoricalCases));
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._mapViewData();
 	}
@@ -55,10 +57,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	_mapViewData(): void {
 		this.viewData$ = combineLatest([
-			this._globalCases$
-		]).pipe(switchMap((data: [IGlobalCases]) => {
+			this._globalCases$,
+			this._historicalCases$
+		]).pipe(switchMap((data: [IGlobalCases, HistoricalCases]) => {
 				return of({
-					cards: this._getCards(data[0])
+					cards: this._getCards(data[0]),
+					global: data[0],
+					historical: data[1]
 				});
 			})
 		);

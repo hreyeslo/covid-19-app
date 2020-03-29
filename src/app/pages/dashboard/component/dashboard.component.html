@@ -33,7 +33,7 @@
                 </div>
             </mat-tab>
             <mat-tab label="{{'tabs.charts' | translate}}">
-                Content 2
+                <covid-charts [global]="viewData.global" [historical]="viewData.historical"></covid-charts>
             </mat-tab>
         </mat-tab-group>
     </div>

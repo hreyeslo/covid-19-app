@@ -8,5 +8,6 @@ export {
 	selectIsDesktopLayout,
 	selectGlobalCases,
 	selectGlobalCountries,
-	selectLastUpdate
+	selectLastUpdate,
+	selectHistoricalCases
 } from './store/shared.selectors';
