@@ -1,0 +1,27 @@
+@import "../settings";
+
+@mixin respond-to($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media #{map-get($breakpoints, $breakpoint)} {
+			@content;
+		}
+	}
+}
+
+@mixin mobile {
+	@include respond-to('mobile') {
+		@content;
+	}
+}
+
+@mixin tablet {
+	@include respond-to('tablet') {
+		@content;
+	}
+}
+
+@mixin desktop {
+	@include respond-to('desktop') {
+		@content;
+	}
+}

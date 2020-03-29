@@ -1,6 +1,10 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
+import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
@@ -24,7 +28,11 @@ import { dashboardReducer } from './store/dashboard.reducer';
 		StoreModule.forFeature(featureStoreName, dashboardReducer),
 		I18nModule.forChild('dashboard'),
 		DashboardServiceApiModule,
-		FlexLayoutModule
+		FlexLayoutModule,
+		MatCardModule,
+		MatIconModule,
+		CountUpModule,
+		MatProgressSpinnerModule
 	]
 })
 export class DashboardModule {}

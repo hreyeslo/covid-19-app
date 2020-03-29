@@ -1,0 +1,127 @@
+@import "src/scss/settings";
+@import "src/scss/utilities";
+
+:host {
+	@include page-container;
+}
+
+:host ::ng-deep {
+	.c-countries {
+		position: static;
+		width: calc(100vw - 36px);
+		z-index: 999;
+
+		@include tablet{
+			width: calc(100vw - 48px);
+		}
+
+		@include desktop {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			position: relative;
+			width: 100%;
+			z-index: unset;
+		}
+
+		@include page-header;
+
+		&__filter {
+			margin: 0;
+
+			@include tablet{
+				margin: rem( 0 10px 10px 10px);
+			}
+
+			@include desktop{
+				margin: rem( 0 20px 20px 20px);
+			}
+		}
+
+		&__container {
+
+			@include desktop {
+				display: flex;
+				flex: 1 1 auto;
+				height: auto;
+			}
+
+			@include cards;
+
+			&__cards {
+
+				&__card {
+					cursor: pointer;
+
+					&__header {
+						position: relative;
+						padding-top: 0;
+						font-weight: 500;
+
+						.mat-card-header-text {
+							width: 100%;
+							text-align: center;
+							margin: 0;
+						}
+					}
+
+					&__position {
+						position: absolute;
+						left: rem(20px);
+						bottom: rem(20px);
+						font-size: rem(16px);
+						font-weight: 300;
+						color: $fontTitleColor;
+					}
+
+					&__name {
+						font-size: rem(16px);
+					}
+
+					&__content {
+						margin-top: rem(10px);
+
+						&__flag {
+							width: rem(28%);
+							max-height: rem(50px);
+							@include mat-elevation(1);
+							border-radius: rem(4px);
+							margin-top: rem(10px);
+
+							@include mobile{
+								width: rem(25%);
+								max-height: rem(45px);
+							}
+						}
+
+						&__values {
+							padding-left: rem(30px);
+							font-size: rem(16px);
+							font-weight: 500;
+							color: $fontColor;
+
+							@include mobile{
+								font-size: rem(14px);
+								padding-left: rem(15px);
+							}
+
+							div {
+								line-height: rem(35px);
+							}
+
+							&__number {
+								font-size: rem(27px);
+								padding-left: rem(10px);
+								font-weight: 300;
+
+								@include mobile{
+									font-size: rem(20px);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

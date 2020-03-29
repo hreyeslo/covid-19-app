@@ -1,0 +1,32 @@
+@import "~@angular/material/theming";
+@import "../settings";
+@import "../tools";
+
+@mixin page-container {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	position: fixed;
+	width: 100%;
+	background: $globalBgColor;
+	padding: rem(18px);
+	overflow-y: auto;
+	-webkit-overflow-scrolling: auto;
+	overflow-x: hidden;
+	height: calc(100vh - 112px);
+
+	@include mobile {
+		width: 100vw;
+	}
+
+	@include tablet {
+		width: 100vw;
+		padding: rem(24px);
+	}
+
+	@include desktop {
+		height: calc(100vh - 64px);
+		padding: rem(30px);
+		position: absolute;
+	}
+}

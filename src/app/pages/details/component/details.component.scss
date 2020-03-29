@@ -1,0 +1,60 @@
+@import "src/scss/settings";
+@import "src/scss/utilities";
+
+:host {
+	@include page-container;
+}
+
+:host ::ng-deep {
+	.c-details {
+		position: static;
+		width: calc(100vw - 36px);
+		z-index: 999;
+
+		@include tablet{
+			width: calc(100vw - 48px);
+		}
+
+		@include desktop {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			position: relative;
+			width: 100%;
+			z-index: unset;
+		}
+
+		@include page-header;
+
+		&__header {
+			margin-bottom: rem(10px);
+			min-height: rem(101px);
+
+			&__flag {
+				width: 60px;
+				border-radius: rem(4px);
+				@include mat-elevation(1);
+			}
+
+			&__title {
+				font-size: 40px;
+				font-weight: 400;
+			}
+
+			&__date{
+				padding-top: rem(10px);
+			}
+		}
+
+		&__container {
+
+			@include desktop {
+				display: flex;
+				flex: 1 1 auto;
+				height: auto;
+			}
+
+			@include cards;
+		}
+	}
+}

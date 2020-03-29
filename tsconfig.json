@@ -32,6 +32,15 @@
 			],
 			"@shared/models": [
 				"src/app/shared/models_api"
+			],
+			"@shared/store": [
+				"src/app/shared/store_api"
+			],
+			"@shared/module": [
+				"src/app/shared/shared.module"
+			],
+			"@ui/summary": [
+				"projects/summary/src/public-api"
 			]
 		}
 	},

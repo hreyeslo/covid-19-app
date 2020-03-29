@@ -11,8 +11,8 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$covid-primary: mat-palette($mat-indigo);
-$covid-accent: mat-palette($mat-pink, A200, A100, A400);
+$covid-primary: mat-palette($mat-teal);
+$covid-accent: mat-palette($mat-blue-gray, 600, 400 700);
 
 // The warn palette is optional (defaults to red).
 $covid-warn: mat-palette($mat-red);

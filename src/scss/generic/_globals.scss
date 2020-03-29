@@ -1,5 +1,5 @@
 html, body {
-	position: absolute;
+	position: fixed;
 	top: 0;
 	right: 0;
 	bottom: 0;
@@ -11,6 +11,12 @@ html, body {
 	overflow: hidden;
 	line-height: 16px;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
-	-webkit-text-size-adjust: none;
-	touch-action: manipulation;
+}
+
+.spinner {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }

@@ -1,0 +1,13 @@
+{
+	"title": "Registros por País - Top 20",
+	"cards": {
+		"cases": "Totales:",
+		"active": "Activos:",
+		"deaths": "Muertos:",
+		"recovered": "Recuperados:"
+	},
+	"filter": {
+		"label": "Buscar...",
+		"placeholder": "Escribe tu país"
+	}
+}

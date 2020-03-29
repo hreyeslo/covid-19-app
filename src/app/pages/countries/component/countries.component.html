@@ -1,0 +1,77 @@
+<div class="c-countries">
+
+    <div class="c-countries__header" fxLayout="column">
+        <div fxLayout="row" fxLayoutAlign="center center">
+            <mat-icon class="c-countries__header__icon">flag</mat-icon>
+            <span class="c-countries__header__title">{{'title' | translate}}</span>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="center center" class="c-countries__header__date">
+            <span>Última actualización:</span>
+            <span class="c-countries__header__date__value">{{lastUpdate$ | async | date:'d-M-yyyy, HH:mm z'}}</span>
+        </div>
+    </div>
+
+    <div class="c-countries__filter" fxLayout="row" fxLayoutAlign="center center">
+        <mat-form-field>
+            <mat-label>{{'filter.label' | translate}}</mat-label>
+            <input matInput placeholder="{{'filter.placeholder' | translate}}" [ngModel]="filterValue" (ngModelChange)="filter($event)" autocomplete="off">
+        </mat-form-field>
+    </div>
+
+    <div class="c-countries__container" *ngIf="viewData$ | async; let viewData">
+        <div class="c-countries__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start" *ngIf="viewData.length > 0; else spinner">
+            <mat-card
+                class="c-countries__container__cards__card"
+                *ngFor="let country of viewData; trackBy: trackByIndex; let position = index;"
+                fxFlex.xs="100"
+                [fxFlex.sm]="'0 1 calc(50% - 20px)'"
+                [fxFlex.md]="'0 1 calc(50% - 40px)'"
+                [fxFlex.lg]="'0 1 calc(33.33% - 40px)'"
+                [fxFlex.xl]="'0 1 calc(25% - 40px)'"
+                [fxFlex]="'0 1 calc(25% - 40px)'"
+                (click)="goToCountry(country)"
+            >
+                <mat-card-header class="c-countries__container__cards__card__header">
+                    <mat-card-title class="c-countries__container__cards__card__header__title">
+                        <span class="c-countries__container__cards__card__name">{{country.country | titlecase}}</span>
+                    </mat-card-title>
+                </mat-card-header>
+                <mat-card-content class="c-countries__container__cards__card__content">
+                    <span class="c-countries__container__cards__card__position">{{position + 1}}º</span>
+                    <div fxLayout="row">
+                        <img class="c-countries__container__cards__card__content__flag" [src]="country?.countryInfo?.flag" alt="Country flag">
+                        <div class="c-countries__container__cards__card__content__values" fxFlex="1 1 auto" fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="flex-start center">
+                                <span>{{'cards.cases' | translate}}</span>
+                                <span class="c-countries__container__cards__card__content__values__number" [countUp]="country?.cases" [options]="countUpOptions"
+                                      [reanimateOnClick]="false"></span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="flex-start center">
+                                <span>{{'cards.active' | translate}}</span>
+                                <span class="c-countries__container__cards__card__content__values__number" [countUp]="country?.active" [options]="countUpOptions"
+                                      [reanimateOnClick]="false"></span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="flex-start center">
+                                <span>{{'cards.deaths' | translate}}</span>
+                                <span class="c-countries__container__cards__card__content__values__number" [countUp]="country?.deaths" [options]="countUpOptions"
+                                      [reanimateOnClick]="false"></span>
+                            </div>
+                            <div fxLayout="row" fxLayoutAlign="flex-start center">
+                                <span>{{'cards.recovered' | translate}}</span>
+                                <span class="c-countries__container__cards__card__content__values__number" [countUp]="country?.recovered" [options]="countUpOptions"
+                                      [reanimateOnClick]="false"></span>
+                            </div>
+                        </div>
+                    </div>
+                </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #spinner>
+    <div class="spinner">
+        <mat-progress-spinner class="example-margin" color="accent" mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>

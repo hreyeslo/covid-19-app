@@ -1,13 +1,41 @@
-.c-dashboard {
-	display: grid;
-	grid-gap: 25px;
-	grid-template-columns: repeat(auto-fill, minmax(auto, 100%));
-	justify-items: center;
-	align-items: stretch;
-	margin: 0 auto 50px auto;
-	max-width: 500px;
+@import "src/scss/settings";
+@import "src/scss/utilities";
 
-	&__title {
-		font-size: 2rem;
+:host {
+	@include page-container;
+}
+
+:host ::ng-deep {
+	.c-dashboard {
+		position: static;
+		width: calc(100vw - 36px);
+		z-index: 999;
+
+		@include tablet{
+			width: calc(100vw - 48px);
+		}
+
+		@include desktop {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			position: relative;
+			width: 100%;
+			z-index: unset;
+		}
+
+		@include page-header;
+
+		&__container {
+
+			@include desktop {
+				display: flex;
+				flex: 1 1 auto;
+				height: auto;
+			}
+
+			@include cards;
+		}
 	}
 }
+

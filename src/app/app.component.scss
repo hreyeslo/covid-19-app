@@ -1,5 +1,181 @@
+@import "~@angular/material/theming";
+@import "src/scss/utilities";
+@import "src/scss/tools";
+
+:host {
+	display: block;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
 :host ::ng-deep {
 	.c-app {
+		width: 100vw;
+		height: 100vh;
+		padding: rem(56px 0);
+		overflow: hidden;
 
+		@include desktop {
+			padding: rem(64px 0 0 0);
+		}
+
+		&__toolbar {
+			@include mat-elevation(4);
+			position: fixed;
+			z-index: 9999;
+			top: 0;
+
+			&__button {
+				margin-right: rem(16px);
+			}
+
+			&__title {
+				width: 100%;
+				font-weight: 500;
+				text-align: left;
+
+				@include desktop {
+					padding-right: rem(56px);
+					text-align: center;
+				}
+			}
+		}
+
+		&__container {
+			width: 100vw;
+			height: calc(100vh - 64px);
+			overflow: hidden;
+
+			@include mobile {
+				height: calc(100vh - 56px);
+			}
+
+			&__sidenav {
+				background-color: map_get($mat-blue-gray, 800);
+				border: unset;
+
+				&__title {
+					display: block;
+					color: white;
+					font-size: 25px;
+					font-weight: 300;
+					line-height: rem(25px);
+					padding: rem(20px 10px);
+					text-align: center;
+					border-bottom: rem(1px) solid map_get($mat-blue-gray, 600);
+					cursor: default;
+					user-select: none;
+				}
+
+				&__menu {
+					height: calc(100% - 66px);
+					padding-top: rem(20px);
+					overflow-x: hidden;
+					overflow-y: auto;
+
+					> ul {
+						list-style: none;
+						padding: 0;
+						margin: 0;
+
+						> li {
+							margin: rem(5px 0);
+							min-width: rem(200px);
+							background: transparent;
+							transition: background 0.3s cubic-bezier(0.45, 0, 0.55, 1);
+
+							.mat-flat-button {
+								width: 100%;
+								height: rem(50px);
+								border-radius: 0;
+								background: unset;
+								color: white;
+								font-weight: 300;
+								font-size: rem(17px);
+								padding: rem(0 24px);
+								display: flex;
+								flex-direction: column;
+								justify-content: center;
+
+								.mat-button-wrapper {
+									width: 100%;
+									display: flex;
+									height: 100%;
+									justify-content: center;
+									align-items: center;
+
+									.mat-icon {
+										font-size: rem(20px);
+										margin-right: rem(10px);
+									}
+								}
+
+								&.active {
+									background: map_get($mat-blue-gray, 700);
+								}
+							}
+
+							&:hover {
+								background: map_get($mat-blue-gray, 700);
+							}
+						}
+					}
+				}
+			}
+
+			.mat-drawer-content {
+				width: auto;
+				height: 100vh;
+				overflow: hidden;
+
+				@include tablet {
+					width: 100vw;
+				}
+
+				@include mobile {
+					width: 100vw;
+				}
+			}
+
+			&__main {
+				width: auto;
+				height: 100vh;
+				overflow: hidden;
+				position: relative;
+				display: block;
+
+				@include tablet {
+					width: 100vw;
+				}
+
+				@include mobile {
+					width: 100vw;
+				}
+
+				&__mobile-menu {
+					position: fixed;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					z-index: 9999;
+					width: 100vw;
+					height: rem(56px);
+					background-color: map_get($mat-blue-gray, 800);
+
+					&__button {
+						color: white;
+						font-size: rem(25px);
+						height: rem(56px);
+						width: calc(33.33% - 20px);
+						border-radius: 0;
+
+						&.active {
+							background: map_get($mat-blue-gray, 700);
+						}
+					}
+				}
+			}
+		}
 	}
 }

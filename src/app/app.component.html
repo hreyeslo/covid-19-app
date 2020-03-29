@@ -1,3 +1,63 @@
-<main class="c-app">
-    <router-outlet></router-outlet>
-</main>
+<div class="c-app">
+
+    <mat-toolbar class="c-app__toolbar" color="primary">
+        <mat-toolbar-row>
+            <button class="c-app__toolbar__button" mat-icon-button aria-label="Menu icon" (click)="sidenav?.toggle()" *ngIf="isDesktopLayout$ | async">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <span class="c-app__toolbar__title">{{'title' | translate}}</span>
+        </mat-toolbar-row>
+    </mat-toolbar>
+
+    <mat-drawer-container class="c-app__container" autosize [hasBackdrop]="sidenavHasBackdrop">
+        <mat-drawer
+          #sidenav
+          class="c-app__container__sidenav"
+          [mode]="sidenavMode"
+          [opened]="isDesktopLayout$ | async"
+          [fxHide]="isMobileLayout$ | async"
+        >
+            <span class="c-app__container__sidenav__title">{{'menu.title' | translate}}</span>
+            <nav class="c-app__container__sidenav__menu">
+                <ul>
+                    <li>
+                        <button mat-flat-button aria-label="Glbal icon" [routerLink]="['dashboard']" routerLinkActive="active">
+                            <mat-icon>language</mat-icon>
+                            <span>{{'menu.global' | translate}}</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-flat-button aria-label="Countries icon" [routerLink]="['countries']" routerLinkActive="active">
+                            <mat-icon>flag</mat-icon>
+                            <span>{{'menu.countries' | translate}}</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button mat-flat-button aria-label="Localization icon" (click)="navigateByLocation()">
+                            <mat-icon>my_location</mat-icon>
+                            <span>{{'menu.location' | translate}}</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </mat-drawer>
+        <main class="c-app__container__main" [@routeAnimations]="(isMobileLayout$ | async) && o && o?.activatedRouteData && o?.activatedRouteData['animation']">
+            <router-outlet #o="outlet"></router-outlet>
+        </main>
+    </mat-drawer-container>
+
+    <div class="c-app__container__main__mobile-menu" *ngIf="isMobileLayout$ | async" fxLayout="row" fxLayoutAlign="space-around center">
+        <button mat-icon-button aria-label="Glbal icon" class="c-app__container__main__mobile-menu__button" [routerLink]="['dashboard']" routerLinkActive="active">
+            <mat-icon>language</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Countries icon" class="c-app__container__main__mobile-menu__button" [routerLink]="['countries']" routerLinkActive="active">
+            <mat-icon>flag</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Localization icon" class="c-app__container__main__mobile-menu__button" (click)="navigateByLocation()">
+            <mat-icon>my_location</mat-icon>
+        </button>
+    </div>
+
+</div>
+
+

@@ -1,5 +1,6 @@
 export const environment = {
 	production: true,
 	configFile: '/configs/prod.json',
-	defaultLang: 'en'
+	defaultLang: 'es',
+	pooling: 300000
 };

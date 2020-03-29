@@ -3,14 +3,18 @@ import { createReducer, on, Action } from '@ngrx/store';
 import { ICoreStore } from './core.state';
 import { setLang } from './core.actions';
 
-export const initialState: ICoreStore = {};
+export const initialState: ICoreStore = {
+	i18n: {
+		currentLang: undefined
+	}
+};
 
 const _coreReducer = createReducer(initialState,
-	on(setLang, (state, {payload}) => ({
+	on(setLang, (state, {lang}) => ({
 		...state,
 		i18n: {
 			...state?.i18n,
-			currentLang: payload
+			currentLang: lang
 		}
 	}))
 );
