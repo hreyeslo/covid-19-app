@@ -1,8 +1,8 @@
 {
   "name": "Covid-19 Meters",
   "short_name": "Covid Meters",
-  "theme_color": "#1976d2",
-  "background_color": "#1976d2",
+  "theme_color": "#009688",
+  "background_color": "#edf2f6",
   "display": "standalone",
   "orientation": "portrait",
   "Scope": "/",

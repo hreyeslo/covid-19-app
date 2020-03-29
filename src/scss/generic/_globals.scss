@@ -11,6 +11,7 @@ html, body {
 	overflow: hidden;
 	line-height: 16px;
 	font-family: Roboto, "Helvetica Neue", sans-serif;
+	background: map_get($mat-teal, 500);
 }
 
 .spinner {

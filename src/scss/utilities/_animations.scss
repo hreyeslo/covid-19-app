@@ -13,7 +13,7 @@
 	overflow-y: auto;
 	-webkit-overflow-scrolling: auto;
 	overflow-x: hidden;
-	height: calc(100vh - 112px);
+	height: calc(100% - 112px);
 
 	@include mobile {
 		width: 100vw;
@@ -25,7 +25,7 @@
 	}
 
 	@include desktop {
-		height: calc(100vh - 64px);
+		height: calc(100% - 64px);
 		padding: rem(30px);
 		position: absolute;
 	}
