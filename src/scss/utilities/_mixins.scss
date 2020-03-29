@@ -11,10 +11,6 @@
 		align-items: center;
 		min-height: rem(101px);
 
-		@include desktop {
-			margin-bottom: rem(20px);
-		}
-
 		&__icon {
 			font-size: rem(30px);
 			width: (30px);
@@ -99,5 +95,11 @@
 				}
 			}
 		}
+	}
+}
+
+@mixin tabs {
+	&__tabs {
+		width: 100%;
 	}
 }
