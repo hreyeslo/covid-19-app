@@ -12,7 +12,7 @@
     </div>
 
     <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner">
-        <mat-tab-group class="c-dashboard__container__tabs">
+        <mat-tab-group class="c-dashboard__container__tabs" [dynamicHeight]="true">
             <mat-tab label="{{'tabs.summary' | translate}}">
                 <div class="c-dashboard__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
                     <mat-card
