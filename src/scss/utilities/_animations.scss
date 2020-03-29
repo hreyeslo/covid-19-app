@@ -8,12 +8,12 @@
 	align-items: stretch;
 	position: fixed;
 	width: 100%;
-	background: $globalBgColor;
 	padding: rem(18px);
-	overflow-y: auto;
-	-webkit-overflow-scrolling: auto;
-	overflow-x: hidden;
 	height: calc(100% - 112px);
+	background: $globalBgColor;
+	overflow-x: hidden;
+	overflow-y: auto;
+	-webkit-overflow-scrolling: touch;
 
 	@include mobile {
 		width: 100vw;
