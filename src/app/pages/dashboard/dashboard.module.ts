@@ -2,7 +2,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { CountUpModule } from 'ngx-countup';
@@ -35,7 +34,6 @@ import { dashboardReducer } from './store/dashboard.reducer';
 		MatIconModule,
 		CountUpModule,
 		MatProgressSpinnerModule,
-		MatTabsModule,
 		ChartsModule
 	]
 })

@@ -29,6 +29,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	viewData$: Subject<IDetails> = new Subject<IDetails>();
 	lastUpdate$: Observable<number>;
+	tabSelected = 0;
 
 	constructor(
 		private _dashboardService: AbstractDetailsService,

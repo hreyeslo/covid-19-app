@@ -1,3 +1,14 @@
-<div class="c-charts">
-    charts
+<div class="c-charts" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
+
+    <div class="c-charts__card c-charts__total" fxFlex.xs="100" fxFlex.sm="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
+        <apx-chart
+            *ngIf="totalCasesChart$ | async; let totalCasesChart"
+            #total
+            [series]="totalCasesChart.series"
+            [chart]="totalCasesChart.chart"
+            [xaxis]="totalCasesChart.xaxis"
+            [title]="totalCasesChart.title"
+        ></apx-chart>
+    </div>
+
 </div>
