@@ -2,16 +2,19 @@
 @import "src/scss/utilities";
 @import "src/scss/tools";
 
+:host {
+	display: block;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
 :host ::ng-deep {
 	.c-app {
-		position: fixed;
-		top: 0;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		width: 100vw;
+		height: 100vh;
 		padding: rem(56px 0);
+		overflow: hidden;
 
 		@include desktop {
 			padding: rem(64px 0 0 0);
@@ -40,8 +43,13 @@
 		}
 
 		&__container {
-			width: 100%;
-			height: 100%;
+			width: 100vw;
+			height: calc(100vh - 64px);
+			overflow: hidden;
+
+			@include mobile {
+				height: calc(100vh - 56px);
+			}
 
 			&__sidenav {
 				background-color: map_get($mat-blue-gray, 800);
@@ -117,22 +125,41 @@
 			}
 
 			.mat-drawer-content {
+				width: auto;
+				height: 100vh;
 				overflow: hidden;
+
+				@include tablet {
+					width: 100vw;
+				}
+
+				@include mobile {
+					width: 100vw;
+				}
 			}
 
 			&__main {
-				width: 100%;
-				height: 100%;
+				width: auto;
+				height: 100vh;
 				overflow: hidden;
 				position: relative;
 				display: block;
 
+				@include tablet {
+					width: 100vw;
+				}
+
+				@include mobile {
+					width: 100vw;
+				}
+
 				&__mobile-menu {
-					@include mat-elevation(8);
-					position: sticky;
+					position: fixed;
 					bottom: 0;
-					width: 100%;
+					left: 0;
+					right: 0;
 					z-index: 9999;
+					width: 100vw;
 					height: rem(56px);
 					background-color: map_get($mat-blue-gray, 800);
 

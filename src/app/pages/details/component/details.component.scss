@@ -7,9 +7,22 @@
 
 :host ::ng-deep {
 	.c-details {
-		display: flex;
-		flex-direction: column;
-		flex: 1 1 auto;
+		position: static;
+		width: calc(100vw - 36px);
+		z-index: 999;
+
+		@include tablet{
+			width: calc(100vw - 48px);
+		}
+
+		@include desktop {
+			display: flex;
+			flex-direction: column;
+			flex: 1 1 auto;
+			position: relative;
+			width: 100%;
+			z-index: unset;
+		}
 
 		@include page-header;
 
@@ -27,8 +40,12 @@
 		}
 
 		&__container {
-			display: flex;
-			flex: 1 1 auto;
+
+			@include desktop {
+				display: flex;
+				flex: 1 1 auto;
+				height: auto;
+			}
 
 			@include cards;
 		}

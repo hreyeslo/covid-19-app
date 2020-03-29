@@ -9,6 +9,7 @@
 		flex-direction: row;
 		justify-content: center;
 		align-items: center;
+		min-height: rem(65px);
 
 		@include desktop {
 			margin-bottom: rem(20px);
@@ -19,6 +20,7 @@
 			width: (30px);
 			height: (30px);
 			font-weight: 300;
+			display: block;
 
 			@include mobile {
 				font-size: rem(25px);
@@ -30,8 +32,9 @@
 		&__title {
 			font-size: rem(30px);
 			font-weight: 300;
-			margin: rem(20px 0 20px 20px);
+			padding: rem(20px 0 20px 20px);
 			line-height: rem(30px);
+			display: block;
 
 			@include mobile {
 				font-size: rem(25px);
