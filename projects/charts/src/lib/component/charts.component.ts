@@ -1,12 +1,14 @@
 import { Component, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
 import { format } from 'date-fns';
+import { isEqual, merge } from 'lodash';
 
 import { HistoricalCases, IGlobalCases, ICountryCases } from '@shared/models';
 
 import { AbstractChartsService } from '../service/abstract-charts.service';
 import { totalCasesChart, totalDeathsChart } from '../charts.defaults';
 import { IChartsLiterals, IChartsData } from '../charts.model';
+import { distinctUntilChanged, first } from 'rxjs/operators';
 
 @Component({
 	selector: 'covid-charts',
@@ -60,7 +62,12 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 	_initCharts() {
 		this._subscriptions.push(
 			combineLatest([
-				this.literals,
+				this.literals.pipe(distinctUntilChanged((prev, curr) => {
+					if (!isEqual(prev, curr)) {
+						this._updateLiterals(curr);
+					}
+					return false;
+				})),
 				this.historical,
 				this.global || this.country
 			]).subscribe(chartData => {
@@ -127,6 +134,32 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 				});
 			})
 		);
+	}
+
+	_updateLiterals(literals: IChartsLiterals): void {
+		combineLatest([
+			this.totalCasesChart$,
+			this.totalDeaths$
+		]).pipe(first()).subscribe(results => {
+			this.totalCasesChart$.next(merge({}, results[0], {
+				series: (results[0]?.series || []).map((serie: any) => {
+					serie.name = literals?.totalCases;
+					return serie;
+				}),
+				title: {
+					text: literals?.totalCases
+				}
+			}));
+			this.totalDeaths$.next(merge({}, results[1], {
+				series: (results[0]?.series || []).map((serie: any) => {
+					serie.name = literals?.totalCases;
+					return serie;
+				}),
+				title: {
+					text: literals?.totalDeath
+				}
+			}));
+		});
 	}
 
 }

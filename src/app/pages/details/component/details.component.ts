@@ -45,7 +45,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.literals$ = this._tranlsateService.get('charts');
+		this.literals$ = this.literals$ = this._tranlsateService.onLangChange.pipe(
+			switchMap(() => this._tranlsateService.get('charts'))
+		);
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._subscriptions.push(
 			this._route.params.subscribe(params => this._getViewInfo(params?.country))

@@ -42,7 +42,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.globalCases$ = this._store.pipe(select(selectGlobalCases));
 		this.historicalCases$ = this._store.pipe(select(selectHistoricalCases));
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
-		this.literals$ = this._tranlsateService.get('charts');
+		this.literals$ = this._tranlsateService.onLangChange.pipe(
+			switchMap(() => this._tranlsateService.get('charts'))
+		);
 		this._mapViewData();
 	}
 
