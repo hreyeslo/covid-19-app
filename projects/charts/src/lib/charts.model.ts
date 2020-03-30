@@ -11,3 +11,8 @@ export interface IChartData {
 	global?: IGlobalCases;
 	country?: ICountryCases;
 }
+
+export enum EWorkertTypes {
+	TOTAL_CASES = 'TOTAL_CASES',
+	TOTAL_DEATHS = 'TOTAL_DEATHS'
+}

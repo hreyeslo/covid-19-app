@@ -4,6 +4,7 @@ import { NgApexchartsModule } from 'ng-apexcharts';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { ChartsServiceApiModule } from './service/charts-service-api.module';
 import { ChartsComponent } from './component/charts.component';
 
 @NgModule({
@@ -12,7 +13,8 @@ import { ChartsComponent } from './component/charts.component';
 		FormsModule,
 		FlexLayoutModule,
 		ReactiveFormsModule,
-		NgApexchartsModule
+		NgApexchartsModule,
+		ChartsServiceApiModule
 	],
 	declarations: [ChartsComponent],
 	exports: [ChartsComponent]

@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { each, get } from 'lodash';
 import { format } from 'date-fns';
 
+import { AbstractChartsService } from '../service/abstract-charts.service';
 import { totalCasesChart, totalDeathsChart } from '../charts.defaults';
 import { IChartData } from '../charts.model';
 
@@ -18,7 +19,7 @@ export class ChartsComponent implements OnChanges {
 	totalCasesChart$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(totalCasesChart);
 	totalDeaths$: BehaviorSubject<Partial<any>> = new BehaviorSubject<Partial<any>>(totalDeathsChart);
 
-	constructor() {}
+	constructor(private _chartsService: AbstractChartsService) {}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (
@@ -27,6 +28,7 @@ export class ChartsComponent implements OnChanges {
 		) {
 			this._updateTotalCasesChart();
 			this._updateTotalDeathsChart();
+			this._chartsService.calcTotalCases(this.chartData);
 		}
 	}
 
