@@ -1,8 +1,7 @@
-import { ICountryCases, HistoricalCases } from '@shared/models';
+import { ICountryCases } from '@shared/models';
 
 export interface IDetails {
 	cases: ICountryCases;
-	historical: HistoricalCases;
 	cards: IDetailsCard[];
 }
 

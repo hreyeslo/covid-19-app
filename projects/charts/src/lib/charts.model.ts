@@ -5,8 +5,7 @@ export interface IChartsLiterals {
 	totalDeath: string;
 }
 
-export interface IChartData {
-	literals: IChartsLiterals;
+export interface IChartsData {
 	historical: HistoricalCases;
 	global?: IGlobalCases;
 	country?: ICountryCases;

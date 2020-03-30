@@ -5,7 +5,7 @@ import { isEqual } from 'lodash';
 import { UtilsService } from '@shared/services';
 
 import { AbstractChartsService } from './abstract-charts.service';
-import { IChartData, EWorkertTypes } from '../charts.model';
+import { IChartsData, EWorkertTypes } from '../charts.model';
 import { distinctUntilChanged } from 'rxjs/operators';
 
 @Injectable()
@@ -15,9 +15,8 @@ export class ChartsService implements AbstractChartsService {
 	_totalDeaths$: Subject<any> = new Subject<any>();
 
 	constructor(private _utilsService: UtilsService) {
-		const worker = this._webWorker;
-		if (worker) {
-			worker.onmessage = ({data}) => this._sendMessageResponse(data);
+		if (this._webWorker) {
+			this._webWorker.onmessage = ({data}) => this._sendMessageResponse(data);
 		}
 	}
 
@@ -25,20 +24,18 @@ export class ChartsService implements AbstractChartsService {
 		return this._utilsService.getWorker() || null;
 	}
 
-	calcTotalCases(chartData: IChartData): void {
-		const worker = this._webWorker;
-		if (worker) {
-			worker.postMessage({
+	calcTotalCases(chartData: IChartsData): void {
+		if (this._webWorker) {
+			this._webWorker.postMessage({
 				type: EWorkertTypes.TOTAL_CASES,
 				charts: chartData
 			});
 		}
 	}
 
-	calcTotalDeaths(chartData: IChartData): void {
-		const worker = this._webWorker;
-		if (worker) {
-			worker.postMessage({
+	calcTotalDeaths(chartData: IChartsData): void {
+		if (this._webWorker) {
+			this._webWorker.postMessage({
 				type: EWorkertTypes.TOTAL_DEATHS,
 				charts: chartData
 			});

@@ -5,7 +5,7 @@ import { UtilsService } from '@shared/services';
 
 import { ChartsServiceApiModule } from './charts-service-api.module';
 import { ChartsService } from './charts.service';
-import { IChartData } from '../charts.model';
+import { IChartsData } from '../charts.model';
 
 @Injectable({
 	providedIn: ChartsServiceApiModule,
@@ -14,9 +14,9 @@ import { IChartData } from '../charts.model';
 })
 export abstract class AbstractChartsService {
 
-	abstract calcTotalCases(chartData: IChartData): void;
+	abstract calcTotalCases(chartData: IChartsData): void;
 
-	abstract calcTotalDeaths(chartData: IChartData): void;
+	abstract calcTotalDeaths(chartData: IChartsData): void;
 
 	abstract getTotalCases(): Observable<any>;
 
