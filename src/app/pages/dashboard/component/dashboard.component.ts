@@ -42,11 +42,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.globalCases$ = this._store.pipe(select(selectGlobalCases));
 		this.historicalCases$ = this._store.pipe(select(selectHistoricalCases));
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
-		this._subscriptions.push(
-			this._tranlsateService.onLangChange.subscribe(() => {
-				this._tranlsateService.get('charts').pipe(first()).subscribe(literals => this.literals$.next(literals));
-			})
-		);
+		this._setChartsLiterals();
 		this._mapViewData();
 	}
 
@@ -60,6 +56,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	trackByIndex(index: number): number {
 		return index;
+	}
+
+	_setChartsLiterals(): void {
+		const getChartsLiterals$ = this._tranlsateService.get('charts');
+		getChartsLiterals$.pipe(
+			first()
+		).subscribe(literals => {
+			this.literals$.next(literals);
+			this._subscriptions.push(
+				this._tranlsateService.onLangChange
+					.subscribe(() => getChartsLiterals$.pipe
+					(first()
+					).subscribe(changedLiterals => {
+						this.literals$.next(changedLiterals);
+					}))
+			);
+		});
 	}
 
 	_mapViewData(): void {

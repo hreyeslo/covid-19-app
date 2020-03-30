@@ -26,10 +26,10 @@ function calcTotalCounts(chartData: any, key: any) {
 	return countries.reduce((acc: any, country: any) => {
 		const data = country?.timeline[key] || {};
 		each(data, (value, date) => {
-			if (acc[date]) {
-				acc[date] = acc[date] + value;
-			} else {
-				acc[date] = value;
+			if (countries.length && value > 0) {
+				acc[date] = acc[date] ? acc[date] + value : value;
+			} else if (countries.length > 1) {
+				acc[date] = acc[date] ? acc[date] + value : value;
 			}
 		});
 		return acc;

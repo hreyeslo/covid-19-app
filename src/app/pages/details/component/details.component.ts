@@ -46,11 +46,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	ngOnInit(): void {
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
+		this._setChartsLiterals();
 		this._subscriptions.push(
-			this._route.params.subscribe(params => this._getViewInfo(params?.country)),
-			this._tranlsateService.onLangChange.subscribe(() => {
-				this._tranlsateService.get('charts').pipe(first()).subscribe(literals => this.literals$.next(literals));
-			})
+			this._route.params.subscribe(params => this._getViewInfo(params?.country))
 		);
 	}
 
@@ -64,6 +62,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	trackByIndex(index: number): number {
 		return index;
+	}
+
+	_setChartsLiterals(): void {
+		const getChartsLiterals$ = this._tranlsateService.get('charts');
+		getChartsLiterals$.pipe(
+			first()
+		).subscribe(literals => {
+			this.literals$.next(literals);
+			this._subscriptions.push(
+				this._tranlsateService.onLangChange
+					.subscribe(() => getChartsLiterals$.pipe
+					(first()
+					).subscribe(changedLiterals => {
+						this.literals$.next(changedLiterals);
+					}))
+			);
+		});
 	}
 
 	_getViewInfo(country: string) {
