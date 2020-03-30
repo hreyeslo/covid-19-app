@@ -9,8 +9,14 @@
 		},
 		"default": "es",
 		"langs": [
-			"en",
-			"es"
+			{
+				"name": "es",
+				"flag": "es"
+			},
+			{
+				"name": "en",
+				"flag": "us"
+			}
 		]
 	}
 }

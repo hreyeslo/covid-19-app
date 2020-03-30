@@ -6,6 +6,19 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <span class="c-app__toolbar__title">{{'title' | translate}}</span>
+            <mat-select [(ngModel)]="currentLanguage" (ngModelChange)="changeLang($event)" class="c-app__toolbar__language">
+                <mat-select-trigger>
+                    <img class="c-app__toolbar__language__selected"
+                         src="{{'https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/' + currentLanguage.flag + '.png'}}" [alt]="currentLanguage.name">
+                </mat-select-trigger>
+                <mat-option *ngFor="let lang of availableLangs" [value]="lang">
+                    <div class="c-app__toolbar__language__option">
+                        <img src="{{'https://raw.githubusercontent.com/NovelCOVID/API/master/assets/flags/' + lang.flag + '.png'}}"
+                             [alt]="lang.name">
+                        <span>{{lang.name | titlecase}}</span>
+                    </div>
+                </mat-option>
+            </mat-select>
         </mat-toolbar-row>
     </mat-toolbar>
 

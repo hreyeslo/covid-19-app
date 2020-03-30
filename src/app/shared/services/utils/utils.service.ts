@@ -24,8 +24,11 @@ import { setLayout } from '../../store/shared.actions';
 @Injectable()
 export class UtilsService implements AbstractUtilsService {
 
+	private _webWorker: Worker;
+
 	constructor(private _injector: Injector) {
 		this._initLayoutObserver();
+		this._initWebWorker();
 	}
 
 	get _config(): IAppConfig {
@@ -90,6 +93,10 @@ export class UtilsService implements AbstractUtilsService {
 		);
 	}
 
+	getWorker(): Worker {
+		return this._webWorker;
+	}
+
 	// Private
 
 	_makeRequest<T>(path: string): Observable<T> {
@@ -126,6 +133,12 @@ export class UtilsService implements AbstractUtilsService {
 				});
 			})
 		).subscribe((layout: ILayout) => this._store.dispatch(setLayout({layout})));
+	}
+
+	_initWebWorker() {
+		if (typeof Worker !== 'undefined') {
+			this._webWorker = new Worker('../charts-manager.worker', {type: 'module'});
+		}
 	}
 
 }

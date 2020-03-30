@@ -1,4 +1,4 @@
-import { Subscription, Subject, forkJoin, Observable, interval, of } from 'rxjs';
+import { Subscription, Subject, forkJoin, Observable, interval, BehaviorSubject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { startWith, switchMap } from 'rxjs/operators';
@@ -8,7 +8,7 @@ import { Store, select } from '@ngrx/store';
 import { IHistoricalCases, ICountryCases } from '@shared/models';
 import { selectLastUpdate } from '@shared/store';
 import { UtilsService } from '@shared/services';
-import { IChartData } from '@ui/charts';
+import { IChartsLiterals } from '@ui/charts';
 
 import { AbstractDetailsService } from '../service/abstract-details.service';
 import { environment } from '../../../../environments/environment';
@@ -28,9 +28,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
 		duration: 1
 	};
 
+	historical$: BehaviorSubject<IHistoricalCases | object> = new BehaviorSubject<IHistoricalCases | object>({});
+	country$: BehaviorSubject<ICountryCases | object> = new BehaviorSubject<ICountryCases | object>({});
+	literals$: Observable<IChartsLiterals>;
+
 	viewData$: Subject<IDetails> = new Subject<IDetails>();
 	lastUpdate$: Observable<number>;
-	chartData$: Observable<IChartData>;
 	tabSelected = 0;
 
 	constructor(
@@ -42,6 +45,9 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
+		this.literals$ = this.literals$ = this._tranlsateService.onLangChange.pipe(
+			switchMap(() => this._tranlsateService.get('charts'))
+		);
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._subscriptions.push(
 			this._route.params.subscribe(params => this._getViewInfo(params?.country))
@@ -70,9 +76,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
 				]))
 			).subscribe((response: [ICountryCases, IHistoricalCases]) => {
 				const [cases, historical] = response;
+				this.historical$.next([historical]);
+				this.country$.next(cases);
 				this.viewData$.next({
 					cases,
-					historical: [historical],
 					cards: [
 						{
 							title: 'cases',
@@ -92,13 +99,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 						}
 					]
 				});
-				this._mapChartData(historical, cases);
 			})
 		);
 	}
 
-	_mapChartData(historical: any, country: any) {
-		this.chartData$ = this._tranlsateService.get('charts')
-			.pipe(switchMap(literals => of({historical: [historical], literals, country})));
-	}
 }

@@ -28,4 +28,6 @@ export abstract class AbstractUtilsService {
 	abstract getCountryHistoricalCases(country: string): Observable<IHistoricalCases>;
 
 	abstract getMyCountry(): Observable<string>;
+
+	abstract getWorker(): Worker;
 }

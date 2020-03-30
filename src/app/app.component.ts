@@ -18,6 +18,7 @@ import { UtilsService } from '@shared/services';
 
 import { environment } from '../environments/environment';
 import { AppRoutingAnimations } from './app-animations';
+import { IAppLangTypes } from './core/models/core.model';
 
 @Component({
 	selector: 'covid-root',
@@ -30,12 +31,13 @@ export class AppComponent implements OnInit, OnDestroy {
 	private readonly _subscriptions: Subscription[] = [];
 
 	languages: string[] = [];
-	currentLanguage: string;
+	currentLanguage: IAppLangTypes;
 
 	isDesktopLayout$: Observable<boolean>;
 	isMobileLayout$: Observable<boolean>;
 	sidenavMode: MatDrawerMode = 'over';
 	sidenavHasBackdrop = true;
+	availableLangs: IAppLangTypes[] = [];
 
 	constructor(
 		@Inject(APP_CONFIG) private _configManager: ConfigManager,
@@ -61,8 +63,8 @@ export class AppComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	changeLang(lang: string): void {
-		this._store.dispatch(setLang({lang}));
+	changeLang(language: IAppLangTypes): void {
+		this._store.dispatch(setLang({lang: language.name}));
 	}
 
 	_initLayoutObserver(): void {
@@ -77,12 +79,20 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	_setInitialLanguage(): void {
-		this._translateService.addLangs(this._configManager.config?.i18n?.langs || [environment.defaultLang]);
+		this.availableLangs = this._configManager.config?.i18n?.langs || [];
+		const langs = this.availableLangs.map(lang => lang.name);
+		this._translateService.addLangs(langs || [environment.defaultLang]);
 		this.languages = this._translateService.getLangs();
 		const defaultLang = this._configManager.config?.i18n?.default || environment.defaultLang;
 		const browserLang = this._translateService.getBrowserLang();
-		this.currentLanguage = this.languages.indexOf(browserLang) > -1 ? browserLang : defaultLang;
-		this._translateService.setDefaultLang(this.currentLanguage);
+		this.currentLanguage = this.availableLangs.find(languages => {
+			return languages.name === (this.languages.indexOf(browserLang) > -1 ? browserLang
+				: defaultLang);
+		}) || {
+			name: 'es',
+			flag: 'es'
+		};
+		this._translateService.setDefaultLang(this.currentLanguage.name);
 		this.changeLang(this.currentLanguage);
 	}
 
