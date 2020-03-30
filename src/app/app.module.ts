@@ -3,9 +3,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
 import { CoreModule, I18nModule } from '@app/core';
@@ -34,7 +36,9 @@ import { AppComponent } from './app.component';
 		MatSidenavModule,
 		MatToolbarModule,
 		MatIconModule,
-		MatButtonModule
+		MatButtonModule,
+		MatSelectModule,
+		FormsModule
 	],
 	bootstrap: [AppComponent]
 })

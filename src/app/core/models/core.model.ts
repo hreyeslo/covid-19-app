@@ -9,8 +9,13 @@ export interface IAppConfig {
 	i18n: {
 		scope: II18nScope;
 		default: string;
-		langs: string[];
+		langs: IAppLangTypes[];
 	};
+}
+
+export interface IAppLangTypes {
+	name: string;
+	flag: string;
 }
 
 export interface IAppEnv {
