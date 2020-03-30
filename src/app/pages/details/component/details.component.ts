@@ -1,7 +1,7 @@
 import { Subscription, Subject, forkJoin, Observable, interval, BehaviorSubject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { startWith, switchMap } from 'rxjs/operators';
+import { startWith, switchMap, first } from 'rxjs/operators';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
@@ -30,7 +30,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 
 	historical$: BehaviorSubject<IHistoricalCases | object> = new BehaviorSubject<IHistoricalCases | object>({});
 	country$: BehaviorSubject<ICountryCases | object> = new BehaviorSubject<ICountryCases | object>({});
-	literals$: Observable<IChartsLiterals>;
+	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
 
 	viewData$: Subject<IDetails> = new Subject<IDetails>();
 	lastUpdate$: Observable<number>;
@@ -45,12 +45,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	) {}
 
 	ngOnInit(): void {
-		this.literals$ = this.literals$ = this._tranlsateService.onLangChange.pipe(
-			switchMap(() => this._tranlsateService.get('charts'))
-		);
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._subscriptions.push(
-			this._route.params.subscribe(params => this._getViewInfo(params?.country))
+			this._route.params.subscribe(params => this._getViewInfo(params?.country)),
+			this._tranlsateService.onLangChange.subscribe(() => {
+				this._tranlsateService.get('charts').pipe(first()).subscribe(literals => this.literals$.next(literals));
+			})
 		);
 	}
 

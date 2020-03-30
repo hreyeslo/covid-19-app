@@ -1,8 +1,8 @@
-import { Subscription, Observable, of } from 'rxjs';
+import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Store, select } from '@ngrx/store';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, first } from 'rxjs/operators';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
 import { IGlobalCases, HistoricalCases } from '@shared/models';
@@ -25,12 +25,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		duration: 1
 	};
 
-	literals$: Observable<IChartsLiterals>;
 	globalCases$: Observable<IGlobalCases>;
 	historicalCases$: Observable<HistoricalCases>;
 
 	viewData$: Observable<IDashboardViewData>;
 	lastUpdate$: Observable<number>;
+	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
@@ -42,8 +42,10 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.globalCases$ = this._store.pipe(select(selectGlobalCases));
 		this.historicalCases$ = this._store.pipe(select(selectHistoricalCases));
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
-		this.literals$ = this._tranlsateService.onLangChange.pipe(
-			switchMap(() => this._tranlsateService.get('charts'))
+		this._subscriptions.push(
+			this._tranlsateService.onLangChange.subscribe(() => {
+				this._tranlsateService.get('charts').pipe(first()).subscribe(literals => this.literals$.next(literals));
+			})
 		);
 		this._mapViewData();
 	}
