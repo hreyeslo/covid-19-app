@@ -42,6 +42,9 @@ export const totalCasesChart = {
 	},
 	xaxis: {
 		categories: []
+	},
+	yaxis: {
+		logarithmic: false
 	}
 };
 
@@ -89,5 +92,8 @@ export const totalDeathsChart = {
 	},
 	xaxis: {
 		categories: []
+	},
+	yaxis: {
+		logarithmic: false
 	}
 };
