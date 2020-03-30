@@ -1,3 +1,4 @@
+import { AngularFireAnalyticsModule, ScreenTrackingService } from '@angular/fire/analytics';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -7,6 +8,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { BrowserModule } from '@angular/platform-browser';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
+import { AngularFireModule } from '@angular/fire';
 import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 
@@ -32,6 +34,8 @@ import { AppComponent } from './app.component';
 			enabled: environment.production,
 			registrationStrategy: 'registerImmediately'
 		}),
+		AngularFireModule.initializeApp(environment.firebase),
+		AngularFireAnalyticsModule,
 		SharedModule,
 		MatSidenavModule,
 		MatToolbarModule,
@@ -39,6 +43,9 @@ import { AppComponent } from './app.component';
 		MatButtonModule,
 		MatSelectModule,
 		FormsModule
+	],
+	providers: [
+		ScreenTrackingService
 	],
 	bootstrap: [AppComponent]
 })

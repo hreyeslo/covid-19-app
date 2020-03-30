@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "covidmeters"
+  },
+  "targets": {
+    "covidmeters": {
+      "hosting": {
+        "covid": [
+          "covidmeters"
+        ]
+      }
+    }
   }
 }
