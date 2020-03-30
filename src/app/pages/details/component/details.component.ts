@@ -65,18 +65,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	}
 
 	_setChartsLiterals(): void {
-		const getChartsLiterals$ = this._tranlsateService.get('charts');
-		getChartsLiterals$.pipe(
-			first()
-		).subscribe(literals => {
+		this._tranlsateService.get('charts')
+			.pipe(
+				first()
+			).subscribe(literals => {
 			this.literals$.next(literals);
 			this._subscriptions.push(
 				this._tranlsateService.onLangChange
-					.subscribe(() => getChartsLiterals$.pipe
-					(first()
+					.pipe(
+						switchMap(() => this._tranlsateService.get('charts'))
 					).subscribe(changedLiterals => {
-						this.literals$.next(changedLiterals);
-					}))
+					this.literals$.next(changedLiterals);
+				})
 			);
 		});
 	}
