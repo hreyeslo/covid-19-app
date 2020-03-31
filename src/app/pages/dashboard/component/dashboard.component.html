@@ -12,7 +12,11 @@
     </div>
 
     <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner" fxLayout="column">
-        <div class="c-dashboard__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
+        <mat-tab-group (selectedIndexChange)="currentTabIndex = $event" class="c-dashboard__container__tabs">
+            <mat-tab label="{{'tabs.summary' | translate}}"></mat-tab>
+            <mat-tab label="{{'tabs.charts' | translate}}"></mat-tab>
+        </mat-tab-group>
+        <div *ngIf="currentTabIndex === 0" class="c-dashboard__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
             <mat-card
                 class="c-dashboard__container__cards__card"
                 *ngFor="let card of viewData?.cards; trackBy: trackByIndex"
@@ -29,7 +33,7 @@
                 </mat-card-content>
             </mat-card>
         </div>
-        <covid-charts [historical]="historicalCases$" [global]="globalCases$" [literals]="literals$"></covid-charts>
+        <covid-charts *ngIf="currentTabIndex === 1" [historical]="historicalCases$" [global]="globalCases$" [literals]="literals$"></covid-charts>
     </div>
 
 </div>

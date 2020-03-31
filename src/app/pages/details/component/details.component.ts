@@ -1,7 +1,7 @@
 import { Subscription, Subject, forkJoin, Observable, interval, BehaviorSubject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
 import { startWith, switchMap, first } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 
@@ -12,12 +12,14 @@ import { IChartsLiterals } from '@ui/charts';
 
 import { AbstractDetailsService } from '../service/abstract-details.service';
 import { environment } from '../../../../environments/environment';
+import { AppTabsAnimations } from '../../../app-animations';
 import { IDetails } from '../models/details.model';
 
 @Component({
 	selector: 'covid-dashboard',
 	templateUrl: './details.component.html',
-	styleUrls: ['./details.component.scss']
+	styleUrls: ['./details.component.scss'],
+	animations: [AppTabsAnimations]
 })
 export class DetailsComponent implements OnInit, OnDestroy {
 
@@ -27,6 +29,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 		decimal: ',',
 		duration: 1
 	};
+
+	currentTabIndex = 0;
 
 	historical$: BehaviorSubject<IHistoricalCases | object> = new BehaviorSubject<IHistoricalCases | object>({});
 	country$: BehaviorSubject<ICountryCases | object> = new BehaviorSubject<ICountryCases | object>({});

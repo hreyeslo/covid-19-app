@@ -27,7 +27,6 @@
 		@include page-header;
 
 		&__header {
-			margin-bottom: rem(10px);
 			min-height: rem(101px);
 
 			&__flag {
@@ -53,6 +52,8 @@
 				flex: 1 1 auto;
 				height: auto;
 			}
+
+			@include tabs;
 
 			@include cards;
 		}

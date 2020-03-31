@@ -1,8 +1,8 @@
 import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { Store, select } from '@ngrx/store';
 import { switchMap, first } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
 import { IGlobalCases, HistoricalCases } from '@shared/models';
@@ -10,11 +10,13 @@ import { IChartsLiterals } from '@ui/charts';
 
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
 import { IDashboardViewData, IDashboardCard } from '../models/dashboard.model';
+import { AppTabsAnimations } from '../../../app-animations';
 
 @Component({
 	selector: 'covid-dashboard',
 	templateUrl: './dashboard.component.html',
-	styleUrls: ['./dashboard.component.scss']
+	styleUrls: ['./dashboard.component.scss'],
+	animations: [AppTabsAnimations]
 })
 export class DashboardComponent implements OnInit, OnDestroy {
 
@@ -24,6 +26,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		decimal: ',',
 		duration: 1
 	};
+
+	currentTabIndex = 0;
 
 	globalCases$: Observable<IGlobalCases>;
 	historicalCases$: Observable<HistoricalCases>;

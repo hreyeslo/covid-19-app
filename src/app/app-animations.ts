@@ -1,5 +1,10 @@
 import { transition, trigger, useAnimation } from '@angular/animations';
-import { moveFromRight, moveFromLeft } from 'ngx-router-animations';
+import {
+	moveFromRight,
+	moveFromLeft,
+	scaleDownFromRight,
+	scaleDownFromLeft
+} from 'ngx-router-animations';
 
 export const AppRoutingAnimations =
 	trigger('routeAnimations', [
@@ -9,4 +14,10 @@ export const AppRoutingAnimations =
 		transition('countries => dashboard', useAnimation(moveFromLeft)),
 		transition('details => countries', useAnimation(moveFromLeft)),
 		transition('details => dashboard', useAnimation(moveFromLeft))
+	]);
+
+export const AppTabsAnimations =
+	trigger('tabsAnimations', [
+		transition(':enter', useAnimation(scaleDownFromRight)),
+		transition(':leave', useAnimation(scaleDownFromLeft))
 	]);
