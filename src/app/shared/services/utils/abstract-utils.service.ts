@@ -5,10 +5,10 @@ import { UtilsApiModule } from './utils-api.module';
 import { UtilsService } from './utils.service';
 import {
 	IGlobalCases,
-	HistoricalCases,
 	CountryCases,
 	ICountryCases,
-	IHistoricalCases
+	IHistoricalCases,
+	IHistoricalTimeline
 } from '../../models/shared.model';
 
 @Injectable({
@@ -19,7 +19,7 @@ import {
 export abstract class AbstractUtilsService {
 	abstract getGlobalCases(): Observable<IGlobalCases>;
 
-	abstract getGlobalHistoricalCases(): Observable<HistoricalCases>;
+	abstract getGlobalHistoricalCases(): Observable<IHistoricalTimeline>;
 
 	abstract getAllCountriesCases(): Observable<CountryCases>;
 

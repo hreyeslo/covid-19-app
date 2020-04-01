@@ -32,6 +32,7 @@ export interface ICountryCases {
 	critical: number;
 	casesPerOneMillion: number;
 	deathsPerOneMillion: number;
+	updated: number;
 }
 
 export type CountryCases = ICountryCases[];
@@ -43,11 +44,12 @@ export interface IHistoricalDateCase {
 export interface IHistoricalTimeline {
 	cases: IHistoricalDateCase;
 	deaths: IHistoricalDateCase;
+	recovered: IHistoricalDateCase;
 }
 
 export interface IHistoricalCases {
 	country: string;
-	province?: any;
+	province?: any[];
 	timeline: IHistoricalTimeline;
 }
 

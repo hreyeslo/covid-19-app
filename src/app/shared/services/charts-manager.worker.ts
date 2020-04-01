@@ -22,9 +22,10 @@ addEventListener('message', ({data}) => {
 // Methods
 
 function calcTotalCounts(chartData: any, key: any) {
-	const countries: any[] = get(chartData, 'historical', []);
+	let countries: any = get(chartData, 'historical', []);
+	countries = (Array.isArray(countries) ? countries : [countries]);
 	return countries.reduce((acc: any, country: any) => {
-		const data = country?.timeline[key] || {};
+		const data = country[key] || {};
 		each(data, (value, date) => {
 			if (countries.length && value > 0) {
 				acc[date] = acc[date] ? acc[date] + value : value;

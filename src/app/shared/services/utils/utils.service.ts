@@ -1,6 +1,6 @@
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { Injectable, Injector } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable, Injector } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { isEqual } from 'lodash';
 
@@ -11,11 +11,11 @@ import {
 	IGlobalCases,
 	CountryCases,
 	ICountryCases,
-	HistoricalCases,
 	IHistoricalCases,
 	ELayoutName,
 	ELayoutAlias,
-	ILayout
+	ILayout,
+	IHistoricalTimeline
 } from '../../models/shared.model';
 import { filter, map, distinctUntilChanged, switchMap, catchError, first } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -53,8 +53,8 @@ export class UtilsService implements AbstractUtilsService {
 		return this._makeRequest<IGlobalCases>('all');
 	}
 
-	getGlobalHistoricalCases(): Observable<HistoricalCases> {
-		return this._makeRequest<HistoricalCases>('v2/historical');
+	getGlobalHistoricalCases(): Observable<IHistoricalTimeline> {
+		return this._makeRequest<IHistoricalTimeline>('v2/historical/all');
 	}
 
 	// Countries

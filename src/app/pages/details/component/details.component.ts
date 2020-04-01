@@ -95,7 +95,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 				]))
 			).subscribe((response: [ICountryCases, IHistoricalCases]) => {
 				const [cases, historical] = response;
-				this.historical$.next([historical]);
+				this.historical$.next(historical?.timeline);
 				this.country$.next(cases);
 				this.viewData$.next({
 					cases,
