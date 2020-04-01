@@ -94,6 +94,38 @@
 					font-weight: 300;
 				}
 			}
+
+			&__increment {
+				border-top: 1px solid $globalBgColor;
+				margin: rem(0 -16px);
+				padding: rem(16px 26px 0);
+				font-size: rem(16px);
+				font-weight: 400;
+				color: $fontColor;
+				display: flex;
+				flex-direction: revert;
+				justify-content: center;
+
+				&__value {
+					font-size: rem(21px);
+					font-weight: 400;
+
+					&:last-child {
+						padding-left: rem(2px);
+					}
+
+					&--bad {
+						margin-left: rem(10px);
+						color: $badColor;
+					}
+
+					&--good {
+						margin-left: rem(10px);
+						color: $goodColor;
+					}
+
+				}
+			}
 		}
 	}
 }

@@ -1,4 +1,4 @@
-import { IGlobalCases, HistoricalCases, CountryCases, ILayout } from '../models/shared.model';
+import { IGlobalCases, CountryCases, ILayout, IHistoricalTimeline } from '../models/shared.model';
 
 export const featureStoreName = 'Shared';
 
@@ -22,7 +22,7 @@ export interface ISharedStore {
 	layout: ILayout;
 	cases: {
 		global: IGlobalCases;
-		historical: HistoricalCases;
+		historical: IHistoricalTimeline;
 		countries: CountryCases;
 	};
 }

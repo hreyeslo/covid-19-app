@@ -9,3 +9,10 @@ export interface IDetailsCard {
 	title: string;
 	value: number;
 }
+
+export interface IDetailsDailyIncrements {
+	cases: number;
+	deaths: number;
+	recovered: number;
+	active: number;
+}

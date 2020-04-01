@@ -8,6 +8,7 @@ export interface IGlobalCases {
 	recovered: number;
 	updated: number;
 	active: number;
+	affectedCountries: number;
 }
 
 export interface ICountryInfo {

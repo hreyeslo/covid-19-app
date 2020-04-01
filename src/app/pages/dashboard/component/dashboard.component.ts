@@ -1,15 +1,20 @@
-import { Subscription, Observable, of, BehaviorSubject } from 'rxjs';
+import { Subscription, Observable, of, BehaviorSubject, combineLatest } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { switchMap, first } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
+import { get } from 'lodash';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
-import { IGlobalCases, HistoricalCases } from '@shared/models';
+import { IGlobalCases, IHistoricalTimeline } from '@shared/models';
 import { IChartsLiterals } from '@ui/charts';
 
+import {
+	IDashboardViewData,
+	IDashboardCard,
+	IDashboardDailyIncrements
+} from '../models/dashboard.model';
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
-import { IDashboardViewData, IDashboardCard } from '../models/dashboard.model';
 import { AppTabsAnimations } from '../../../app-animations';
 
 @Component({
@@ -30,7 +35,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	currentTabIndex = 0;
 
 	globalCases$: Observable<IGlobalCases>;
-	historicalCases$: Observable<HistoricalCases>;
+	historicalCases$: Observable<IHistoricalTimeline>;
+	dailyIncrements$: Observable<IDashboardDailyIncrements>;
 
 	viewData$: Observable<IDashboardViewData>;
 	lastUpdate$: Observable<number>;
@@ -48,6 +54,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._setChartsLiterals();
 		this._mapViewData();
+		this._getDailyIncrements();
 	}
 
 	ngOnDestroy() {
@@ -106,5 +113,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
 				value: data?.recovered
 			}
 		];
+	}
+
+	_getDailyIncrements() {
+		this.dailyIncrements$ = combineLatest([
+			this.globalCases$,
+			this.historicalCases$
+		]).pipe(switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
+			const [global, historical] = data;
+			const cases = this._calcIncrement(global, historical, 'cases');
+			const deaths = this._calcIncrement(global, historical, 'deaths');
+			const recovered = this._calcIncrement(global, historical, 'recovered');
+			return of({
+				cases, deaths, recovered,
+				active: cases - (recovered + deaths)
+			});
+		}));
+	}
+
+	_calcIncrement(global: IGlobalCases, historical: IHistoricalTimeline, key: string): number {
+		const result = get(global, [key], 0) - get(historical, [
+			key,
+			Object.keys(get(historical, [key], {})).pop() || ''
+		], 0);
+		return result < 0 ? 0 : result;
 	}
 }
