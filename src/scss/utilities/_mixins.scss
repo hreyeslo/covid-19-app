@@ -83,6 +83,9 @@
 				}
 			}
 
+			&--chart {
+			}
+
 			&__content {
 
 				&__value {
@@ -92,6 +95,21 @@
 					font-size: rem(50px);
 					line-height: rem(100px);
 					font-weight: 300;
+				}
+			}
+
+			&__chart {
+				width: calc(100% - 40px);
+
+				&__title {
+					display: block;
+					width: 100%;
+					font-weight: 400;
+					font-size: rem(28px);
+					color: $fontTitleColor;
+					text-align: center;
+					padding: rem(20px);
+					margin-bottom: rem(20px);
 				}
 			}
 

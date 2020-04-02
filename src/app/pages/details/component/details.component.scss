@@ -57,5 +57,12 @@
 
 			@include cards;
 		}
+
+		&__summary-chart {
+
+			> div:first-of-type {
+				margin-left: rem(15px);
+			}
+		}
 	}
 }

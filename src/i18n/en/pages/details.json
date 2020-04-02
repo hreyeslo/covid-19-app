@@ -5,11 +5,13 @@
 		"cases": "Total cases",
 		"active": "Active cases",
 		"deaths": "Deaths",
-		"recovered": "Recovered"
+		"recovered": "Recovered",
+		"increment": "Increment:",
+		"summary": "Last {{days}} days"
 	},
 	"tabs": {
 		"summary": "Summary",
-		"charts": "Graphics"
+		"charts": "More details"
 	},
 	"charts": {
 		"totalCases": "Historical of total cases",
