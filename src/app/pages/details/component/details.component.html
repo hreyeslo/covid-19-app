@@ -50,9 +50,9 @@
                     </mat-card-content>
                 </mat-card>
                 <!-- charts-->
-                <mat-card class="c-details__container__cards__card c-details__container__cards__card__content__chart" fxFlex="100">
+                <mat-card class="c-details__container__cards__card c-details__container__cards__card__chart" fxFlex="100">
                     <mat-card-content class="c-details__container__cards__card__content">
-                        <span class="c-details__container__cards__card__content__chart__title">{{ 'cards.summary' | translate:{ days: lastdays } }}</span>
+                        <span class="c-details__container__cards__card__chart__title">{{ 'cards.summary' | translate:{ days: lastdays } }}</span>
                         <apx-chart
                             class="c-details__summary-chart"
                             *ngIf="chartData"
