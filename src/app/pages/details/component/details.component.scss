@@ -27,7 +27,6 @@
 		@include page-header;
 
 		&__header {
-			margin-bottom: rem(10px);
 			min-height: rem(101px);
 
 			&__flag {
@@ -54,7 +53,16 @@
 				height: auto;
 			}
 
+			@include tabs;
+
 			@include cards;
+		}
+
+		&__summary-chart {
+
+			> div:first-of-type {
+				margin-left: rem(15px);
+			}
 		}
 	}
 }

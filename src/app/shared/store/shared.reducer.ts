@@ -23,9 +23,14 @@ export const initialState: ISharedStore = {
 			deaths: 0,
 			recovered: 0,
 			active: 0,
+			affectedCountries: 0,
 			updated: Number(new Date().toString())
 		},
-		historical: [],
+		historical: {
+			cases: {},
+			deaths: {},
+			recovered: {}
+		},
 		countries: []
 	}
 };

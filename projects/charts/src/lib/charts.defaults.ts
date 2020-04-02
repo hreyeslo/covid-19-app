@@ -40,6 +40,13 @@ export const totalCasesChart = {
 			opacity: 0.5
 		}
 	},
+	legend: {
+		position: 'top',
+		horizontalAlign: 'right',
+		floating: true,
+		offsetY: -25,
+		offsetX: -5
+	},
 	xaxis: {
 		categories: []
 	},
@@ -89,6 +96,13 @@ export const totalDeathsChart = {
 			colors: ['#f3f3f3', 'transparent'],
 			opacity: 0.5
 		}
+	},
+	legend: {
+		position: 'top',
+		horizontalAlign: 'right',
+		floating: true,
+		offsetY: -25,
+		offsetX: -5
 	},
 	xaxis: {
 		categories: []

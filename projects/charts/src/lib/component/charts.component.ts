@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, OnDestroy, OnInit } from '@angular/core';
 import { BehaviorSubject, Observable, combineLatest, Subscription } from 'rxjs';
-import { format } from 'date-fns';
 import { isEqual, merge } from 'lodash';
+import { format } from 'date-fns';
 
 import { HistoricalCases, IGlobalCases, ICountryCases } from '@shared/models';
 
@@ -32,8 +32,10 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 	constructor(private _chartsService: AbstractChartsService) {}
 
 	ngOnInit() {
-		this._updateTotalCasesChart();
-		this._updateTotalDeathsChart();
+		this._subscriptions.push(
+			this._chartsService.getTotalCases().subscribe(data => this._updateTotalCasesChart(data)),
+			this._chartsService.getTotalDeaths().subscribe(data => this._updateTotalDeathsChart(data))
+		);
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -90,59 +92,14 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 		this._chartsService.calcTotalDeaths(this._chartsData);
 	}
 
-	_updateTotalCasesChart() {
-		this._subscriptions.push(
-			this._chartsService.getTotalCases().subscribe(data => {
-				this.totalCasesChart$.next({
-					...totalCasesChart,
-					series: [
-						{
-							name: this._literals?.totalCases,
-							data: Object.values(data)
-						}
-					],
-					title: {
-						text: this._literals?.totalCases,
-						align: 'left'
-					},
-					xaxis: {
-						categories: Object.keys(data).map(date => format(new Date(date), 'dd-MM-yyyy'))
-					}
-				});
-			})
-		);
-	}
-
-	_updateTotalDeathsChart() {
-		this._subscriptions.push(
-			this._chartsService.getTotalDeaths().subscribe(data => {
-				this.totalDeaths$.next({
-					...totalDeathsChart,
-					series: [
-						{
-							name: this._literals?.totalDeath,
-							data: Object.values(data)
-						}
-					],
-					title: {
-						text: this._literals?.totalDeath,
-						align: 'left'
-					},
-					xaxis: {
-						categories: Object.keys(data).map(date => format(new Date(date), 'dd-MM-yyyy'))
-					}
-				});
-			})
-		);
-	}
-
 	_updateLiterals(literals: IChartsLiterals): void {
 		combineLatest([
 			this.totalCasesChart$,
 			this.totalDeaths$
 		]).pipe(first()).subscribe(results => {
-			this.totalCasesChart$.next(merge({}, results[0], {
-				series: (results[0]?.series || []).map((serie: any) => {
+			const [totalCases, totalDeaths] = results;
+			this.totalCasesChart$.next(merge({}, totalCases, {
+				series: (totalCases?.series || []).map((serie: any) => {
 					serie.name = literals?.totalCases;
 					return serie;
 				}),
@@ -150,8 +107,8 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 					text: literals?.totalCases
 				}
 			}));
-			this.totalDeaths$.next(merge({}, results[1], {
-				series: (results[0]?.series || []).map((serie: any) => {
+			this.totalDeaths$.next(merge({}, totalDeaths, {
+				series: (totalDeaths?.series || []).map((serie: any) => {
 					serie.name = literals?.totalCases;
 					return serie;
 				}),
@@ -159,6 +116,46 @@ export class ChartsComponent implements OnInit, OnChanges, OnDestroy {
 					text: literals?.totalDeath
 				}
 			}));
+		});
+	}
+
+	// Draw chat methods
+
+	_updateTotalCasesChart(data: any) {
+		this.totalCasesChart$.next({
+			...totalCasesChart,
+			series: [
+				{
+					name: this._literals?.totalCases,
+					data: Object.values(data)
+				}
+			],
+			title: {
+				text: this._literals?.totalCases,
+				align: 'left'
+			},
+			xaxis: {
+				categories: Object.keys(data).map(date => format(new Date(date), 'dd-MM-yyyy'))
+			}
+		});
+	}
+
+	_updateTotalDeathsChart(data: any) {
+		this.totalDeaths$.next({
+			...totalDeathsChart,
+			series: [
+				{
+					name: this._literals?.totalDeath,
+					data: Object.values(data)
+				}
+			],
+			title: {
+				text: this._literals?.totalDeath,
+				align: 'left'
+			},
+			xaxis: {
+				categories: Object.keys(data).map(date => format(new Date(date), 'dd-MM-yyyy'))
+			}
 		});
 	}
 

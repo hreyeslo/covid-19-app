@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 
-import { IGlobalCases, HistoricalCases, CountryCases, ILayout } from '../models/shared.model';
+import { IGlobalCases, CountryCases, ILayout, IHistoricalTimeline } from '../models/shared.model';
 import { ESharedActions, EPrivateSharedActions } from './shared.state';
 
 // Public
@@ -22,7 +22,7 @@ export const getGlobalCasesSuccess = createAction(
 export const getGlobalCasesError = createAction(EPrivateSharedActions.GET_GLOBAL_CASES_ERROR);
 export const getHistoricalCasesSuccess = createAction(
 	EPrivateSharedActions.GET_HISTORICAL_CASES_SUCCESSFULLY,
-	props<{historical: HistoricalCases}>()
+	props<{historical: IHistoricalTimeline}>()
 );
 export const getHistoricalCasesError = createAction(EPrivateSharedActions.GET_HISTORICAL_CASES_ERROR);
 export const getCountriesCasesSuccess = createAction(

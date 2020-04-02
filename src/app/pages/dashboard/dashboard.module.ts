@@ -1,6 +1,7 @@
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
@@ -34,7 +35,8 @@ import { dashboardReducer } from './store/dashboard.reducer';
 		MatIconModule,
 		CountUpModule,
 		MatProgressSpinnerModule,
-		ChartsModule
+		ChartsModule,
+		MatTabsModule
 	]
 })
 export class DashboardModule {}

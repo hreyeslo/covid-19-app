@@ -11,10 +11,6 @@
 		align-items: center;
 		min-height: rem(101px);
 
-		@include desktop {
-			margin-bottom: rem(20px);
-		}
-
 		&__icon {
 			font-size: rem(30px);
 			width: (30px);
@@ -98,6 +94,53 @@
 					font-weight: 300;
 				}
 			}
+
+			&__chart {
+				width: calc(100% - 40px);
+
+				&__title {
+					display: block;
+					width: 100%;
+					font-weight: 400;
+					font-size: rem(28px);
+					color: $fontTitleColor;
+					text-align: center;
+					padding: rem(20px);
+					margin-bottom: rem(20px);
+				}
+			}
+
+			&__increment {
+				border-top: 1px solid $globalBgColor;
+				margin: rem(0 -16px);
+				padding: rem(16px 26px 0);
+				font-size: rem(16px);
+				font-weight: 400;
+				color: $fontColor;
+				display: flex;
+				flex-direction: revert;
+				justify-content: center;
+
+				&__value {
+					font-size: rem(21px);
+					font-weight: 400;
+
+					&:last-child {
+						padding-left: rem(2px);
+					}
+
+					&--bad {
+						margin-left: rem(10px);
+						color: $badColor;
+					}
+
+					&--good {
+						margin-left: rem(10px);
+						color: $goodColor;
+					}
+
+				}
+			}
 		}
 	}
 }
@@ -105,6 +148,9 @@
 @mixin tabs {
 	&__tabs {
 		width: 100%;
-		height: rem(50px);
+
+		.mat-tab-body-wrapper {
+			display: none;
+		}
 	}
 }
