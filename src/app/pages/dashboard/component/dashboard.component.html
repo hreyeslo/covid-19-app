@@ -33,20 +33,21 @@
                     <div class="c-dashboard__container__cards__card__increment">
                         <span>{{'cards.increment' | translate}}</span>
                         <div
-                            [ngClass]="((dailyIncrements$ | async)[card?.title] || 0) > 0
+                            [ngClass]="card?.increment > 0
                             ? 'c-dashboard__container__cards__card__increment__value--bad'
                             : 'c-dashboard__container__cards__card__increment__value--good'"
                         >
-                            <span class="c-dashboard__container__cards__card__increment__value">{{((dailyIncrements$ | async)[card?.title] || 0) > 0 ? '+' : ''}}</span>
+                            <span class="c-dashboard__container__cards__card__increment__value">{{card?.increment > 0 ? '+' : ''}}</span>
                             <span
                                 class="c-dashboard__container__cards__card__increment__value"
-                                [countUp]="(dailyIncrements$ | async)[card?.title] || 0" [options]="countUpOptions"
+                                [countUp]="card?.increment" [options]="countUpOptions"
                                 [reanimateOnClick]="false">
                             </span>
                         </div>
                     </div>
                 </mat-card-content>
             </mat-card>
+            <covid-daily-increment-chart [historicalData$]="historicalCases$"></covid-daily-increment-chart>
         </div>
         <covid-charts *ngIf="currentTabIndex === 1" [historical]="historicalCases$" [global]="globalCases$" [literals]="literals$"></covid-charts>
     </div>

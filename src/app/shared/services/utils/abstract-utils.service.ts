@@ -30,4 +30,6 @@ export abstract class AbstractUtilsService {
 	abstract getMyCountry(): Promise<string>;
 
 	abstract getWorker(): Worker;
+
+	abstract calcIncrement(global: IGlobalCases | ICountryCases, historical: IHistoricalTimeline, key: string): number;
 }

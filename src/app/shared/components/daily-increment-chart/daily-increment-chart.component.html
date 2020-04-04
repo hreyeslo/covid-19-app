@@ -1,0 +1,19 @@
+<mat-card class="c-chart__cards__card c-chart__cards__card__chart" fxFlex="100">
+    <mat-card-content class="c-chart__cards__card__content">
+        <span class="c-chart__cards__card__chart__title">{{ 'cards.summary' | translate:{ days: lastdays } }}</span>
+        <apx-chart
+            class="c-chart__summary-chart"
+            *ngIf="chartData$ | async; let chartData"
+            [series]="chartData?.series"
+            [chart]="chartData?.chart"
+            [xaxis]="chartData?.xaxis"
+            [tooltip]="chartData?.tooltip"
+            [dataLabels]="chartData?.dataLabels"
+            [stroke]="chartData?.stroke"
+            [yaxis]="chartData?.yaxis"
+            [legend]="chartData?.legend"
+            [fill]="chartData?.fill"
+            [colors]="chartData?.colors"
+        ></apx-chart>
+    </mat-card-content>
+</mat-card>

@@ -5,6 +5,7 @@ export interface IDashboardViewData {
 export interface IDashboardCard {
 	title: string;
 	value: number;
+	increment: number;
 }
 
 export interface IDashboardDailyIncrements {

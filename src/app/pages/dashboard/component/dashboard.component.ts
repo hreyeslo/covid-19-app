@@ -3,18 +3,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { switchMap, first } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { get } from 'lodash';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
 import { IGlobalCases, IHistoricalTimeline } from '@shared/models';
+import { UtilsService } from '@shared/services';
 import { IChartsLiterals } from '@ui/charts';
 
-import {
-	IDashboardViewData,
-	IDashboardCard,
-	IDashboardDailyIncrements
-} from '../models/dashboard.model';
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
+import { IDashboardViewData } from '../models/dashboard.model';
 import { AppTabsAnimations } from '../../../app-animations';
 
 @Component({
@@ -34,17 +30,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	currentTabIndex = 0;
 
+	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
 	globalCases$: Observable<IGlobalCases>;
 	historicalCases$: Observable<IHistoricalTimeline>;
-	dailyIncrements$: Observable<IDashboardDailyIncrements>;
 
 	viewData$: Observable<IDashboardViewData>;
 	lastUpdate$: Observable<number>;
-	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
 		private _tranlsateService: TranslateService,
+		private _utilsService: UtilsService,
 		private _store: Store
 	) {}
 
@@ -54,7 +50,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._setChartsLiterals();
 		this._mapViewData();
-		this._getDailyIncrements();
 	}
 
 	ngOnDestroy() {
@@ -68,6 +63,28 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	trackByIndex(index: number): number {
 		return index;
 	}
+
+	_mapViewData(): void {
+		this.viewData$ = combineLatest([this.globalCases$, this.historicalCases$]).pipe(
+			switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
+					const [global, historical] = data;
+					const cases = this._utilsService.calcIncrement(global, historical, 'cases');
+					const deaths = this._utilsService.calcIncrement(global, historical, 'deaths');
+					const recovered = this._utilsService.calcIncrement(global, historical, 'recovered');
+					return of({
+						cards: [
+							{title: 'cases', value: global?.cases, increment: cases || 0},
+							{title: 'active', value: global?.active, increment: cases - (recovered + deaths) || 0},
+							{title: 'deaths', value: global?.deaths, increment: deaths || 0},
+							{title: 'recovered', value: global?.recovered, increment: recovered || 0}
+						]
+					});
+				}
+			)
+		);
+	}
+
+	// Review
 
 	_setChartsLiterals(): void {
 		this._tranlsateService.get('charts')
@@ -84,58 +101,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
 				})
 			);
 		});
-	}
-
-	_mapViewData(): void {
-		this.viewData$ = this.globalCases$
-			.pipe(
-				switchMap((data: IGlobalCases) => of({cards: this._getCards(data)})
-				)
-			);
-	}
-
-	_getCards(data: IGlobalCases): IDashboardCard[] {
-		return [
-			{
-				title: 'cases',
-				value: data?.cases
-			},
-			{
-				title: 'active',
-				value: data?.active
-			},
-			{
-				title: 'deaths',
-				value: data?.deaths
-			},
-			{
-				title: 'recovered',
-				value: data?.recovered
-			}
-		];
-	}
-
-	_getDailyIncrements() {
-		this.dailyIncrements$ = combineLatest([
-			this.globalCases$,
-			this.historicalCases$
-		]).pipe(switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
-			const [global, historical] = data;
-			const cases = this._calcIncrement(global, historical, 'cases');
-			const deaths = this._calcIncrement(global, historical, 'deaths');
-			const recovered = this._calcIncrement(global, historical, 'recovered');
-			return of({
-				cases, deaths, recovered,
-				active: cases - (recovered + deaths)
-			});
-		}));
-	}
-
-	_calcIncrement(global: IGlobalCases, historical: IHistoricalTimeline, key: string): number {
-		const result = get(global, [key], 0) - get(historical, [
-			key,
-			Object.keys(get(historical, [key], {})).pop() || ''
-		], 0);
-		return result < 0 ? 0 : result;
 	}
 }

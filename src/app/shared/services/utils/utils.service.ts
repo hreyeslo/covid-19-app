@@ -9,6 +9,7 @@ import { Store } from '@ngrx/store';
 import { IAppConfig, ConfigManager, APP_CONFIG } from '@app/core';
 
 import { AbstractUtilsService } from './abstract-utils.service';
+import { setLayout } from '../../store/shared.actions';
 import {
 	IGlobalCases,
 	CountryCases,
@@ -19,7 +20,6 @@ import {
 	ILayout,
 	IHistoricalTimeline
 } from '../../models/shared.model';
-import { setLayout } from '../../store/shared.actions';
 
 @Injectable()
 export class UtilsService implements AbstractUtilsService {
@@ -109,6 +109,14 @@ export class UtilsService implements AbstractUtilsService {
 
 	getWorker(): Worker {
 		return this._webWorker;
+	}
+
+	calcIncrement(global: IGlobalCases | ICountryCases, historical: IHistoricalTimeline, key: string): number {
+		const result = get(global, [key], 0) - get(historical, [
+			key,
+			Object.keys(get(historical, [key], {})).pop() || ''
+		], 0);
+		return result < 0 ? 0 : result;
 	}
 
 	// Private

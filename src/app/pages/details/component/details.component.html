@@ -30,55 +30,32 @@
                         <mat-card-title class="c-details__container__cards__card__header__title">{{ 'cards.' + card?.title | translate}}</mat-card-title>
                     </mat-card-header>
                     <mat-card-content class="c-details__container__cards__card__content">
-                        <span class="c-details__container__cards__card__content__value" [countUp]="card?.value" [options]="countUpOptions"
-                              [reanimateOnClick]="false"></span>
+                        <span class="c-details__container__cards__card__content__value" [countUp]="card?.value" [options]="countUpOptions" [reanimateOnClick]="false"></span>
                         <div class="c-details__container__cards__card__increment">
                             <span>{{'cards.increment' | translate}}</span>
                             <div
-                                [ngClass]="((dailyIncrements$ | async)[card?.title] || 0) > 0
+                                [ngClass]="card?.increment > 0
                             ? 'c-details__container__cards__card__increment__value--bad'
                             : 'c-details__container__cards__card__increment__value--good'"
                             >
-                                <span class="c-details__container__cards__card__increment__value">{{((dailyIncrements$ | async)[card?.title] || 0) > 0 ? '+' : ''}}</span>
-                                <span
-                                    class="c-details__container__cards__card__increment__value"
-                                    [countUp]="(dailyIncrements$ | async)[card?.title] || 0" [options]="countUpOptions"
-                                    [reanimateOnClick]="false">
+                                <span class="c-details__container__cards__card__increment__value">{{card?.increment > 0 ? '+' : ''}}</span>
+                                <span class="c-details__container__cards__card__increment__value" [countUp]="card?.increment" [options]="countUpOptions" [reanimateOnClick]="false">
                             </span>
                             </div>
                         </div>
                     </mat-card-content>
                 </mat-card>
-                <!-- charts-->
-                <mat-card class="c-details__container__cards__card c-details__container__cards__card__chart" fxFlex="100">
-                    <mat-card-content class="c-details__container__cards__card__content">
-                        <span class="c-details__container__cards__card__chart__title">{{ 'cards.summary' | translate:{ days: lastdays } }}</span>
-                        <apx-chart
-                            class="c-details__summary-chart"
-                            *ngIf="chartData"
-                            [series]="chartData?.series"
-                            [chart]="chartData?.chart"
-                            [xaxis]="chartData?.xaxis"
-                            [tooltip]="chartData?.tooltip"
-                            [dataLabels]="chartData?.dataLabels"
-                            [stroke]="chartData?.stroke"
-                            [yaxis]="chartData?.yaxis"
-                            [legend]="chartData?.legend"
-                            [fill]="chartData?.fill"
-                            [colors]="chartData?.colors"
-                        ></apx-chart>
-                    </mat-card-content>
-                </mat-card>
+                <covid-daily-increment-chart [historicalData$]="historical$"></covid-daily-increment-chart>
             </div>
             <covid-charts *ngIf="currentTabIndex === 1" [historical]="historical$" [country]="country$" [literals]="literals$"></covid-charts>
         </div>
 
     </ng-container>
 
-    <ng-template #spinner>
-        <div class="spinner">
-            <mat-progress-spinner class="example-margin" color="accent" mode="indeterminate"></mat-progress-spinner>
-        </div>
-    </ng-template>
-
 </div>
+
+<ng-template #spinner>
+    <div class="spinner">
+        <mat-progress-spinner class="example-margin" color="accent" mode="indeterminate"></mat-progress-spinner>
+    </div>
+</ng-template>
