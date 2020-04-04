@@ -21,7 +21,9 @@
 			"updateMode": "prefetch",
 			"resources": {
 				"files": [
-					"/assets/**",
+					"/assets/**/*",
+					"/config/**/*",
+					"/i18n/**/*",
 					"/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani|pdf)"
 				]
 			}
