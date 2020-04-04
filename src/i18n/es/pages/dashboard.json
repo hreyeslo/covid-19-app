@@ -14,6 +14,11 @@
 		"charts": "Más detalles"
 	},
 	"charts": {
+		"daily": {
+			"new": "Nuevos casos",
+			"death": "Nuevas muertes",
+			"recovered": "Nuevos recuperados"
+		},
 		"totalCases": "Histórico de casos totales",
 		"totalDeath": "Histórico de muertes totales"
 	}
