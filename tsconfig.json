@@ -39,6 +39,9 @@
 			"@shared/module": [
 				"src/app/shared/shared.module"
 			],
+			"@shared/components": [
+				"src/app/shared/components_api"
+			],
 			"@ui/charts": [
 				"projects/charts/src/public-api"
 			]

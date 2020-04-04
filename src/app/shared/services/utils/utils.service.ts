@@ -1,12 +1,15 @@
+import { filter, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import { isEqual } from 'lodash';
+import { isEqual, get } from 'lodash';
+import { Store } from '@ngrx/store';
 
 import { IAppConfig, ConfigManager, APP_CONFIG } from '@app/core';
 
 import { AbstractUtilsService } from './abstract-utils.service';
+import { setLayout } from '../../store/shared.actions';
 import {
 	IGlobalCases,
 	CountryCases,
@@ -17,14 +20,12 @@ import {
 	ILayout,
 	IHistoricalTimeline
 } from '../../models/shared.model';
-import { filter, map, distinctUntilChanged, switchMap, catchError, first } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { setLayout } from '../../store/shared.actions';
 
 @Injectable()
 export class UtilsService implements AbstractUtilsService {
 
 	private _webWorker: Worker;
+	private _countries: any = {};
 
 	constructor(private _injector: Injector) {
 		this._initLayoutObserver();
@@ -61,8 +62,16 @@ export class UtilsService implements AbstractUtilsService {
 
 	getAllCountriesCases(): Observable<CountryCases> {
 		return this._makeRequest<CountryCases>('countries?sort=cases')
-			.pipe(switchMap((counties: CountryCases) => {
-				return of(counties.map((country, index) => {
+			.pipe(switchMap((countries: CountryCases) => {
+				this._countries = countries.reduce((acc: any, value: ICountryCases) => {
+					const key = this._getCountrykey(value?.countryInfo?.lat, value?.countryInfo?.long);
+					acc = {
+						...acc,
+						[key]: value.country
+					};
+					return acc;
+				}, {});
+				return of(countries.map((country, index) => {
 					return {
 						...country,
 						countryInfo: {
@@ -75,26 +84,39 @@ export class UtilsService implements AbstractUtilsService {
 	}
 
 	getCountryCases(country: string): Observable<ICountryCases> {
-		return this._makeRequest<ICountryCases>(`countries/${country}?strict=true`);
+		return this._makeRequest<ICountryCases>(`countries/${country}`);
 	}
 
 	getCountryHistoricalCases(country: string): Observable<IHistoricalCases> {
 		return this._makeRequest<IHistoricalCases>(`v2/historical/${country}`);
 	}
 
-	getMyCountry(): Observable<string> {
-		const referrer = location.protocol + '//' + location.hostname;
-		return this._httpClient.get('https://geoip-js.maxmind.com/geoip/v2.1/country/me', {
-			params: new HttpParams({fromObject: {referrer}})
-		}).pipe(
-			catchError(() => of({})),
-			switchMap((location: any) => of(location?.country?.names?.en?.toLowerCase())),
-			first()
-		);
+	getMyCountry(): Promise<string> {
+		return new Promise<string>(resolve => {
+			if ('geolocation' in navigator) {
+				navigator.geolocation.getCurrentPosition(position => {
+					const key = this._getCountrykey(position?.coords?.latitude, position?.coords?.longitude);
+					resolve(get(this._countries, key, null));
+				}, error => {
+					console.error(error);
+					resolve(null);
+				});
+			} else {
+				/* la geolocalización NO está disponible */
+			}
+		});
 	}
 
 	getWorker(): Worker {
 		return this._webWorker;
+	}
+
+	calcIncrement(global: IGlobalCases | ICountryCases, historical: IHistoricalTimeline, key: string): number {
+		const result = get(global, [key], 0) - get(historical, [
+			key,
+			Object.keys(get(historical, [key], {})).pop() || ''
+		], 0);
+		return result < 0 ? 0 : result;
 	}
 
 	// Private
@@ -139,6 +161,10 @@ export class UtilsService implements AbstractUtilsService {
 		if (typeof Worker !== 'undefined') {
 			this._webWorker = new Worker('../charts-manager.worker', {type: 'module'});
 		}
+	}
+
+	_getCountrykey(lat: number, long: number): string {
+		return `${Math.round(lat)},${Math.round(long)}`;
 	}
 
 }

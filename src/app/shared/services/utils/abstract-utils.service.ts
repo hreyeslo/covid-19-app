@@ -27,7 +27,9 @@ export abstract class AbstractUtilsService {
 
 	abstract getCountryHistoricalCases(country: string): Observable<IHistoricalCases>;
 
-	abstract getMyCountry(): Observable<string>;
+	abstract getMyCountry(): Promise<string>;
 
 	abstract getWorker(): Worker;
+
+	abstract calcIncrement(global: IGlobalCases | ICountryCases, historical: IHistoricalTimeline, key: string): number;
 }

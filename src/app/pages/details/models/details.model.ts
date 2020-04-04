@@ -8,6 +8,7 @@ export interface IDetails {
 export interface IDetailsCard {
 	title: string;
 	value: number;
+	increment: number;
 }
 
 export interface IDetailsDailyIncrements {
