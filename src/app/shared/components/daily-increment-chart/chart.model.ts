@@ -81,6 +81,8 @@ export const chartConfig = {
 		}
 	},
 	yaxis: {
+		min: 0,
+		forceNiceScale: true,
 		axisBorder: {
 			show: true,
 			offsetX: -5,
