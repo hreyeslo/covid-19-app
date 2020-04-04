@@ -84,13 +84,23 @@ export class DetailsComponent implements OnInit, OnDestroy {
 			return of({
 				cases: countryCases,
 				cards: [
-					{title: 'cases', value: countryCases?.cases, increment: cases || 0},
+					{
+						title: 'cases', value: countryCases?.cases, increment: cases || 0,
+						absIncrement: Math.abs(cases || 0)
+					},
 					{
 						title: 'active', value: countryCases?.active,
-						increment: cases - (recovered + deaths) || 0
+						increment: cases - (recovered + deaths) || 0,
+						absIncrement: Math.abs(cases - (recovered + deaths) || 0)
 					},
-					{title: 'deaths', value: countryCases?.deaths, increment: deaths || 0},
-					{title: 'recovered', value: countryCases?.recovered, increment: recovered || 0}
+					{
+						title: 'deaths', value: countryCases?.deaths, increment: deaths || 0,
+						absIncrement: Math.abs(deaths || 0)
+					},
+					{
+						title: 'recovered', value: countryCases?.recovered, increment: recovered || 0,
+						absIncrement: Math.abs(recovered || 0)
+					}
 				]
 			});
 		}));

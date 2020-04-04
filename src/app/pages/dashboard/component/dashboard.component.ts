@@ -73,10 +73,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
 					const recovered = this._utilsService.calcIncrement(global, historical, 'recovered');
 					return of({
 						cards: [
-							{title: 'cases', value: global?.cases, increment: cases || 0},
-							{title: 'active', value: global?.active, increment: cases - (recovered + deaths) || 0},
-							{title: 'deaths', value: global?.deaths, increment: deaths || 0},
-							{title: 'recovered', value: global?.recovered, increment: recovered || 0}
+							{
+								title: 'cases', value: global?.cases, increment: cases || 0,
+								absIncrement: Math.abs(cases || 0)
+							},
+							{
+								title: 'active', value: global?.active, increment: cases - (recovered + deaths) || 0,
+								absIncrement: Math.abs(cases - (recovered + deaths) || 0)
+							},
+							{
+								title: 'deaths', value: global?.deaths, increment: deaths || 0,
+								absIncrement: Math.abs(deaths || 0)
+							},
+							{
+								title: 'recovered', value: global?.recovered, increment: recovered || 0,
+								absIncrement: Math.abs(recovered || 0)
+							}
 						]
 					});
 				}

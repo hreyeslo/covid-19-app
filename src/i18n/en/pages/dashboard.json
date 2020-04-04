@@ -7,6 +7,7 @@
 		"deaths": "Deaths",
 		"recovered": "Recovered",
 		"increment": "Increment:",
+		"decrement": "Decrement:",
 		"summary": "Last {{days}} days"
 	},
 	"tabs": {

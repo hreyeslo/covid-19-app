@@ -9,6 +9,7 @@ export interface IDetailsCard {
 	title: string;
 	value: number;
 	increment: number;
+	absIncrement: number;
 }
 
 export interface IDetailsDailyIncrements {
