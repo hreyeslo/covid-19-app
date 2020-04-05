@@ -9,6 +9,10 @@
             <span>{{'lastUpdate' | translate}}</span>
             <span class="c-dashboard__header__date__value">{{lastUpdate$ | async | date:'d-M-yyyy, HH:mm z'}}</span>
         </div>
+        <div *ngIf="(tests$ | async) > 0" fxLayout="row" fxLayoutAlign="center center" class="c-dashboard__header__tests">
+            <span>{{'tests' | translate}}</span>
+            <span class="c-dashboard__header__tests__value" [countUp]="tests$ | async" [options]="countUpOptions"></span>
+        </div>
     </div>
 
     <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner" fxLayout="column">
@@ -16,38 +20,14 @@
             <mat-tab label="{{'tabs.summary' | translate}}"></mat-tab>
             <mat-tab label="{{'tabs.charts' | translate}}"></mat-tab>
         </mat-tab-group>
-        <div *ngIf="currentTabIndex === 0" class="c-dashboard__container__cards" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
-            <mat-card
-                class="c-dashboard__container__cards__card"
-                *ngFor="let card of viewData?.cards; trackBy: trackByIndex"
-                fxFlex.xs="100"
-                [fxFlex.sm]="'0 1 calc(50% - 20px)'"
-                [fxFlex.md]="'0 1 calc(50% - 40px)'"
-                [fxFlex]="'0 1 calc(25% - 40px)'"
-            >
-                <mat-card-header class="c-dashboard__container__cards__card__header">
-                    <mat-card-title class="c-dashboard__container__cards__card__header__title">{{ 'cards.' + card?.title | translate}}</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="c-dashboard__container__cards__card__content">
-                    <span class="c-dashboard__container__cards__card__content__value" [countUp]="card?.value" [options]="countUpOptions" [reanimateOnClick]="false"></span>
-                    <div class="c-dashboard__container__cards__card__increment">
-                        <span>{{'cards.increment' | translate}}</span>
-                        <div
-                            [ngClass]="((dailyIncrements$ | async)[card?.title] || 0) > 0
-                            ? 'c-dashboard__container__cards__card__increment__value--bad'
-                            : 'c-dashboard__container__cards__card__increment__value--good'"
-                        >
-                            <span class="c-dashboard__container__cards__card__increment__value">{{((dailyIncrements$ | async)[card?.title] || 0) > 0 ? '+' : ''}}</span>
-                            <span
-                                class="c-dashboard__container__cards__card__increment__value"
-                                [countUp]="(dailyIncrements$ | async)[card?.title] || 0" [options]="countUpOptions"
-                                [reanimateOnClick]="false">
-                            </span>
-                        </div>
-                    </div>
-                </mat-card-content>
-            </mat-card>
+        <!-- Summary -->
+        <div *ngIf="currentTabIndex === 0">
+            <!-- Totales -->
+            <covid-summary [viewData]="viewData" [todayData$]="todayData$" [tomorrowData$]="tomorrowData$" [countUpOptions]="countUpOptions"></covid-summary>
+            <!-- Chart -->
+            <covid-daily-increment-chart [historicalData$]="historicalCases$"></covid-daily-increment-chart>
         </div>
+        <!-- More details -->
         <covid-charts *ngIf="currentTabIndex === 1" [historical]="historicalCases$" [global]="globalCases$" [literals]="literals$"></covid-charts>
     </div>
 

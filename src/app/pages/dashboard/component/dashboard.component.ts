@@ -1,19 +1,21 @@
 import { Subscription, Observable, of, BehaviorSubject, combineLatest } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { switchMap, first } from 'rxjs/operators';
+import { switchMap, first, tap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { get } from 'lodash';
+import { isEmpty, omit } from 'lodash';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
-import { IGlobalCases, IHistoricalTimeline } from '@shared/models';
+import {
+	IGlobalCases,
+	IHistoricalTimeline,
+	ISharedTomorrowData,
+	ISharedTodayData,
+	ISummaryViewData
+} from '@shared/models';
+import { UtilsService } from '@shared/services';
 import { IChartsLiterals } from '@ui/charts';
 
-import {
-	IDashboardViewData,
-	IDashboardCard,
-	IDashboardDailyIncrements
-} from '../models/dashboard.model';
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
 import { AppTabsAnimations } from '../../../app-animations';
 
@@ -34,17 +36,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	currentTabIndex = 0;
 
-	globalCases$: Observable<IGlobalCases>;
-	historicalCases$: Observable<IHistoricalTimeline>;
-	dailyIncrements$: Observable<IDashboardDailyIncrements>;
-
-	viewData$: Observable<IDashboardViewData>;
+	viewData$: Observable<ISummaryViewData>;
 	lastUpdate$: Observable<number>;
+
 	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
+	tests$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+	historicalCases$: Observable<IHistoricalTimeline>;
+	globalCases$: Observable<IGlobalCases>;
+
+	todayData$: BehaviorSubject<Partial<ISharedTodayData>> = new BehaviorSubject<Partial<ISharedTodayData>>(null);
+	tomorrowData$: BehaviorSubject<ISharedTomorrowData> = new BehaviorSubject<ISharedTomorrowData>(null);
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
 		private _tranlsateService: TranslateService,
+		private _utilsService: UtilsService,
 		private _store: Store
 	) {}
 
@@ -54,7 +60,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.lastUpdate$ = this._store.pipe(select(selectLastUpdate));
 		this._setChartsLiterals();
 		this._mapViewData();
-		this._getDailyIncrements();
 	}
 
 	ngOnDestroy() {
@@ -68,6 +73,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	trackByIndex(index: number): number {
 		return index;
 	}
+
+	_mapViewData(): void {
+		this.viewData$ = combineLatest([this.globalCases$, this.historicalCases$]).pipe(
+			switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
+					const [cases, historical] = data;
+					this.tests$.next(cases?.tests || 0);
+					return of({cases, cards: this._utilsService.getViewData(cases, historical)});
+				}
+			),
+			tap((data: ISummaryViewData) => this._setTodayData(data))
+		);
+	}
+
+	_setTodayData(data: ISummaryViewData): void {
+		this.historicalCases$.pipe(
+			first((historical: IHistoricalTimeline) => !isEmpty(historical)),
+			switchMap((historical: IHistoricalTimeline) => {
+				return of({
+					historical,
+					...this._utilsService.getTodayData(data?.cases, historical)
+				});
+			}),
+			tap((today: ISharedTodayData) => this._setTomorrow(today))
+		).subscribe((today: ISharedTodayData) => this.todayData$.next(omit(today, ['historical'])));
+	}
+
+	_setTomorrow(today: ISharedTodayData): void {
+		this.tomorrowData$.next(this._utilsService.getTomorrowData(today));
+	}
+
+	// Review
 
 	_setChartsLiterals(): void {
 		this._tranlsateService.get('charts')
@@ -84,58 +120,5 @@ export class DashboardComponent implements OnInit, OnDestroy {
 				})
 			);
 		});
-	}
-
-	_mapViewData(): void {
-		this.viewData$ = this.globalCases$
-			.pipe(
-				switchMap((data: IGlobalCases) => of({cards: this._getCards(data)})
-				)
-			);
-	}
-
-	_getCards(data: IGlobalCases): IDashboardCard[] {
-		return [
-			{
-				title: 'cases',
-				value: data?.cases
-			},
-			{
-				title: 'active',
-				value: data?.active
-			},
-			{
-				title: 'deaths',
-				value: data?.deaths
-			},
-			{
-				title: 'recovered',
-				value: data?.recovered
-			}
-		];
-	}
-
-	_getDailyIncrements() {
-		this.dailyIncrements$ = combineLatest([
-			this.globalCases$,
-			this.historicalCases$
-		]).pipe(switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
-			const [global, historical] = data;
-			const cases = this._calcIncrement(global, historical, 'cases');
-			const deaths = this._calcIncrement(global, historical, 'deaths');
-			const recovered = this._calcIncrement(global, historical, 'recovered');
-			return of({
-				cases, deaths, recovered,
-				active: cases - (recovered + deaths)
-			});
-		}));
-	}
-
-	_calcIncrement(global: IGlobalCases, historical: IHistoricalTimeline, key: string): number {
-		const result = get(global, [key], 0) - get(historical, [
-			key,
-			Object.keys(get(historical, [key], {})).pop() || ''
-		], 0);
-		return result < 0 ? 0 : result;
 	}
 }

@@ -3,13 +3,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
-import { NgApexchartsModule } from 'ng-apexcharts';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
+import { DailyIncrementChartModule, SummaryModule } from '@shared/components';
 import { ChartsModule } from '@ui/charts';
 import { I18nModule } from '@app/core';
 
@@ -36,9 +36,10 @@ import { detailsReducer } from './store/details.reducer';
 		MatProgressSpinnerModule,
 		MatCardModule,
 		CountUpModule,
-		ChartsModule,
 		MatTabsModule,
-		NgApexchartsModule
+		DailyIncrementChartModule,
+		SummaryModule,
+		ChartsModule
 	]
 })
 export class DetailsModule {}

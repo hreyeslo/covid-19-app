@@ -1,0 +1,26 @@
+@import "src/scss/settings";
+@import "src/scss/utilities";
+
+:host {
+	display: block;
+	width: 100%;
+}
+
+:host ::ng-deep {
+	.c-chart {
+
+		@include cards;
+
+		&__summary-chart {
+			> div:first-of-type {
+				margin-left: rem(15px);
+			}
+
+			@include mobile {
+				> div:first-of-type {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}

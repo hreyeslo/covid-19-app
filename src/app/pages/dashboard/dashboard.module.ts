@@ -9,6 +9,7 @@ import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
+import { DailyIncrementChartModule, SummaryModule } from '@shared/components';
 import { ChartsModule } from '@ui/charts';
 import { I18nModule } from '@app/core';
 
@@ -35,8 +36,10 @@ import { dashboardReducer } from './store/dashboard.reducer';
 		MatIconModule,
 		CountUpModule,
 		MatProgressSpinnerModule,
-		ChartsModule,
-		MatTabsModule
+		MatTabsModule,
+		DailyIncrementChartModule,
+		SummaryModule,
+		ChartsModule
 	]
 })
 export class DashboardModule {}

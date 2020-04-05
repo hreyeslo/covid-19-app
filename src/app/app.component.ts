@@ -111,8 +111,10 @@ export class AppComponent implements OnInit, OnDestroy {
 	}
 
 	navigateByLocation() {
-		this._utilsService.getMyCountry().subscribe((country: string) => {
-			this._router.navigate(['/', 'countries', country]);
+		this._utilsService.getMyCountry().then((country: string) => {
+			if (country && typeof country === 'string' && country !== '') {
+				this._router.navigate(['/', 'countries', country?.toLowerCase()]);
+			}
 		});
 	}
 }

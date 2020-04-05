@@ -1,19 +1,39 @@
 {
 	"title": "Registros Mundiales",
 	"lastUpdate": "Última actualización:",
+	"tests": "Nº de tests realizados:",
 	"cards": {
 		"cases": "Casos totales",
 		"active": "Casos activos",
 		"deaths": "Muertes",
 		"recovered": "Recuperados",
 		"increment": "Incremento:",
-		"summary": "Últimos {{days}} días"
+		"decrement": "Decremento:",
+		"summary": "Últimos {{days}} días",
+		"details": {
+			"active": "Detalle activos",
+			"moderate": "Moderados",
+			"critical": "Críticos",
+			"closed": "Detalle cerrados",
+			"recovered": "Recuperados",
+			"deaths": "Muertos",
+			"predictions": "Previsiones",
+			"newCases": "Nuevos casos",
+			"newDeaths": "Nuevas muertes",
+			"propagation": "Factor de contagio",
+			"improving": "¿Mejorando?"
+		}
 	},
 	"tabs": {
 		"summary": "Resumen",
 		"charts": "Más detalles"
 	},
 	"charts": {
+		"daily": {
+			"new": "Nuevos casos",
+			"death": "Nuevas muertes",
+			"recovered": "Nuevos recuperados"
+		},
 		"totalCases": "Histórico de casos totales",
 		"totalDeath": "Histórico de muertes totales"
 	}

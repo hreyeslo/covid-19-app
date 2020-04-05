@@ -3,7 +3,7 @@
     <div class="c-countries__header" fxLayout="column">
         <div fxLayout="row" fxLayoutAlign="center center">
             <mat-icon class="c-countries__header__icon">flag</mat-icon>
-            <span class="c-countries__header__title">{{'title' | translate}}</span>
+            <span class="c-countries__header__title">{{'title' | translate:{ number: maxItemsToShow } }}</span>
         </div>
         <div fxLayout="row" fxLayoutAlign="center center" class="c-countries__header__date">
             <span>{{'lastUpdate' | translate}}</span>

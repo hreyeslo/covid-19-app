@@ -9,6 +9,13 @@ export interface IGlobalCases {
 	updated: number;
 	active: number;
 	affectedCountries: number;
+	todayCases: number;
+	todayDeaths: number;
+	critical: number;
+	casesPerOneMillion: number;
+	deathsPerOneMillion: number;
+	tests: number;
+	testsPerOneMillion: number;
 }
 
 export interface ICountryInfo {
@@ -34,6 +41,8 @@ export interface ICountryCases {
 	casesPerOneMillion: number;
 	deathsPerOneMillion: number;
 	updated: number;
+	tests: number;
+	testsPerOneMillion: number;
 }
 
 export type CountryCases = ICountryCases[];
@@ -75,3 +84,58 @@ export interface ILayout {
 	type: ELayoutName;
 	alias: ELayoutAlias;
 }
+
+export interface ISharedBasicViewData {
+	cases: number;
+	deaths: number;
+	recovered: number;
+	newCasesPercent: number;
+	newDeathsPercent: number;
+	newRecoveredPercent: number;
+	newActivePercent: number;
+	incrementActiveCases: number;
+}
+
+export interface ISharedTodayData {
+	historical: IHistoricalTimeline;
+	active: number;
+	activePercent: number;
+	closed: number;
+	closedPercent: number;
+	moderate: number;
+	moderatePercent: number;
+	critical: number;
+	criticalPercent: number;
+	recovered: number;
+	recoveredPercent: number;
+	deaths: number;
+	deathsPercent: number;
+	propagationIndex: number;
+	deathsIndex: number;
+	recoveredIndex: number;
+}
+
+export interface ISharedTomorrowData {
+	cases: number;
+	deaths: number;
+	recovered: number;
+	improving: boolean;
+	propagationIndex: number;
+}
+
+export interface ILatestData {
+	lastTotalCases: number;
+	lastTotalDeaths: number;
+	lastTotalRecovered: number;
+	lastTotalActive: number;
+}
+
+export interface ISharedDetailsCard {
+	title: string;
+	value: number;
+	increment: number;
+	absIncrement: number;
+	percent: number;
+}
+
+export type SharedDetailsCards = ISharedDetailsCard[];

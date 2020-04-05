@@ -1,17 +1,23 @@
+export interface ILiterals {
+	new: string;
+	death: string;
+	recovered: string;
+}
+
 export const chartConfig = {
 	series: [
 		{
-			name: 'Nuevos casos',
+			name: '',
 			type: 'area',
 			data: []
 		},
 		{
-			name: 'Nuevas recuperaciones',
+			name: '',
 			type: 'area',
 			data: []
 		},
 		{
-			name: 'Nuevas Muertes',
+			name: '',
 			type: 'area',
 			data: []
 		}
@@ -24,17 +30,7 @@ export const chartConfig = {
 			enabled: false
 		},
 		animations: {
-			enabled: true,
-			easing: 'easeinout',
-			speed: 1000,
-			animateGradually: {
-				enabled: true,
-				delay: 150
-			},
-			dynamicAnimation: {
-				enabled: true,
-				speed: 350
-			}
+			enabled: true
 		},
 		toolbar: {
 			show: false
@@ -81,6 +77,8 @@ export const chartConfig = {
 		}
 	},
 	yaxis: {
+		min: 0,
+		forceNiceScale: true,
 		axisBorder: {
 			show: true,
 			offsetX: -5,
@@ -94,7 +92,12 @@ export const chartConfig = {
 			align: 'right',
 			offsetX: -15,
 			offsetY: 0,
-			formatter: (label) => `${label}%`
+			minWidth: 30,
+			formatter: (label) => {
+				return Number(label) > 1 || Number(label) === 0
+					? `${label}%`
+					: `${Number(label).toFixed(1)}%`;
+			}
 		},
 		crosshairs: {
 			show: true
