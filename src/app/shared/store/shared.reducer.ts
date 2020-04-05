@@ -29,7 +29,9 @@ export const initialState: ISharedStore = {
 			todayDeaths: 0,
 			critical: 0,
 			casesPerOneMillion: 0,
-			deathsPerOneMillion: 0
+			deathsPerOneMillion: 0,
+			tests: 0,
+			testsPerOneMillion: 0
 		},
 		historical: {
 			cases: {},

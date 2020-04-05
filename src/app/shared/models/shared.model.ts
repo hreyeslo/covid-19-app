@@ -14,6 +14,8 @@ export interface IGlobalCases {
 	critical: number;
 	casesPerOneMillion: number;
 	deathsPerOneMillion: number;
+	tests: number;
+	testsPerOneMillion: number;
 }
 
 export interface ICountryInfo {
@@ -39,6 +41,8 @@ export interface ICountryCases {
 	casesPerOneMillion: number;
 	deathsPerOneMillion: number;
 	updated: number;
+	tests: number;
+	testsPerOneMillion: number;
 }
 
 export type CountryCases = ICountryCases[];
