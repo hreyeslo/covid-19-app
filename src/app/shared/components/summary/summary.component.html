@@ -120,16 +120,34 @@
             [fxFlex]="'0 1 calc(33.33% - 40px)'"
         >
             <mat-card-header class="c-summary__container__cards__card__header">
-                <mat-card-title class="c-summary__container__cards__card__header__title">Más información</mat-card-title>
+                <mat-card-title class="c-summary__container__cards__card__header__title">Previsiones</mat-card-title>
             </mat-card-header>
             <mat-card-content class="c-summary__container__cards__card__content__tomorrow" *ngIf="tomorrowData$ | async; let tomorrowData">
-                {{tomorrowData?.propagationIndex}}
-                {{tomorrowData?.cases}}
-                {{tomorrowData?.deaths}}
-                {{tomorrowData?.recovered}}
-                <p>
-                    ¿Estamos mejorando? <span>{{tomorrowData?.improving ? 'SI' : 'NO'}}</span>
-                </p>
+                <div fxLayout="column" fxFlex="60" fxLayoutAlign="center center">
+                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+                        <span class="c-summary__container__cards__card__content__title">Nuevos casos</span>
+                        <span class="c-summary__container__cards__card__content__total" [countUp]="tomorrowData?.cases" [options]="countUpOptions"></span>
+                    </div>
+                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+                        <span class="c-summary__container__cards__card__content__title">Nuevas muertes</span>
+                        <span class="c-summary__container__cards__card__content__total" [countUp]="tomorrowData?.deaths" [options]="countUpOptions"></span>
+                    </div>
+                </div>
+                <div fxLayout="column" fxFlex="60" fxLayoutAlign="center center">
+                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+                        <span class="c-summary__container__cards__card__content__title">Factor de contagio</span>
+                        <span class="c-summary__container__cards__card__content__total" [countUp]="tomorrowData?.propagationIndex" [options]="countUpOptionsDecimals"></span>
+                    </div>
+                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="center center">
+                        <span class="c-summary__container__cards__card__content__title">Mejorando?</span>
+                        <span
+                            class="c-summary__container__cards__card__content__improving"
+                            [ngClass]="tomorrowData?.improving
+                                ? 'c-summary__container__cards__card__content__improving--good'
+                                : 'c-summary__container__cards__card__content__improving--bad'"
+                        >{{tomorrowData?.improving ? 'SI' : 'NO'}}</span>
+                    </div>
+                </div>
             </mat-card-content>
         </mat-card>
     </div>
