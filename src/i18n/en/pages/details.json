@@ -1,6 +1,7 @@
 {
 	"title": "Global Records",
 	"lastUpdate": "Last update:",
+	"tests": "No. of tests done:",
 	"cards": {
 		"cases": "Total cases",
 		"active": "Active cases",

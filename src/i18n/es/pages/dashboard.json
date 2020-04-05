@@ -1,6 +1,7 @@
 {
 	"title": "Registros Mundiales",
 	"lastUpdate": "Última actualización:",
+	"tests": "Nº de tests realizados:",
 	"cards": {
 		"cases": "Casos totales",
 		"active": "Casos activos",

@@ -9,6 +9,10 @@
             <span>{{'lastUpdate' | translate}}</span>
             <span class="c-dashboard__header__date__value">{{lastUpdate$ | async | date:'d-M-yyyy, HH:mm z'}}</span>
         </div>
+        <div *ngIf="(tests$ | async) > 0" fxLayout="row" fxLayoutAlign="center center" class="c-dashboard__header__tests">
+            <span>{{'tests' | translate}}</span>
+            <span class="c-dashboard__header__tests__value" [countUp]="tests$ | async" [options]="countUpOptions"></span>
+        </div>
     </div>
 
     <div class="c-dashboard__container" *ngIf="viewData$ | async; let viewData; else spinner" fxLayout="column">

@@ -48,6 +48,19 @@
 				padding-left: rem(5px);
 			}
 		}
+
+		&__tests {
+			font-size: rem(18px);
+			font-weight: 400;
+			color: $fontColor;
+			padding-bottom: rem(20px);
+
+			&__value {
+				padding-left: rem(5px);
+				font-size: rem(22px);
+				font-weight: 400;
+			}
+		}
 	}
 }
 

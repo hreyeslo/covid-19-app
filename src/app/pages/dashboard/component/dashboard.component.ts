@@ -10,7 +10,8 @@ import {
 	IGlobalCases,
 	IHistoricalTimeline,
 	ISharedTomorrowData,
-	ISharedTodayData, ISummaryViewData
+	ISharedTodayData,
+	ISummaryViewData
 } from '@shared/models';
 import { UtilsService } from '@shared/services';
 import { IChartsLiterals } from '@ui/charts';
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	lastUpdate$: Observable<number>;
 
 	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
+	tests$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 	historicalCases$: Observable<IHistoricalTimeline>;
 	globalCases$: Observable<IGlobalCases>;
 
@@ -76,6 +78,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.viewData$ = combineLatest([this.globalCases$, this.historicalCases$]).pipe(
 			switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
 					const [cases, historical] = data;
+					this.tests$.next(cases?.tests || 0);
 					return of({cases, cards: this._utilsService.getViewData(cases, historical)});
 				}
 			),

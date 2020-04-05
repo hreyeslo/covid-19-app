@@ -45,6 +45,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	historical$: BehaviorSubject<IHistoricalTimeline | object> = new BehaviorSubject<IHistoricalTimeline | object>({});
 	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
 	country$: BehaviorSubject<ICountryCases | object> = new BehaviorSubject<ICountryCases | object>({});
+	tests$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
 	todayData$: BehaviorSubject<Partial<ISharedTodayData>> = new BehaviorSubject<Partial<ISharedTodayData>>(null);
 	tomorrowData$: BehaviorSubject<ISharedTomorrowData> = new BehaviorSubject<ISharedTomorrowData>(null);
@@ -84,6 +85,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 			const [countryCases, historical] = response;
 			this.historical$.next(historical?.timeline);
 			this.country$.next(countryCases);
+			this.tests$.next(countryCases?.tests || 0);
 			return of({
 				cases: countryCases,
 				cards: this._utilsService.getViewData(countryCases, historical?.timeline)
