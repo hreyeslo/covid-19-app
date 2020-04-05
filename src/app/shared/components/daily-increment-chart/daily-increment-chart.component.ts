@@ -90,7 +90,9 @@ export class DailyIncrementChartComponent implements OnInit, OnChanges, OnDestro
 							}).map(date => capitalize(format(date, 'E\',\' d \'de\' MMMM', {locale: esLocale})))
 						}
 					});
-					return newLiterals ? of(merge({}, newData)) : of(newData);
+					return newLiterals ? of(merge({}, newData)) : of(merge({}, newData, {
+						chart: {animations: {enabled: false}}
+					}));
 				} else {
 					return of(chartConfig);
 				}
