@@ -94,26 +94,30 @@ export class DetailsComponent implements OnInit, OnDestroy {
 			const newDeathsPercent = round(((totalDeaths - lastTotalDeaths) / totalDeaths) * 100, 2);
 			const newRecoveredPercent = round(((totalRecovered - lastTotalRecovered) / totalRecovered) * 100, 2);
 			const newActivePercent = round(((totalActive - lastTotalActive) / totalActive) * 100, 2);
+			const incrementActiveCases = cases - (recovered + deaths) || 0;
 			return of({
 				cases: countryCases,
 				cards: [
 					{
 						title: 'cases', value: countryCases?.cases, increment: cases || 0,
-						absIncrement: Math.abs(cases || 0), percent: newCasesPercent
+						absIncrement: Math.abs(cases || 0),
+						percent: newCasesPercent > 0 ? newCasesPercent : 0
 					},
 					{
 						title: 'active', value: countryCases?.active,
-						increment: cases - (recovered + deaths) || 0,
-						absIncrement: Math.abs(cases - (recovered + deaths) || 0),
-						percent: newActivePercent
+						increment: incrementActiveCases,
+						absIncrement: Math.abs(incrementActiveCases),
+						percent: incrementActiveCases === 0 ? 0 : newActivePercent
 					},
 					{
 						title: 'deaths', value: countryCases?.deaths, increment: deaths || 0,
-						absIncrement: Math.abs(deaths || 0), percent: newDeathsPercent
+						absIncrement: Math.abs(deaths || 0),
+						percent: newDeathsPercent > 0 ? newDeathsPercent : 0
 					},
 					{
 						title: 'recovered', value: countryCases?.recovered, increment: recovered || 0,
-						absIncrement: Math.abs(recovered || 0), percent: newRecoveredPercent
+						absIncrement: Math.abs(recovered || 0),
+						percent: newRecoveredPercent > 0 ? newRecoveredPercent : 0
 					}
 				]
 			});

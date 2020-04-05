@@ -88,28 +88,30 @@ export class DashboardComponent implements OnInit, OnDestroy {
 					const newDeathsPercent = round(((totalDeaths - lastTotalDeaths) / totalDeaths) * 100, 2);
 					const newRecoveredPercent = round(((totalRecovered - lastTotalRecovered) / totalRecovered) * 100, 2);
 					const newActivePercent = round(((totalActive - lastTotalActive) / totalActive) * 100, 2);
+					const incrementActiveCases = cases - (recovered + deaths) || 0;
 					return of({
 						global,
 						cards: [
 							{
 								title: 'cases', value: global?.cases, increment: cases || 0,
 								absIncrement: Math.abs(cases || 0),
-								percent: newCasesPercent
+								percent: newCasesPercent > 0 ? newCasesPercent : 0
 							},
 							{
-								title: 'active', value: global?.active, increment: cases - (recovered + deaths) || 0,
-								absIncrement: Math.abs(cases - (recovered + deaths) || 0),
-								percent: newActivePercent
+								title: 'active', value: global?.active,
+								increment: incrementActiveCases,
+								absIncrement: Math.abs(incrementActiveCases),
+								percent: incrementActiveCases === 0 ? 0 : newActivePercent
 							},
 							{
 								title: 'deaths', value: global?.deaths, increment: deaths || 0,
 								absIncrement: Math.abs(deaths || 0),
-								percent: newDeathsPercent
+								percent: newDeathsPercent > 0 ? newDeathsPercent : 0
 							},
 							{
 								title: 'recovered', value: global?.recovered, increment: recovered || 0,
 								absIncrement: Math.abs(recovered || 0),
-								percent: newRecoveredPercent
+								percent: newRecoveredPercent > 0 ? newRecoveredPercent : 0
 							}
 						]
 					});
