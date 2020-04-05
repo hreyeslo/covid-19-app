@@ -10,13 +10,12 @@ import {
 	IGlobalCases,
 	IHistoricalTimeline,
 	ISharedTomorrowData,
-	ISharedTodayData
+	ISharedTodayData, ISummaryViewData
 } from '@shared/models';
 import { UtilsService } from '@shared/services';
 import { IChartsLiterals } from '@ui/charts';
 
 import { AbstractDashboardService } from '../service/abstract-dashboard.service';
-import { IDashboardViewData } from '../models/dashboard.model';
 import { AppTabsAnimations } from '../../../app-animations';
 
 @Component({
@@ -36,7 +35,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	currentTabIndex = 0;
 
-	viewData$: Observable<IDashboardViewData>;
+	viewData$: Observable<ISummaryViewData>;
 	lastUpdate$: Observable<number>;
 
 	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
@@ -76,30 +75,29 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	_mapViewData(): void {
 		this.viewData$ = combineLatest([this.globalCases$, this.historicalCases$]).pipe(
 			switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
-					const [global, historical] = data;
-					return of({global, cards: this._utilsService.getViewData(global, historical)});
+					const [cases, historical] = data;
+					return of({cases, cards: this._utilsService.getViewData(cases, historical)});
 				}
 			),
-			tap((data: IDashboardViewData) => this._setTodayData(data))
+			tap((data: ISummaryViewData) => this._setTodayData(data))
 		);
 	}
 
-	_setTodayData(data: IDashboardViewData): void {
+	_setTodayData(data: ISummaryViewData): void {
 		this.historicalCases$.pipe(
 			first((historical: IHistoricalTimeline) => !isEmpty(historical)),
 			switchMap((historical: IHistoricalTimeline) => {
 				return of({
 					historical,
-					...this._utilsService.getTodayData(data?.global, historical)
+					...this._utilsService.getTodayData(data?.cases, historical)
 				});
 			}),
-			tap((today: ISharedTodayData) => this._setTomorrow(today, data?.global))
+			tap((today: ISharedTodayData) => this._setTomorrow(today))
 		).subscribe((today: ISharedTodayData) => this.todayData$.next(omit(today, ['historical'])));
 	}
 
-	_setTomorrow(today: ISharedTodayData, data: IGlobalCases): void {
-		const tomorrowData = this._utilsService.getTomorrowData(today, data);
-		this.tomorrowData$.next(tomorrowData);
+	_setTomorrow(today: ISharedTodayData): void {
+		this.tomorrowData$.next(this._utilsService.getTomorrowData(today));
 	}
 
 	// Review

@@ -94,19 +94,51 @@
 					font-weight: 300;
 				}
 
-				&__today{
+				&__title {
+					font-weight: 400;
+					font-size: rem(18px);
+					line-height: rem(18px);
+					margin-bottom: rem(5px);
+				}
 
-					&__active{
+				&__total {
+					font-weight: 400;
+					font-size: rem(22px);
+					line-height: rem(22px);
+					margin-bottom: rem(5px);
+				}
 
+				&__text {
+					font-weight: 400;
+					font-size: rem(16px);
+					line-height: rem(16px);
+				}
+
+				&__percent {
+					font-weight: 400;
+					font-size: rem(16px);
+					line-height: rem(16px);
+					padding: rem(0 2px);
+					margin-bottom: rem(5px);
+				}
+
+				&__today {
+
+					&__active {
+						margin-top: rem(20px) !important;
+
+						&__total {
+
+						}
 					}
 
-					&__closed{
-
+					&__closed {
+						margin-top: rem(20px) !important;
 					}
 
 				}
 
-				&__tomorrow{
+				&__tomorrow {
 
 				}
 			}

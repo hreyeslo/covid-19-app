@@ -211,7 +211,7 @@ export class UtilsService implements AbstractUtilsService {
 		return {lastTotalCases, lastTotalDeaths, lastTotalRecovered, lastTotalActive};
 	}
 
-	getTomorrowData(today: ISharedTodayData, data: ICountryCases | IGlobalCases): ISharedTomorrowData {
+	getTomorrowData(today: ISharedTodayData): ISharedTomorrowData {
 		const latestData = this.getLatestData(today?.historical);
 		const totalCases = latestData?.lastTotalCases || 0;
 		const totalDeaths = latestData?.lastTotalDeaths || 0;

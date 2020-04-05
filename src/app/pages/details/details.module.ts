@@ -9,7 +9,7 @@ import { CountUpModule } from 'ngx-countup';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
-import { DailyIncrementChartModule } from '@shared/components';
+import { DailyIncrementChartModule, SummaryModule } from '@shared/components';
 import { ChartsModule } from '@ui/charts';
 import { I18nModule } from '@app/core';
 
@@ -38,6 +38,7 @@ import { detailsReducer } from './store/details.reducer';
 		CountUpModule,
 		MatTabsModule,
 		DailyIncrementChartModule,
+		SummaryModule,
 		ChartsModule
 	]
 })

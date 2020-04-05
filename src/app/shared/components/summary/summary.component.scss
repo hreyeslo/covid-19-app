@@ -1,0 +1,23 @@
+@import "src/scss/settings";
+@import "src/scss/utilities";
+
+:host {
+	display: block;
+	width: 100%;
+}
+
+:host ::ng-deep {
+	.c-summary {
+
+		&__container {
+
+			@include desktop {
+				display: flex;
+				flex: 1 1 auto;
+				height: auto;
+			}
+
+			@include cards;
+		}
+	}
+}
