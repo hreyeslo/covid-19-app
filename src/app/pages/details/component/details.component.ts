@@ -3,8 +3,8 @@ import { startWith, switchMap, first, tap } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
+import { last, isEmpty, round } from 'lodash';
 import { Store, select } from '@ngrx/store';
-import { last, isEmpty } from 'lodash';
 
 import { IHistoricalCases, ICountryCases, IHistoricalTimeline } from '@shared/models';
 import { selectLastUpdate } from '@shared/store';
@@ -90,10 +90,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
 			const totalDeaths = countryCases?.deaths || 0;
 			const totalRecovered = countryCases?.recovered || 0;
 			const totalActive = countryCases?.active || 0;
-			const newCasesPercent = Math.round(((totalCases - lastTotalCases) / totalCases) * 100);
-			const newDeathsPercent = Math.round(((totalDeaths - lastTotalDeaths) / totalDeaths) * 100);
-			const newRecoveredPercent = Math.round(((totalRecovered - lastTotalRecovered) / totalRecovered) * 100);
-			const newActivePercent = Math.round(((totalActive - lastTotalActive) / totalActive) * 100);
+			const newCasesPercent = round(((totalCases - lastTotalCases) / totalCases) * 100, 2);
+			const newDeathsPercent = round(((totalDeaths - lastTotalDeaths) / totalDeaths) * 100, 2);
+			const newRecoveredPercent = round(((totalRecovered - lastTotalRecovered) / totalRecovered) * 100, 2);
+			const newActivePercent = round(((totalActive - lastTotalActive) / totalActive) * 100, 2);
 			return of({
 				cases: countryCases,
 				cards: [

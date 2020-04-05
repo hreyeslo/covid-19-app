@@ -2,8 +2,8 @@ import { Subscription, Observable, of, BehaviorSubject, combineLatest } from 'rx
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { switchMap, first, tap } from 'rxjs/operators';
+import { isEmpty, last, round } from 'lodash';
 import { Store, select } from '@ngrx/store';
-import { isEmpty, last } from 'lodash';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
 import { IGlobalCases, IHistoricalTimeline } from '@shared/models';
@@ -79,24 +79,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
 					const cases = this._utilsService.calcIncrement(global, historical, 'cases');
 					const deaths = this._utilsService.calcIncrement(global, historical, 'deaths');
 					const recovered = this._utilsService.calcIncrement(global, historical, 'recovered');
+					const {lastTotalCases, lastTotalDeaths, lastTotalRecovered, lastTotalActive} = this._getLatestData(historical);
+					const totalCases = global?.cases || 0;
+					const totalDeaths = global?.deaths || 0;
+					const totalRecovered = global?.recovered || 0;
+					const totalActive = global?.active || 0;
+					const newCasesPercent = round(((totalCases - lastTotalCases) / totalCases) * 100, 2);
+					const newDeathsPercent = round(((totalDeaths - lastTotalDeaths) / totalDeaths) * 100, 2);
+					const newRecoveredPercent = round(((totalRecovered - lastTotalRecovered) / totalRecovered) * 100, 2);
+					const newActivePercent = round(((totalActive - lastTotalActive) / totalActive) * 100, 2);
 					return of({
 						global,
 						cards: [
 							{
 								title: 'cases', value: global?.cases, increment: cases || 0,
-								absIncrement: Math.abs(cases || 0)
+								absIncrement: Math.abs(cases || 0),
+								percent: newCasesPercent
 							},
 							{
 								title: 'active', value: global?.active, increment: cases - (recovered + deaths) || 0,
-								absIncrement: Math.abs(cases - (recovered + deaths) || 0)
+								absIncrement: Math.abs(cases - (recovered + deaths) || 0),
+								percent: newActivePercent
 							},
 							{
 								title: 'deaths', value: global?.deaths, increment: deaths || 0,
-								absIncrement: Math.abs(deaths || 0)
+								absIncrement: Math.abs(deaths || 0),
+								percent: newDeathsPercent
 							},
 							{
 								title: 'recovered', value: global?.recovered, increment: recovered || 0,
-								absIncrement: Math.abs(recovered || 0)
+								absIncrement: Math.abs(recovered || 0),
+								percent: newRecoveredPercent
 							}
 						]
 					});

@@ -7,10 +7,10 @@ import {
 	OnInit
 } from '@angular/core';
 import { Observable, of, combineLatest, Subscription, BehaviorSubject } from 'rxjs';
-import { takeRight, merge, capitalize, isEqual } from 'lodash';
+import { takeRight, merge, capitalize, isEqual, last } from 'lodash';
 import { eachDayOfInterval, subDays, format } from 'date-fns';
-import { Store, select } from '@ngrx/store';
 import { switchMap, skipWhile } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
 import esLocale from 'date-fns/locale/es';
 
 import { IHistoricalTimeline } from '@shared/models';
@@ -76,6 +76,7 @@ export class DailyIncrementChartComponent implements OnInit, OnChanges, OnDestro
 					const lastWeekCases = this._calcPercents(takeRight(Object.values(historical?.cases || {}), this.lastdays + 1));
 					const lastWeekDeaths = this._calcPercents(takeRight(Object.values(historical?.deaths || {}), this.lastdays + 1));
 					const lastWeekRecovered = this._calcPercents(takeRight(Object.values(historical?.recovered || {}), this.lastdays + 1));
+					const lastHistoricalDate = new Date(last(Object.keys(historical?.cases || {})));
 					const newData = merge(chartConfig, {
 						series: [
 							{name: translations?.new || '', data: lastWeekCases},
@@ -84,8 +85,8 @@ export class DailyIncrementChartComponent implements OnInit, OnChanges, OnDestro
 						],
 						xaxis: {
 							categories: eachDayOfInterval({
-								start: subDays(new Date(), this.lastdays),
-								end: subDays(new Date(), 1)
+								start: subDays(lastHistoricalDate, this.lastdays - 1),
+								end: lastHistoricalDate
 							}).map(date => capitalize(format(date, 'E\',\' d \'de\' MMMM', {locale: esLocale})))
 						}
 					});

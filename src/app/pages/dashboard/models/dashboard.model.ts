@@ -10,6 +10,7 @@ export interface IDashboardCard {
 	value: number;
 	increment: number;
 	absIncrement: number;
+	percent: number;
 }
 
 export interface IDashboardDailyIncrements {
