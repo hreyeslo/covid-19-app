@@ -107,7 +107,7 @@
 					font-weight: 400;
 					color: $fontColor;
 					line-height: rem(24px);
-					padding: rem(8px 10px 8px 20px);
+					padding: rem(15px 10px 5px);
 				}
 
 				&__total {
@@ -115,13 +115,17 @@
 					font-weight: 400;
 					font-size: rem(24px);
 					line-height: rem(24px);
+					padding: rem(0 10px);
 				}
 
 				&__text {
 					font-weight: 400;
 					font-size: rem(16px);
 					line-height: rem(24px);
-					display: inline-block;
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
 				}
 
 				&__percent {
@@ -141,6 +145,10 @@
 
 						> div:first-child {
 							border-right: 1px solid $globalBgColor;
+						}
+
+						> div:last-child{
+							padding-bottom: rem(15px);
 						}
 					}
 				}
@@ -168,7 +176,7 @@
 			&__increment {
 				border-top: 1px solid $globalBgColor;
 				margin: rem(0 -16px);
-				padding: rem(16px 26px 0);
+				padding: rem(16px 5px 0);
 				font-size: rem(16px);
 				font-weight: 400;
 				color: $fontColor;
@@ -194,6 +202,11 @@
 						color: $goodColor;
 					}
 
+				}
+
+				&__percent{
+					font-size: rem(14px);
+					padding-left: rem(5px);
 				}
 			}
 		}
