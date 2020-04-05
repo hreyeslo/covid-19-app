@@ -49,5 +49,5 @@ export abstract class AbstractUtilsService {
 
 	abstract getLatestData(historical: IHistoricalTimeline, beforeYesterday?: boolean): ILatestData;
 
-	abstract getTomorrowData(today: ISharedTodayData, data: ICountryCases | IGlobalCases): ISharedTomorrowData;
+	abstract getTomorrowData(today: ISharedTodayData): ISharedTomorrowData;
 }

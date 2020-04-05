@@ -1,6 +1,3 @@
-import { IGlobalCases, SharedDetailsCards } from '@shared/models';
-
-export interface IDashboardViewData {
-	cards: SharedDetailsCards;
-	global: IGlobalCases;
+export interface IDashboard {
+	[key: string]: any;
 }

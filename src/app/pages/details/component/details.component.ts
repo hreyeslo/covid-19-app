@@ -11,7 +11,8 @@ import {
 	ICountryCases,
 	IHistoricalTimeline,
 	ISharedTodayData,
-	ISharedTomorrowData
+	ISharedTomorrowData,
+	ISummaryViewData
 } from '@shared/models';
 import { selectLastUpdate } from '@shared/store';
 import { UtilsService } from '@shared/services';
@@ -20,7 +21,6 @@ import { IChartsLiterals } from '@ui/charts';
 import { AbstractDetailsService } from '../service/abstract-details.service';
 import { environment } from '../../../../environments/environment';
 import { AppTabsAnimations } from '../../../app-animations';
-import { IDetails } from '../models/details.model';
 
 @Component({
 	selector: 'covid-dashboard',
@@ -40,7 +40,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	currentTabIndex = 0;
 
 	lastUpdate$: Observable<number>;
-	viewData$: Observable<IDetails>;
+	viewData$: Observable<ISummaryViewData>;
 
 	historical$: BehaviorSubject<IHistoricalTimeline | object> = new BehaviorSubject<IHistoricalTimeline | object>({});
 	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
@@ -73,10 +73,6 @@ export class DetailsComponent implements OnInit, OnDestroy {
 		});
 	}
 
-	trackByIndex(index: number): number {
-		return index;
-	}
-
 	_getViewInfo(country: string) {
 		this.viewData$ = interval(environment.pooling).pipe(
 			startWith(0),
@@ -92,10 +88,10 @@ export class DetailsComponent implements OnInit, OnDestroy {
 				cases: countryCases,
 				cards: this._utilsService.getViewData(countryCases, historical?.timeline)
 			});
-		}), tap((data: IDetails) => this._setTodayData(data)));
+		}), tap((data: ISummaryViewData) => this._setTodayData(data)));
 	}
 
-	_setTodayData(data: IDetails): void {
+	_setTodayData(data: ISummaryViewData): void {
 		this.historical$.pipe(
 			first(historical => !isEmpty(historical)),
 			switchMap((historical: IHistoricalTimeline) => {
@@ -104,13 +100,12 @@ export class DetailsComponent implements OnInit, OnDestroy {
 					...this._utilsService.getTodayData(data?.cases, historical)
 				});
 			}),
-			tap((today: ISharedTodayData) => this._setTomorrow(today, data))
+			tap((today: ISharedTodayData) => this._setTomorrow(today))
 		).subscribe((today: ISharedTodayData) => this.todayData$.next(omit(today, ['historical'])));
 	}
 
-	_setTomorrow(today: ISharedTodayData, data: IDetails): void {
-		const tomorrowData = this._utilsService.getTomorrowData(today, data?.cases);
-		this.tomorrowData$.next(tomorrowData);
+	_setTomorrow(today: ISharedTodayData): void {
+		this.tomorrowData$.next(this._utilsService.getTomorrowData(today));
 	}
 
 	// Review

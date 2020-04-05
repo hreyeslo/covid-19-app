@@ -1,0 +1,115 @@
+<div class="c-summary__container" fxLayout="row wrap" fxLayoutAlign="flex-start flex-start">
+    <!-- Totales -->
+    <mat-card
+        class="c-summary__container__cards__card"
+        *ngFor="let card of viewData?.cards; trackBy: trackByIndex; let last = last"
+        fxFlex.xs="100"
+        [fxFlex.sm]="'0 1 calc(50% - 20px)'"
+        [fxFlex.md]="'0 1 calc(50% - 40px)'"
+        [fxFlex]="'0 1 calc(25% - 40px)'"
+    >
+        <mat-card-header class="c-summary__container__cards__card__header">
+            <mat-card-title class="c-summary__container__cards__card__header__title">{{ 'cards.' + card?.title | translate}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content class="c-summary__container__cards__card__content">
+            <span class="c-summary__container__cards__card__content__value" [countUp]="card?.value" [options]="countUpOptions" [reanimateOnClick]="false"></span>
+            <div class="c-summary__container__cards__card__increment" fxLayout="row">
+                <span>{{(card?.increment < 0 ? 'cards.decrement' : 'cards.increment') | translate}}</span>
+                <div
+                    [ngClass]="card?.increment <= 0 || last
+                ?  'c-summary__container__cards__card__increment__value--good'
+                : 'c-summary__container__cards__card__increment__value--bad'"
+                >
+                    <span class="c-summary__container__cards__card__increment__value">{{card?.increment > 0 ? '+' : card?.increment < 0 ? '+' : ''}}</span>
+                    <span class="c-summary__container__cards__card__increment__value" [countUp]="card?.absIncrement" [options]="countUpOptions" [reanimateOnClick]="false"></span>
+                </div>
+                <span>({{card?.percent}}%)</span>
+            </div>
+        </mat-card-content>
+    </mat-card>
+    <!-- Porcentajes -->
+    <div fxLayout="row wrap" fxFlex="1 1 auto" fxLayoutAlign="flex-start stretch">
+        <mat-card class="c-summary__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(33.33% - 20px)'" [fxFlex]="'0 1 calc(33.33% - 40px)'">
+            <mat-card-header class="c-summary__container__cards__card__header">
+                <mat-card-title class="c-summary__container__cards__card__header__title">Detalle activos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="c-summary__container__cards__card__content__today" fxLayout="row wrap" *ngIf="todayData$ | async; let todayData">
+                <div fxFlex="100" fxLayout="row wrap" class="c-summary__container__cards__card__content__today__active">
+                    <div fxLayout="column" fxFlex="25" fxLayoutAlign="center center">
+                        <span class="c-summary__container__cards__card__content__total" [countUp]="todayData?.active" [options]="countUpOptions"></span>
+                        <span class="c-summary__container__cards__card__content__text">
+                        (<span class="c-summary__container__cards__card__content__percent" [countUp]="todayData?.activePercent"
+                               [options]="countUpOptionsPercents"></span>)
+                    </span>
+                    </div>
+                    <div fxLayout="column" fxFlex="75" fxLayoutAlign="center flex-start">
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <span class="c-summary__container__cards__card__content__title">Moderados:</span>
+                            <span class="c-summary__container__cards__card__content__text">
+                            <span class="c-summary__container__cards__card__content__total" [countUp]="todayData?.moderate" [options]="countUpOptions"></span>
+                                (<span class="c-summary__container__cards__card__content__percent" [countUp]="todayData?.moderatePercent"
+                                       [options]="countUpOptionsPercents"></span>)
+                            </span>
+                        </div>
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <span class="c-summary__container__cards__card__content__title">Críticos:</span>
+                            <span class="c-summary__container__cards__card__content__text">
+                            <span class="c-summary__container__cards__card__content__total" [countUp]="todayData?.critical" [options]="countUpOptions"></span>
+                                (<span class="c-summary__container__cards__card__content__percent" [countUp]="todayData?.criticalPercent"
+                                       [options]="countUpOptionsPercents"></span>)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="c-summary__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(33.33% - 20px)'" [fxFlex]="'0 1 calc(33.33% - 40px)'">
+            <mat-card-header class="c-summary__container__cards__card__header">
+                <mat-card-title class="c-summary__container__cards__card__header__title">Detalle cerrados</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="c-summary__container__cards__card__content__today" fxLayout="row wrap" *ngIf="todayData$ | async; let todayData">
+                <div fxFlex="100" fxLayout="row wrap" class="c-summary__container__cards__card__content__today__closed">
+                    <div fxLayout="column" fxFlex="25" fxLayoutAlign="center center">
+                        <span class="c-summary__container__cards__card__content__total" [countUp]="todayData?.closed" [options]="countUpOptions"></span>
+                        <span class="c-summary__container__cards__card__content__text">
+                        (<span class="c-summary__container__cards__card__content__percent" [countUp]="todayData?.closedPercent"
+                               [options]="countUpOptionsPercents"></span>)
+                    </span>
+                    </div>
+                    <div fxLayout="column" fxFlex="75" fxLayoutAlign="center flex-start">
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <span class="c-summary__container__cards__card__content__title">Recuperados:</span>
+                            <span class="c-summary__container__cards__card__content__text">
+                            <span class="c-summary__container__cards__card__content__total" [countUp]="todayData?.recovered" [options]="countUpOptions"></span>
+                                (<span class="c-summary__container__cards__card__content__percent" [countUp]="todayData?.recoveredPercent"
+                                       [options]="countUpOptionsPercents"></span>)
+                            </span>
+                        </div>
+                        <div fxLayout="row wrap" fxFlex="100">
+                            <span class="c-summary__container__cards__card__content__title">Muertos:</span>
+                            <span class="c-summary__container__cards__card__content__text">
+                            <span class="c-summary__container__cards__card__content__total" [countUp]="todayData?.deaths" [options]="countUpOptions"></span>
+                                (<span class="c-summary__container__cards__card__content__percent" [countUp]="todayData?.deathsPercent"
+                                       [options]="countUpOptionsPercents"></span>)
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card class="c-summary__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(33.33% - 20px)'" [fxFlex]="'0 1 calc(33.33% - 40px)'">
+            <mat-card-header class="c-summary__container__cards__card__header">
+                <mat-card-title class="c-summary__container__cards__card__header__title">Más información</mat-card-title>
+            </mat-card-header>
+            <mat-card-content class="c-summary__container__cards__card__content__tomorrow" *ngIf="tomorrowData$ | async; let tomorrowData">
+                {{tomorrowData?.propagationIndex}}
+                {{tomorrowData?.cases}}
+                {{tomorrowData?.deaths}}
+                {{tomorrowData?.recovered}}
+                <p>
+                    ¿Estamos mejorando? <span>{{tomorrowData?.improving ? 'SI' : 'NO'}}</span>
+                </p>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
