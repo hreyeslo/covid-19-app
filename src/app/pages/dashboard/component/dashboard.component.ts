@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { switchMap, first, tap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
-import { isEmpty } from 'lodash';
+import { isEmpty, omit } from 'lodash';
 
 import { selectGlobalCases, selectLastUpdate, selectHistoricalCases } from '@shared/store';
 import {
@@ -43,8 +43,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 	historicalCases$: Observable<IHistoricalTimeline>;
 	globalCases$: Observable<IGlobalCases>;
 
+	todayData$: BehaviorSubject<Partial<ISharedTodayData>> = new BehaviorSubject<Partial<ISharedTodayData>>(null);
 	tomorrowData$: BehaviorSubject<ISharedTomorrowData> = new BehaviorSubject<ISharedTomorrowData>(null);
-	todayData$: BehaviorSubject<ISharedTodayData> = new BehaviorSubject<ISharedTodayData>(null);
 
 	constructor(
 		private _dashboardService: AbstractDashboardService,
@@ -88,10 +88,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 		this.historicalCases$.pipe(
 			first((historical: IHistoricalTimeline) => !isEmpty(historical)),
 			switchMap((historical: IHistoricalTimeline) => {
-				return of(this._utilsService.getTodayData(data?.global, historical));
+				return of({
+					historical,
+					...this._utilsService.getTodayData(data?.global, historical)
+				});
 			}),
 			tap((today: ISharedTodayData) => this._setTomorrow(today, data?.global))
-		).subscribe((today: ISharedTodayData) => this.todayData$.next(today));
+		).subscribe((today: ISharedTodayData) => this.todayData$.next(omit(today, ['historical'])));
 	}
 
 	_setTomorrow(today: ISharedTodayData, data: IGlobalCases): void {

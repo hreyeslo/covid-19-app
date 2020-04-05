@@ -212,9 +212,10 @@ export class UtilsService implements AbstractUtilsService {
 	}
 
 	getTomorrowData(today: ISharedTodayData, data: ICountryCases | IGlobalCases): ISharedTomorrowData {
-		const totalCases = data?.cases || 0;
-		const totalDeaths = data?.deaths || 0;
-		const totalRecovered = data?.recovered || 0;
+		const latestData = this.getLatestData(today?.historical);
+		const totalCases = latestData?.lastTotalCases || 0;
+		const totalDeaths = latestData?.lastTotalDeaths || 0;
+		const totalRecovered = latestData?.lastTotalRecovered || 0;
 		const cases = Math.round(totalCases * today?.propagationIndex);
 		const deaths = Math.round(totalDeaths * today?.deathsIndex);
 		const recovered = Math.round(totalRecovered * today?.recoveredIndex);

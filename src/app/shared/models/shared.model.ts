@@ -93,6 +93,7 @@ export interface ISharedBasicViewData {
 }
 
 export interface ISharedTodayData {
+	historical: IHistoricalTimeline;
 	active: number;
 	activePercent: number;
 	closed: number;
