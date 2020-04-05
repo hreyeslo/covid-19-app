@@ -42,4 +42,5 @@ export interface IDashboardTomorrowData {
 	cases: number;
 	deaths: number;
 	recovered: number;
+	improving: boolean;
 }

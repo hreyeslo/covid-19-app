@@ -42,4 +42,5 @@ export interface IDetailsTomorrowData {
 	cases: number;
 	deaths: number;
 	recovered: number;
+	improving: boolean;
 }

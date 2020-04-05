@@ -145,7 +145,8 @@ export class DetailsComponent implements OnInit, OnDestroy {
 		const cases = Math.round(totalCases * today?.propagationIndex);
 		const deaths = Math.round(totalDeaths * today?.deathsIndex);
 		const recovered = Math.round(totalRecovered * today?.recoveredIndex);
-		this.tomorrowData$.next({cases, deaths, recovered});
+		const improving = totalCases <= cases;
+		this.tomorrowData$.next({cases, deaths, recovered, improving});
 	}
 
 	_calcPercentData(data: ICountryCases, historical: IHistoricalTimeline): Partial<IDetailsTodayData> {

@@ -32,8 +32,7 @@
                 </mat-card-header>
                 <mat-card-content class="c-dashboard__container__cards__card__content">
                     <span class="c-dashboard__container__cards__card__content__value" [countUp]="card?.value" [options]="countUpOptions" [reanimateOnClick]="false"></span>
-                    <span>{{card?.percent}}%</span>
-                    <div class="c-dashboard__container__cards__card__increment">
+                    <div class="c-dashboard__container__cards__card__increment" fxLayout="row">
                         <span>{{(card?.increment < 0 ? 'cards.decrement' : 'cards.increment') | translate}}</span>
                         <div
                             [ngClass]="card?.increment <= 0 || last
@@ -47,6 +46,7 @@
                                 [reanimateOnClick]="false">
                             </span>
                         </div>
+                        <span>({{card?.percent}}%)</span>
                     </div>
                 </mat-card-content>
             </mat-card>
@@ -89,6 +89,9 @@
                         {{tomorrowData?.cases}}
                         {{tomorrowData?.deaths}}
                         {{tomorrowData?.recovered}}
+                        <p>
+                            ¿Estamos mejorando? <span>{{tomorrowData?.improving ? 'SI' : 'NO'}}</span>
+                        </p>
                     </mat-card-content>
                 </mat-card>
             </div>
