@@ -22,6 +22,10 @@ export class SummaryComponent implements OnChanges {
 		suffix: '%'
 	};
 
+	countUpOptionsDecimals = {
+		decimalPlaces: 3
+	};
+
 	constructor() { }
 
 	trackByIndex(index: number): number {
@@ -32,6 +36,10 @@ export class SummaryComponent implements OnChanges {
 		this.countUpOptionsPercents = {
 			...this.countUpOptions,
 			...this.countUpOptionsPercents
+		};
+		this.countUpOptionsDecimals = {
+			...this.countUpOptions,
+			...this.countUpOptionsDecimals
 		};
 	}
 

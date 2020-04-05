@@ -94,52 +94,81 @@
 					font-weight: 300;
 				}
 
+				&--center {
+					display: flex;
+					flex-direction: row;
+					place-content: flex-start center;
+					align-items: center;
+				}
+
 				&__title {
+					display: inline-block;
+					font-size: rem(16px);
 					font-weight: 400;
-					font-size: rem(18px);
-					line-height: rem(18px);
-					margin-bottom: rem(5px);
+					color: $fontColor;
+					line-height: rem(24px);
+					padding: rem(15px 10px 5px);
 				}
 
 				&__total {
+					display: inline-block;
 					font-weight: 400;
-					font-size: rem(22px);
-					line-height: rem(22px);
-					margin-bottom: rem(5px);
+					font-size: rem(24px);
+					line-height: rem(24px);
+					padding: rem(0 10px);
 				}
 
 				&__text {
 					font-weight: 400;
 					font-size: rem(16px);
-					line-height: rem(16px);
+					line-height: rem(24px);
+					display: flex;
+					flex-direction: row;
+					justify-content: center;
+					align-items: center;
 				}
 
 				&__percent {
+					display: inline-block;
 					font-weight: 400;
 					font-size: rem(16px);
-					line-height: rem(16px);
+					line-height: rem(24px);
 					padding: rem(0 2px);
-					margin-bottom: rem(5px);
+				}
+
+				&__improving {
+					font-weight: 400;
+					font-size: rem(24px);
+
+					&--good {
+						color: $goodColor;
+					}
+
+					&--bad {
+						color: $badColor;
+					}
 				}
 
 				&__today {
 
-					&__active {
-						margin-top: rem(20px) !important;
+					&__active,
+					&__closed {
+						margin-top: rem(25px) !important;
+						margin-bottom: rem(10px) !important;
 
-						&__total {
+						> div:first-child {
+							border-right: 1px solid $globalBgColor;
+						}
 
+						> div:last-child {
+							padding-bottom: rem(15px);
 						}
 					}
-
-					&__closed {
-						margin-top: rem(20px) !important;
-					}
-
 				}
 
 				&__tomorrow {
-
+					margin-top: rem(25px) !important;
+					margin-bottom: rem(10px) !important;
 				}
 			}
 
@@ -161,7 +190,7 @@
 			&__increment {
 				border-top: 1px solid $globalBgColor;
 				margin: rem(0 -16px);
-				padding: rem(16px 26px 0);
+				padding: rem(16px 5px 0);
 				font-size: rem(16px);
 				font-weight: 400;
 				color: $fontColor;
@@ -187,6 +216,11 @@
 						color: $goodColor;
 					}
 
+				}
+
+				&__percent {
+					font-size: rem(14px);
+					padding-left: rem(5px);
 				}
 			}
 		}
