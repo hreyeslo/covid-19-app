@@ -92,7 +92,12 @@ export const chartConfig = {
 			align: 'right',
 			offsetX: -15,
 			offsetY: 0,
-			formatter: (label) => `${label}%`
+			minWidth: 30,
+			formatter: (label) => {
+				return Number(label) > 1 || Number(label) === 0
+					? `${label}%`
+					: `${Number(label).toFixed(1)}%`;
+			}
 		},
 		crosshairs: {
 			show: true

@@ -10,6 +10,7 @@ export interface IDetailsCard {
 	value: number;
 	increment: number;
 	absIncrement: number;
+	percent: number;
 }
 
 export interface IDetailsDailyIncrements {
@@ -17,4 +18,28 @@ export interface IDetailsDailyIncrements {
 	deaths: number;
 	recovered: number;
 	active: number;
+}
+
+export interface IDetailsTodayData {
+	active: number;
+	activePercent: number;
+	closed: number;
+	closedPercent: number;
+	moderate: number;
+	moderatePercent: number;
+	critical: number;
+	criticalPercent: number;
+	recovered: number;
+	recoveredPercent: number;
+	deaths: number;
+	deathsPercent: number;
+	propagationIndex: number;
+	deathsIndex: number;
+	recoveredIndex: number;
+}
+
+export interface IDetailsTomorrowData {
+	cases: number;
+	deaths: number;
+	recovered: number;
 }

@@ -9,6 +9,11 @@ export interface IGlobalCases {
 	updated: number;
 	active: number;
 	affectedCountries: number;
+	todayCases: number;
+	todayDeaths: number;
+	critical: number;
+	casesPerOneMillion: number;
+	deathsPerOneMillion: number;
 }
 
 export interface ICountryInfo {
