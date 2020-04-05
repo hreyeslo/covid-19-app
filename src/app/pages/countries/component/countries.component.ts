@@ -19,7 +19,7 @@ import { AbstractCountriesService } from '../service/abstract-countries.service'
 export class CountriesComponent implements OnInit, OnDestroy {
 
 	private readonly _subscriptions: Subscription[] = [];
-	private readonly _maxItemsToShow = 20;
+	readonly maxItemsToShow = 50;
 	readonly countUpOptions = {
 		separator: '.',
 		decimal: ',',
@@ -76,7 +76,7 @@ export class CountriesComponent implements OnInit, OnDestroy {
 					} else {
 						return includes(country?.country.toLowerCase(), filter.toLowerCase());
 					}
-				}).slice(0, this._maxItemsToShow));
+				}).slice(0, this.maxItemsToShow));
 			})
 		);
 	}

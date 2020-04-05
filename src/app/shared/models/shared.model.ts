@@ -80,3 +80,57 @@ export interface ILayout {
 	type: ELayoutName;
 	alias: ELayoutAlias;
 }
+
+export interface ISharedBasicViewData {
+	cases: number;
+	deaths: number;
+	recovered: number;
+	newCasesPercent: number;
+	newDeathsPercent: number;
+	newRecoveredPercent: number;
+	newActivePercent: number;
+	incrementActiveCases: number;
+}
+
+export interface ISharedTodayData {
+	active: number;
+	activePercent: number;
+	closed: number;
+	closedPercent: number;
+	moderate: number;
+	moderatePercent: number;
+	critical: number;
+	criticalPercent: number;
+	recovered: number;
+	recoveredPercent: number;
+	deaths: number;
+	deathsPercent: number;
+	propagationIndex: number;
+	deathsIndex: number;
+	recoveredIndex: number;
+}
+
+export interface ISharedTomorrowData {
+	cases: number;
+	deaths: number;
+	recovered: number;
+	improving: boolean;
+	propagationIndex: number;
+}
+
+export interface ILatestData {
+	lastTotalCases: number;
+	lastTotalDeaths: number;
+	lastTotalRecovered: number;
+	lastTotalActive: number;
+}
+
+export interface ISharedDetailsCard {
+	title: string;
+	value: number;
+	increment: number;
+	absIncrement: number;
+	percent: number;
+}
+
+export type SharedDetailsCards = ISharedDetailsCard[];
