@@ -219,7 +219,7 @@ export class UtilsService implements AbstractUtilsService {
 		const cases = Math.round(totalCases * today?.propagationIndex);
 		const deaths = Math.round(totalDeaths * today?.deathsIndex);
 		const recovered = Math.round(totalRecovered * today?.recoveredIndex);
-		const improving = totalCases <= cases;
+		const improving = totalCases <= cases && totalDeaths <= deaths;
 		const propagationIndex = today?.propagationIndex;
 		return {cases, deaths, recovered, improving, propagationIndex};
 	}
