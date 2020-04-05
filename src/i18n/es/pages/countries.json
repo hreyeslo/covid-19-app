@@ -1,5 +1,5 @@
 {
-	"title": "Registros por País - Top 20",
+	"title": "Registros por País - Top {{number}}",
 	"lastUpdate": "Última actualización:",
 	"cards": {
 		"cases": "Totales:",

@@ -51,40 +51,70 @@
                 </mat-card>
                 <!-- Porcentajes -->
                 <div fxLayout="row wrap" fxFlex="1 1 auto" fxLayoutAlign="flex-start stretch">
-                    <mat-card class="c-details__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
+                    <mat-card class="c-details__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(33.33% - 20px)'" [fxFlex]="'0 1 calc(33.33% - 40px)'">
                         <mat-card-header class="c-details__container__cards__card__header">
-                            <mat-card-title class="c-details__container__cards__card__header__title">Datos de hoy</mat-card-title>
+                            <mat-card-title class="c-details__container__cards__card__header__title">Casos activos</mat-card-title>
                         </mat-card-header>
-                        <mat-card-content class="c-details__container__cards__card__content" fxLayout="row wrap" *ngIf="todayData$ | async; let todayData">
-                            <div fxFlex="50">
-                                <span>Activos {{todayData?.active}} ({{todayData?.activePercent}}%)</span>
-                                <div fxLayout="row">
-                                    <span>Estado leve/moderada</span>
-                                    <span>{{todayData?.moderate}} ({{todayData?.moderatePercent}}%)</span>
+                        <mat-card-content class="c-details__container__cards__card__content__today" fxLayout="row wrap" *ngIf="todayData$ | async; let todayData">
+                            <div fxFlex="100" fxLayout="row wrap" class="c-details__container__cards__card__content__today__active">
+                                <div fxLayout="column" fxFlex="25" fxLayoutAlign="center center">
+                                    <span [countUp]="todayData?.active" [options]="countUpOptions"></span>
+                                    <span>( <span [countUp]="todayData?.activePercent" [options]="countUpOptions"></span>% )</span>
                                 </div>
-                                <div fxLayout="row">
-                                    <span>Estado serio/crítica</span>
-                                    <span>{{todayData?.critical}} ({{todayData?.criticalPercent}}%)</span>
-                                </div>
-                            </div>
-                            <div fxFlex="50">
-                                <span>Cerrados {{todayData?.closed}} ({{todayData?.closedPercent}}%)</span>
-                                <div fxLayout="row">
-                                    <span>Recovered </span>
-                                    <span>{{todayData?.recovered}} ({{todayData?.recoveredPercent}}%)</span>
-                                </div>
-                                <div fxLayout="row">
-                                    <span>Muertos</span>
-                                    <span>{{todayData?.deaths}} ({{todayData?.deathsPercent}}%)</span>
+                                <div fxLayout="column" fxFlex="75" fxLayoutAlign="center flex-start">
+                                    <div fxLayout="row wrap" fxFlex="100">
+                                        <span>Moderados:</span>
+                                        <span>
+                                            <span [countUp]="todayData?.moderate" [options]="countUpOptions"></span>
+                                            ( <span [countUp]="todayData?.moderatePercent" [options]="countUpOptions"></span>% )
+                                        </span>
+                                    </div>
+                                    <div fxLayout="row wrap" fxFlex="100">
+                                        <span>Críticos:</span>
+                                        <span>
+                                            <span [countUp]="todayData?.critical" [options]="countUpOptions"></span>
+                                            ( <span [countUp]="todayData?.criticalPercent" [options]="countUpOptions"></span>% )
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </mat-card-content>
                     </mat-card>
-                    <mat-card class="c-details__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
+                    <mat-card class="c-details__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(33.33% - 20px)'" [fxFlex]="'0 1 calc(33.33% - 40px)'">
                         <mat-card-header class="c-details__container__cards__card__header">
-                            <mat-card-title class="c-details__container__cards__card__header__title">Previsión para mañana</mat-card-title>
+                            <mat-card-title class="c-details__container__cards__card__header__title">Casos cerrados</mat-card-title>
                         </mat-card-header>
-                        <mat-card-content class="c-details__container__cards__card__content" *ngIf="tomorrowData$ | async; let tomorrowData">
+                        <mat-card-content class="c-details__container__cards__card__content__today" fxLayout="row wrap" *ngIf="todayData$ | async; let todayData">
+                            <div fxFlex="100" fxLayout="row wrap" class="c-details__container__cards__card__content__today__closed">
+                                <div fxLayout="column" fxFlex="25" fxLayoutAlign="center center">
+                                    <span [countUp]="todayData?.closed" [options]="countUpOptions"></span>
+                                    <span>( <span [countUp]="todayData?.closedPercent" [options]="countUpOptions"></span>% )</span>
+                                </div>
+                                <div fxLayout="column" fxFlex="75" fxLayoutAlign="center flex-start">
+                                    <div fxLayout="row wrap" fxFlex="100">
+                                        <span>Recuperados:</span>
+                                        <span>
+                                            <span [countUp]="todayData?.recovered" [options]="countUpOptions"></span>
+                                            ( <span [countUp]="todayData?.recoveredPercent" [options]="countUpOptions"></span>% )
+                                        </span>
+                                    </div>
+                                    <div fxLayout="row wrap" fxFlex="100">
+                                        <span>Muertos:</span>
+                                        <span>
+                                            <span [countUp]="todayData?.deaths" [options]="countUpOptions"></span>
+                                            ( <span [countUp]="todayData?.deathsPercent" [options]="countUpOptions"></span>% )
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                    <mat-card class="c-details__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(33.33% - 20px)'" [fxFlex]="'0 1 calc(33.33% - 40px)'">
+                        <mat-card-header class="c-details__container__cards__card__header">
+                            <mat-card-title class="c-details__container__cards__card__header__title">Más información</mat-card-title>
+                        </mat-card-header>
+                        <mat-card-content class="c-details__container__cards__card__content__tomorrow" *ngIf="tomorrowData$ | async; let tomorrowData">
+                            {{tomorrowData?.propagationIndex}}
                             {{tomorrowData?.cases}}
                             {{tomorrowData?.deaths}}
                             {{tomorrowData?.recovered}}

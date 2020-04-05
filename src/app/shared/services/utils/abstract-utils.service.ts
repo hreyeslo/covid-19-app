@@ -8,7 +8,11 @@ import {
 	CountryCases,
 	ICountryCases,
 	IHistoricalCases,
-	IHistoricalTimeline
+	IHistoricalTimeline,
+	ISharedTodayData,
+	ILatestData,
+	ISharedTomorrowData,
+	SharedDetailsCards
 } from '../../models/shared.model';
 
 @Injectable({
@@ -31,5 +35,19 @@ export abstract class AbstractUtilsService {
 
 	abstract getWorker(): Worker;
 
+	abstract getViewData(data: ICountryCases | IGlobalCases, historical: IHistoricalTimeline): SharedDetailsCards;
+
 	abstract calcIncrement(global: IGlobalCases | ICountryCases, historical: IHistoricalTimeline, key: string): number;
+
+	abstract getTodayData(data: ICountryCases | IGlobalCases, historical: IHistoricalTimeline): Partial<ISharedTodayData>;
+
+	abstract calcPercentData(historical: IHistoricalTimeline): Partial<ISharedTodayData>;
+
+	abstract calcActiveData(data: ICountryCases | IGlobalCases): Partial<ISharedTodayData>;
+
+	abstract calcClosedData(data: ICountryCases | IGlobalCases): Partial<ISharedTodayData>;
+
+	abstract getLatestData(historical: IHistoricalTimeline, beforeYesterday?: boolean): ILatestData;
+
+	abstract getTomorrowData(today: ISharedTodayData, data: ICountryCases | IGlobalCases): ISharedTomorrowData;
 }
