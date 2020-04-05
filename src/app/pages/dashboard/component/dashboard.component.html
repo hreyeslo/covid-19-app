@@ -50,22 +50,47 @@
                 </mat-card-content>
             </mat-card>
             <!-- Porcentajes -->
-            <mat-card class="c-dashboard__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
-                <mat-card-header class="c-dashboard__container__cards__card__header">
-                    <mat-card-title class="c-dashboard__container__cards__card__header__title">Test</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="c-dashboard__container__cards__card__content">
-                    contenido
-                </mat-card-content>
-            </mat-card>
-            <mat-card class="c-dashboard__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
-                <mat-card-header class="c-dashboard__container__cards__card__header">
-                    <mat-card-title class="c-dashboard__container__cards__card__header__title">Test</mat-card-title>
-                </mat-card-header>
-                <mat-card-content class="c-dashboard__container__cards__card__content">
-                    contenido
-                </mat-card-content>
-            </mat-card>
+            <div fxLayout="row wrap" fxFlex="1 1 auto" fxLayoutAlign="flex-start stretch">
+                <mat-card class="c-dashboard__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
+                    <mat-card-header class="c-dashboard__container__cards__card__header">
+                        <mat-card-title class="c-dashboard__container__cards__card__header__title">Datos de hoy</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="c-dashboard__container__cards__card__content" fxLayout="row wrap" *ngIf="todayData$ | async; let todayData">
+                        <div fxFlex="50">
+                            <span>Activos {{todayData?.active}} ({{todayData?.activePercent}}%)</span>
+                            <div fxLayout="row">
+                                <span>Estado leve/moderada</span>
+                                <span>{{todayData?.moderate}} ({{todayData?.moderatePercent}}%)</span>
+                            </div>
+                            <div fxLayout="row">
+                                <span>Estado serio/crítica</span>
+                                <span>{{todayData?.critical}} ({{todayData?.criticalPercent}}%)</span>
+                            </div>
+                        </div>
+                        <div fxFlex="50">
+                            <span>Cerrados {{todayData?.closed}} ({{todayData?.closedPercent}}%)</span>
+                            <div fxLayout="row">
+                                <span>Recovered </span>
+                                <span>{{todayData?.recovered}} ({{todayData?.recoveredPercent}}%)</span>
+                            </div>
+                            <div fxLayout="row">
+                                <span>Muertos</span>
+                                <span>{{todayData?.deaths}} ({{todayData?.deathsPercent}}%)</span>
+                            </div>
+                        </div>
+                    </mat-card-content>
+                </mat-card>
+                <mat-card class="c-dashboard__container__cards__card" fxFlex.xs="100" [fxFlex.sm]="'0 1 calc(50% - 20px)'" [fxFlex]="'0 1 calc(50% - 40px)'">
+                    <mat-card-header class="c-dashboard__container__cards__card__header">
+                        <mat-card-title class="c-dashboard__container__cards__card__header__title">Previsión para mañana</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content class="c-dashboard__container__cards__card__content" *ngIf="tomorrowData$ | async; let tomorrowData">
+                        {{tomorrowData?.cases}}
+                        {{tomorrowData?.deaths}}
+                        {{tomorrowData?.recovered}}
+                    </mat-card-content>
+                </mat-card>
+            </div>
             <!-- Chart -->
             <covid-daily-increment-chart [historicalData$]="historicalCases$"></covid-daily-increment-chart>
         </div>
