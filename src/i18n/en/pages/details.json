@@ -11,17 +11,19 @@
 		"decrement": "Decrement:",
 		"summary": "Last {{days}} days",
 		"details": {
-			"active": "Active details",
+			"active": "Active",
 			"moderate": "Moderate",
 			"critical": "Critical",
-			"closed": "Closed details",
+			"closed": "Closed",
 			"recovered": "Recovered",
 			"deaths": "Deaths",
 			"predictions": "Forecasts",
 			"newCases": "New cases",
 			"newDeaths": "New deaths",
 			"propagation": "Propagation factor",
-			"improving": "Improving?"
+			"improving": "Improving?",
+			"yes": "YES",
+			"no": "NO"
 		}
 	},
 	"tabs": {

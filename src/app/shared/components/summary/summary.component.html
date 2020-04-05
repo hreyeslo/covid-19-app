@@ -145,7 +145,7 @@
                             [ngClass]="tomorrowData?.improving
                                 ? 'c-summary__container__cards__card__content__improving--good'
                                 : 'c-summary__container__cards__card__content__improving--bad'"
-                        >{{tomorrowData?.improving ? 'SI' : 'NO'}}</span>
+                        >{{tomorrowData?.improving ? ('cards.details.yes' | translate) : ('cards.details.no' | translate)}}</span>
                     </div>
                 </div>
             </mat-card-content>
