@@ -8,7 +8,20 @@
 		"recovered": "Recovered",
 		"increment": "Increment:",
 		"decrement": "Decrement:",
-		"summary": "Last {{days}} days"
+		"summary": "Last {{days}} days",
+		"details": {
+			"active": "Active details",
+			"moderate": "Moderate",
+			"critical": "Critical",
+			"closed": "Closed details",
+			"recovered": "Recovered",
+			"deaths": "Deaths",
+			"predictions": "Forecasts",
+			"newCases": "New cases",
+			"newDeaths": "New deaths",
+			"propagation": "Propagation factor",
+			"improving": "Improving?"
+		}
 	},
 	"tabs": {
 		"summary": "Summary",
