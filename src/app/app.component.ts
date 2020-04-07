@@ -17,8 +17,8 @@ import {
 import { UtilsService } from '@shared/services';
 
 import { environment } from '../environments/environment';
-import { AppRoutingAnimations } from './app-animations';
 import { IAppLangTypes } from './core/models/core.model';
+import { AppRoutingAnimations } from './app-animations';
 
 @Component({
 	selector: 'covid-root',
@@ -104,9 +104,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
 	_swUpdateChecker(): void {
 		if (this._swUpdate.isEnabled) {
-			this._swUpdate.available.subscribe(event => {
+			this._swUpdate.available.subscribe(() => {
 				window.location.reload();
 			});
+			setInterval(() => {
+				this._swUpdate.checkForUpdate();
+			}, environment.updateIntervalCheck);
 		}
 	}
 

@@ -3,6 +3,7 @@ export const environment = {
 	configFile: '/configs/dev.json',
 	defaultLang: 'es',
 	pooling: 300000,
+	updateIntervalCheck: 3600000,
 	summaryLastDays: 7,
 	firebase: {
 		apiKey: 'AIzaSyA_224uRQAJ3qTf-KfFcZYtVmqjBMVOTVA',
