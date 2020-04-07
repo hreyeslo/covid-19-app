@@ -7,6 +7,8 @@
 			"installMode": "prefetch",
 			"resources": {
 				"files": [
+					"/config/**/*",
+					"/i18n/**/*",
 					"/favicon.ico",
 					"/index.html",
 					"/manifest.webmanifest",
@@ -22,48 +24,16 @@
 			"resources": {
 				"files": [
 					"/assets/**/*",
-					"/config/**/*",
-					"/i18n/**/*",
 					"/*.(eot|svg|cur|jpg|png|webp|gif|otf|ttf|woff|woff2|ani|pdf)"
+				],
+				"urls": [
+					"https://raw.githubusercontent.com/*",
+					"https://fonts.googleapis.com/*"
 				]
 			}
 		}
 	],
 	"dataGroups": [
-		{
-			"name": "fonts",
-			"urls": [
-				"https://fonts.googleapis.com/*"
-			],
-			"cacheConfig": {
-				"maxSize": 100,
-				"maxAge": "7d",
-				"strategy": "performance"
-			}
-		},
-		{
-			"name": "flags",
-			"urls": [
-				"https://raw.githubusercontent.com/*"
-			],
-			"cacheConfig": {
-				"maxSize": 100,
-				"maxAge": "7d",
-				"strategy": "performance"
-			}
-		},
-		{
-			"name": "static-json-data",
-			"urls": [
-				"/config/*",
-				"/i18n/*"
-			],
-			"cacheConfig": {
-				"maxSize": 100,
-				"maxAge": "7d",
-				"strategy": "performance"
-			}
-		},
 		{
 			"name": "api",
 			"urls": [
@@ -71,20 +41,8 @@
 			],
 			"cacheConfig": {
 				"maxSize": 100,
-				"maxAge": "2m",
+				"maxAge": "5m",
 				"timeout": "5s",
-				"strategy": "freshness"
-			}
-		},
-		{
-			"name": "geolocation",
-			"urls": [
-				"https://geoip-js.maxmind.com/*"
-			],
-			"cacheConfig": {
-				"maxSize": 100,
-				"maxAge": "1h",
-				"timeout": "1s",
 				"strategy": "freshness"
 			}
 		}
