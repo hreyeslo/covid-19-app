@@ -95,12 +95,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 					...this._utilsService.getTodayData(data?.cases, historical)
 				});
 			}),
-			tap((today: ISharedTodayData) => this._setTomorrow(today))
+			tap((today: ISharedTodayData) => this._setTomorrow(today, data?.cases as IGlobalCases))
 		).subscribe((today: ISharedTodayData) => this.todayData$.next(omit(today, ['historical'])));
 	}
 
-	_setTomorrow(today: ISharedTodayData): void {
-		this.tomorrowData$.next(this._utilsService.getTomorrowData(today));
+	_setTomorrow(today: ISharedTodayData, data: IGlobalCases): void {
+		this.tomorrowData$.next(this._utilsService.getTomorrowData(today, data));
 	}
 
 	// Review

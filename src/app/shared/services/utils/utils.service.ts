@@ -211,7 +211,7 @@ export class UtilsService implements AbstractUtilsService {
 		return {lastTotalCases, lastTotalDeaths, lastTotalRecovered, lastTotalActive};
 	}
 
-	getTomorrowData(today: ISharedTodayData): ISharedTomorrowData {
+	getTomorrowData(today: ISharedTodayData, data: IGlobalCases | ICountryCases): ISharedTomorrowData {
 		const latestData = this.getLatestData(today?.historical);
 		const totalCases = latestData?.lastTotalCases || 0;
 		const totalDeaths = latestData?.lastTotalDeaths || 0;
@@ -219,7 +219,7 @@ export class UtilsService implements AbstractUtilsService {
 		const cases = Math.round(totalCases * today?.propagationIndex);
 		const deaths = Math.round(totalDeaths * today?.deathsIndex);
 		const recovered = Math.round(totalRecovered * today?.recoveredIndex);
-		const improving = totalCases <= cases && totalDeaths <= deaths;
+		const improving = data.cases <= cases && data.deaths <= deaths;
 		const propagationIndex = today?.propagationIndex;
 		return {cases, deaths, recovered, improving, propagationIndex};
 	}
