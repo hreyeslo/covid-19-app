@@ -24,6 +24,8 @@ export const chartConfig = {
 	],
 	chart: {
 		height: '450px',
+		width: '100%',
+		redrawOnParentResize: true,
 		type: 'line',
 		stacked: false,
 		zoom: {
