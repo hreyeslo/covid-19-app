@@ -14,14 +14,14 @@
         <mat-card-content class="c-summary__container__cards__card__content">
             <span class="c-summary__container__cards__card__content__value" [countUp]="card?.value" [options]="countUpOptions" [reanimateOnClick]="false"></span>
             <div class="c-summary__container__cards__card__increment" fxLayout="row">
-                <span>{{(card?.increment < 0 ? 'cards.decrement' : 'cards.increment') | translate}}</span>
+<!--                <span>{{(card?.increment < 0 ? 'cards.decrement' : 'cards.increment') | translate}}</span>-->
                 <div
                     [ngClass]="card?.increment <= 0 || last
                 ?  'c-summary__container__cards__card__increment__value--good'
                 : 'c-summary__container__cards__card__increment__value--bad'"
                 >
-                    <span class="c-summary__container__cards__card__increment__value">{{card?.increment > 0 ? '+' : card?.increment < 0 ? '+' : ''}}</span>
-                    <span class="c-summary__container__cards__card__increment__value" [countUp]="card?.absIncrement" [options]="countUpOptions" [reanimateOnClick]="false"></span>
+                    <span class="c-summary__container__cards__card__increment__value">{{card?.increment > 0 ? '+' : ''}}</span>
+                    <span class="c-summary__container__cards__card__increment__value" [countUp]="card?.increment" [options]="countUpOptions" [reanimateOnClick]="false"></span>
                 </div>
                 <span class="c-summary__container__cards__card__increment__percent">( {{card?.percent}}% )</span>
             </div>

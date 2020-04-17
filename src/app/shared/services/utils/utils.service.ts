@@ -55,7 +55,7 @@ export class UtilsService implements AbstractUtilsService {
 	// Global
 
 	getGlobalCases(): Observable<IGlobalCases> {
-		return this._makeRequest<IGlobalCases>('all');
+		return this._makeRequest<IGlobalCases>('v2/all');
 	}
 
 	getGlobalHistoricalCases(): Observable<IHistoricalTimeline> {
@@ -65,7 +65,7 @@ export class UtilsService implements AbstractUtilsService {
 	// Countries
 
 	getAllCountriesCases(): Observable<CountryCases> {
-		return this._makeRequest<CountryCases>('countries?sort=cases')
+		return this._makeRequest<CountryCases>('v2/countries?sort=cases')
 			.pipe(switchMap((countries: CountryCases) => {
 				this._countries = countries.reduce((acc: any, value: ICountryCases) => {
 					const key = this._getCountrykey(value?.countryInfo?.lat, value?.countryInfo?.long);
@@ -88,7 +88,7 @@ export class UtilsService implements AbstractUtilsService {
 	}
 
 	getCountryCases(country: string): Observable<ICountryCases> {
-		return this._makeRequest<ICountryCases>(`countries/${country}`);
+		return this._makeRequest<ICountryCases>(`v2/countries/${country}`);
 	}
 
 	getCountryHistoricalCases(country: string): Observable<IHistoricalCases> {
