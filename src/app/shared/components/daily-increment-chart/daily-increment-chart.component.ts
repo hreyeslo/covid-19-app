@@ -7,7 +7,7 @@ import {
 	OnInit
 } from '@angular/core';
 import { Observable, of, combineLatest, Subscription, BehaviorSubject } from 'rxjs';
-import { takeRight, merge, capitalize, isEqual, last } from 'lodash';
+import { takeRight, merge, capitalize, isEqual, last, round } from 'lodash';
 import { eachDayOfInterval, subDays, format } from 'date-fns';
 import { switchMap, skipWhile } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
@@ -103,8 +103,7 @@ export class DailyIncrementChartComponent implements OnInit, OnChanges, OnDestro
 	_calcPercents(collection: number[]): number[] {
 		const percents = [];
 		for (let i = 0; i < collection.length - 1; i++) {
-			const percent = ((collection[i + 1] - collection[i]) / collection[i]) * 100;
-			percents.push(Math.round(percent + Number.EPSILON));
+			percents.push(round(((collection[i + 1] - collection[i]) / collection[i]) * 100, 2));
 		}
 		return percents;
 	}

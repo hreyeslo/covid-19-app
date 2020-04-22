@@ -1,3 +1,5 @@
+import { round } from 'lodash';
+
 export interface ILiterals {
 	new: string;
 	death: string;
@@ -80,7 +82,7 @@ export const chartConfig = {
 	},
 	yaxis: {
 		min: 0,
-		forceNiceScale: true,
+		forceNiceScale: false,
 		axisBorder: {
 			show: true,
 			offsetX: -5,
@@ -96,9 +98,7 @@ export const chartConfig = {
 			offsetY: 0,
 			minWidth: 30,
 			formatter: (label) => {
-				return Number(label) > 1 || Number(label) === 0
-					? `${label}%`
-					: `${Number(label).toFixed(1)}%`;
+				return Number(label) === 0 ? `${label}%` : `${round(Number(label), 2)}%`;
 			}
 		},
 		crosshairs: {
