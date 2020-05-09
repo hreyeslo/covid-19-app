@@ -83,18 +83,18 @@ export class DetailsComponent implements OnInit, OnDestroy {
 				this._utilsService.getCountryCases(country),
 				this._utilsService.getCountryCases(country, true),
 				this._utilsService.getCountryHistoricalCases(country)
-			]))
-		).pipe(switchMap((response: [ICountryCases, ICountryCases, IHistoricalCases]) => {
-			const [countryCases, yesterdayCountryCases, historical] = response;
-			this.historical$.next(historical?.timeline);
-			this.country$.next(countryCases);
-			this.tests$.next(countryCases?.tests || 0);
-			this.yesterday$.next(yesterdayCountryCases);
-			return of({
-				cases: countryCases,
-				cards: this._utilsService.getViewData(countryCases, this._getYesterdayAsHistoricalData(yesterdayCountryCases))
-			});
-		}), tap((data: ISummaryViewData) => this._setTodayData(data)));
+			])),
+			switchMap((response: [ICountryCases, ICountryCases, IHistoricalCases]) => {
+				const [countryCases, yesterdayCountryCases, historical] = response;
+				this.historical$.next(historical?.timeline);
+				this.country$.next(countryCases);
+				this.tests$.next(countryCases?.tests || 0);
+				this.yesterday$.next(yesterdayCountryCases);
+				return of({
+					cases: countryCases,
+					cards: this._utilsService.getViewData(countryCases, this._getYesterdayAsHistoricalData(yesterdayCountryCases))
+				});
+			}), tap((data: ISummaryViewData) => this._setTodayData(data)));
 	}
 
 	_setTodayData(data: ISummaryViewData): void {

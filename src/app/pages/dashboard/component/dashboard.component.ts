@@ -1,7 +1,7 @@
 import { Subscription, Observable, of, BehaviorSubject, combineLatest } from 'rxjs';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { switchMap, first, tap } from 'rxjs/operators';
+import { switchMap, first, tap, delay } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { isEmpty, omit } from 'lodash';
 
@@ -76,6 +76,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	_mapViewData(): void {
 		this.viewData$ = combineLatest([this.globalCases$, this.historicalCases$]).pipe(
+			delay(0),
 			switchMap((data: [IGlobalCases, IHistoricalTimeline]) => {
 					const [cases, historical] = data;
 					this.tests$.next(cases?.tests || 0);
@@ -88,7 +89,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
 	_setTodayData(data: ISummaryViewData): void {
 		this.historicalCases$.pipe(
-			first((historical: IHistoricalTimeline) => !isEmpty(historical)),
+			first((historical: IHistoricalTimeline) => !isEmpty(historical?.cases)),
+			delay(0),
 			switchMap((historical: IHistoricalTimeline) => {
 				return of({
 					historical,

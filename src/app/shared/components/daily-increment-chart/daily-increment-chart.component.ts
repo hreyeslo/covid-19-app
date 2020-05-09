@@ -7,7 +7,7 @@ import {
 	OnInit
 } from '@angular/core';
 import { Observable, of, combineLatest, Subscription, BehaviorSubject } from 'rxjs';
-import { takeRight, merge, capitalize, isEqual, last, round } from 'lodash';
+import { takeRight, merge, capitalize, isEqual, last, round, isEmpty, get } from 'lodash';
 import { eachDayOfInterval, subDays, format } from 'date-fns';
 import { switchMap, skipWhile } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
@@ -67,7 +67,7 @@ export class DailyIncrementChartComponent implements OnInit, OnChanges, OnDestro
 
 	_setChartData() {
 		this.chartData$ = combineLatest([this.historicalData$, this.translations$]).pipe(
-			skipWhile((data: [IHistoricalTimeline, ILiterals]) => !data[1]),
+			skipWhile((data: [IHistoricalTimeline, ILiterals]) => isEmpty(get(data, [0, 'cases']))),
 			switchMap((data: [IHistoricalTimeline, ILiterals]) => {
 				const [historical, translations] = data;
 				const newLiterals = !isEqual(translations, this._currentLiterals);
