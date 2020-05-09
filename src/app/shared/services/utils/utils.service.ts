@@ -1,7 +1,7 @@
 import { filter, map, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { MediaChange, MediaObserver } from '@angular/flex-layout';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, Injector } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { isEqual, get, round } from 'lodash';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -87,8 +87,13 @@ export class UtilsService implements AbstractUtilsService {
 			}));
 	}
 
-	getCountryCases(country: string): Observable<ICountryCases> {
-		return this._makeRequest<ICountryCases>(`v2/countries/${country}`);
+	getCountryCases(country: string, yesterday?: boolean): Observable<ICountryCases> {
+		const options = yesterday ? {
+			params: new HttpParams({
+				fromObject: {yesterday: `${yesterday}`}
+			})
+		} : undefined;
+		return this._makeRequest<ICountryCases>(`v2/countries/${country}`, options);
 	}
 
 	getCountryHistoricalCases(country: string): Observable<IHistoricalCases> {
@@ -115,7 +120,7 @@ export class UtilsService implements AbstractUtilsService {
 		return this._webWorker;
 	}
 
-	getViewData(data: ICountryCases | IGlobalCases, historical: IHistoricalTimeline): SharedDetailsCards {
+	getViewData(data: ICountryCases | IGlobalCases, historical: IHistoricalTimeline ): SharedDetailsCards {
 		const cases = this.calcIncrement(data, historical, 'cases');
 		const deaths = this.calcIncrement(data, historical, 'deaths');
 		const recovered = this.calcIncrement(data, historical, 'recovered');
@@ -226,8 +231,11 @@ export class UtilsService implements AbstractUtilsService {
 
 	// Private
 
-	_makeRequest<T>(path: string): Observable<T> {
-		return this._httpClient.get<T>(`${this._config?.api?.host}/${path}`, {responseType: 'json'});
+	_makeRequest<T>(path: string, options?: object): Observable<T> {
+		return this._httpClient.get<T>(`${this._config?.api?.host}/${path}`, {
+			responseType: 'json',
+			...options || {}
+		});
 	}
 
 	_initLayoutObserver(): void {

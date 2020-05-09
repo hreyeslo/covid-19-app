@@ -5,6 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store, select } from '@ngrx/store';
 import { isEmpty, omit } from 'lodash';
+import { format, sub } from 'date-fns';
 
 import {
 	IHistoricalCases,
@@ -45,6 +46,7 @@ export class DetailsComponent implements OnInit, OnDestroy {
 	historical$: BehaviorSubject<IHistoricalTimeline | object> = new BehaviorSubject<IHistoricalTimeline | object>({});
 	literals$: BehaviorSubject<IChartsLiterals | object> = new BehaviorSubject<IChartsLiterals | object>({});
 	country$: BehaviorSubject<ICountryCases | object> = new BehaviorSubject<ICountryCases | object>({});
+	yesterday$: BehaviorSubject<ICountryCases | object> = new BehaviorSubject<ICountryCases | object>({});
 	tests$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
 	todayData$: BehaviorSubject<Partial<ISharedTodayData>> = new BehaviorSubject<Partial<ISharedTodayData>>(null);
@@ -79,23 +81,25 @@ export class DetailsComponent implements OnInit, OnDestroy {
 			startWith(0),
 			switchMap(() => forkJoin([
 				this._utilsService.getCountryCases(country),
+				this._utilsService.getCountryCases(country, true),
 				this._utilsService.getCountryHistoricalCases(country)
 			]))
-		).pipe(switchMap((response: [ICountryCases, IHistoricalCases]) => {
-			const [countryCases, historical] = response;
+		).pipe(switchMap((response: [ICountryCases, ICountryCases, IHistoricalCases]) => {
+			const [countryCases, yesterdayCountryCases, historical] = response;
 			this.historical$.next(historical?.timeline);
 			this.country$.next(countryCases);
 			this.tests$.next(countryCases?.tests || 0);
+			this.yesterday$.next(yesterdayCountryCases);
 			return of({
 				cases: countryCases,
-				cards: this._utilsService.getViewData(countryCases, historical?.timeline)
+				cards: this._utilsService.getViewData(countryCases, this._getYesterdayAsHistoricalData(yesterdayCountryCases))
 			});
 		}), tap((data: ISummaryViewData) => this._setTodayData(data)));
 	}
 
 	_setTodayData(data: ISummaryViewData): void {
 		this.historical$.pipe(
-			first(historical => !isEmpty(historical)),
+			first(yesterday => !isEmpty(yesterday)),
 			switchMap((historical: IHistoricalTimeline) => {
 				return of({
 					historical,
@@ -127,6 +131,21 @@ export class DetailsComponent implements OnInit, OnDestroy {
 				})
 			);
 		});
+	}
+
+	_getYesterdayAsHistoricalData(yesterdayData: ICountryCases): IHistoricalTimeline {
+		const date = format(sub(new Date(), {days: 1}), 'LL/dd/yy');
+		return {
+			cases: {
+				[date]: yesterdayData.cases
+			},
+			deaths: {
+				[date]: yesterdayData.deaths
+			},
+			recovered: {
+				[date]: yesterdayData.recovered
+			}
+		};
 	}
 
 }

@@ -43,6 +43,7 @@ export interface ICountryCases {
 	updated: number;
 	tests: number;
 	testsPerOneMillion: number;
+	continent: string;
 }
 
 export type CountryCases = ICountryCases[];
