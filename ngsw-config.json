@@ -37,7 +37,7 @@
 		{
 			"name": "api",
 			"urls": [
-				"https://corona.lmao.ninja/*"
+				"https://disease.sh/*"
 			],
 			"cacheConfig": {
 				"maxSize": 100,

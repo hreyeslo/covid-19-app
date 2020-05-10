@@ -1,6 +1,6 @@
 {
 	"api": {
-		"host": "https://corona.lmao.ninja"
+		"host": "https://disease.sh"
 	},
 	"i18n": {
 		"scope": {
